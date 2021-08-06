@@ -11,7 +11,7 @@ export default function SettingsPage() {
         <View>
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
-                <Appbar.Content title="Settings" />
+                <Appbar.Content title="Settings" titleStyle={styles.title}/>
                 
             </Appbar.Header>
             <View style={styles.notification}>
@@ -61,5 +61,9 @@ const styles = StyleSheet.create ({
     },
     notificationtext:{
         fontSize: 18
+    },
+    
+    title:{
+        fontSize:17
     }
  })
