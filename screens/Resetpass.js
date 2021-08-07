@@ -1,35 +1,52 @@
 import React,{useState} from 'react'
 import {View,Text,Image,TextInput,TouchableOpacity, StyleSheet} from "react-native"
-import { MaterialIcons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
+
+import { Ionicons, Feather } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
-export default function Contact() {
-    const [name, setName] = useState("")
-    const [email,setEmail]=useState("")
-    const [message,setMessage]=useState("")
+export default function Resetpass() {
+    const [newpass, setNewpass] = useState("")
+    const [confirmpass,setConfirmpass]=useState("")
+    const [hidenewPass, setHidenewPass] = useState(true);
+    const [hideconfirmPass, setHideconfirmPass] = useState(true);
     return (
        
            <View style={styles.container}>
                 <Appbar.Header style = {styles.item}>
                         <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
-                        <Appbar.Content title="Contact Us" titleStyle={styles.title}/>
+                        <Appbar.Content title="Reset Password" titleStyle={styles.title}/>
                         
                     </Appbar.Header>
                 <View style={styles.content}>
-                    <Text>FullName</Text>
+                    <Text>New Password</Text>
                     <View style={styles.form}>
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setName} value={name} placeholder="Full Name"  />
+                        
+                        <TextInput  style={{ height: 40,padding: 10,backgroundColor:"white",width:"90%"}}  secureTextEntry={hidenewPass ? true : false} onChangeText={setNewpass} value={newpass}/>
+                        <Feather style={{marginTop:5}}name={hidenewPass ? 'eye-off' : 'eye'} size={24} color="grey"  onPress={() => setHidenewPass(!hidenewPass)} />
+        
                     </View>
                     
-                    <Text>Email</Text>
-                    <View style={styles.form}>    
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setEmail} value={email} placeholder="Email" />
-                    </View>
-                    
-                    <Text>Message</Text>
+                    <Text>Confirm Password</Text>
                     <View style={styles.form}>
-                        <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} multiline="true" numberOfLines="10" onChangeText={setMessage} value={message} placeholder="Enter here..." />
+                        
+                        <TextInput  style={{ height: 40,padding: 10,backgroundColor:"white",width:"90%"}}  secureTextEntry={hideconfirmPass ? true : false} onChangeText={setConfirmpass} value={confirmpass}/>
+                        <Feather style={{marginTop:5}}name={hideconfirmPass ? 'eye-off' : 'eye'} size={24} color="grey"  onPress={() => setHideconfirmPass(!hideconfirmPass)} />
+        
+                    </View>
+                    <View style={{marginTop:"10%"}}>
+                        <Text style={styles.title}>
+                            Password Should be
+                        </Text>
+                        <View style={{marginTop:10}}>
+                            <Text style={{color:"grey"}}>
+                                -Is longer than 7 characters
+                            </Text>
+                            <Text style={{color:"grey"}}>
+                                -Does not match your old Username and Password
+                            </Text>
+                            <Text style={{color:"grey"}}>
+                                -Is not a common password
+                            </Text>
+                        </View>
                     </View>
                     
                 </View>
@@ -40,7 +57,7 @@ export default function Contact() {
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.send}>
-                                    <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Send</Text>
+                                    <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Reset</Text>
                                 </TouchableOpacity>
                             </View>
                     </View>
@@ -73,16 +90,17 @@ const styles = StyleSheet.create ({
         backgroundColor:"white",
         borderRadius:8,
         borderWidth:0.5,
-        // padding:10,
         marginVertical:10,
         borderColor:"grey",
+        flexDirection:"row",
+        
         
     },
     buttoncontainer:{
         backgroundColor:"rgb(249,249,249)",
         flex:1,
         justifyContent:"flex-end",
-        marginBottom:18
+        marginBottom:18,
        
     },
 
@@ -91,7 +109,8 @@ const styles = StyleSheet.create ({
         borderTopWidth:1,
         borderColor:"grey",
         flexDirection:"row",
-        padding:15
+        padding:15,
+    
     },
     cancel:{
         backgroundColor:"white",

@@ -6,9 +6,10 @@ import Signup from './screens/Signup';
 import Confirmation from './screens/Confirmation';
 import Home from './screens/Home';
 import SettingsPage from './screens/SettingsPage';
-import Contact from './screens/Contact';
+import Contacts from './screens/Contacts';
+import Resetpass from './screens/Resetpass';
 export default function App() {
   return (
-      <Contact/>
+      <Contacts/>
   );
 }

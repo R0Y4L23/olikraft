@@ -8,7 +8,7 @@ export default function SettingsPage() {
     const [toggle, setToggle] = useState(false);
 
     return (
-        <View>
+        <View style={styles.container}>
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
                 <Appbar.Content title="Settings" titleStyle={styles.title}/>
@@ -45,6 +45,7 @@ export default function SettingsPage() {
 }
 
 const styles = StyleSheet.create ({
+
     item: {
        backgroundColor : 'rgb(5,23,41)'
     },
