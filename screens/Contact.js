@@ -36,11 +36,11 @@ export default function Contact() {
                 <View style={styles.buttoncontainer}>
                         <View style={styles.button}> 
                                 <TouchableOpacity style={styles.cancel}>
-                                    <Text style={{fontSize:17,fontWeight:800}}>Cancel</Text>
+                                    <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.send}>
-                                    <Text style={{color:"white",fontSize:17,fontWeight:800}}>Send</Text>
+                                    <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Send</Text>
                                 </TouchableOpacity>
                             </View>
                     </View>
