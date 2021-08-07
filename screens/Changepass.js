@@ -3,9 +3,11 @@ import {View,Text,TextInput,TouchableOpacity, StyleSheet} from "react-native"
 
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
-export default function Resetpass() {
+export default function Changepass() {
+    const [oldpass, setOldpass] = useState("")
     const [newpass, setNewpass] = useState("")
     const [confirmpass,setConfirmpass]=useState("")
+    const [hideoldPass, setHideoldPass] = useState(true);
     const [hidenewPass, setHidenewPass] = useState(true);
     const [hideconfirmPass, setHideconfirmPass] = useState(true);
     return (
@@ -13,10 +15,18 @@ export default function Resetpass() {
            <View style={styles.container}>
                 <Appbar.Header style = {styles.item}>
                         <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
-                        <Appbar.Content title="Reset Password" titleStyle={styles.title}/>
+                        <Appbar.Content title="Change Password" titleStyle={styles.title}/>
                         
                     </Appbar.Header>
                 <View style={styles.content}>
+                    <Text>Old Password</Text>
+                    <View style={styles.form}>
+                        
+                        <TextInput  style={{ height: 40,padding: 10,backgroundColor:"white",width:"90%"}}  secureTextEntry={hideoldPass ? true : false} onChangeText={setOldpass} value={oldpass}/>
+                        <Feather style={{marginTop:5}}name={hideoldPass ? 'eye-off' : 'eye'} size={24} color="grey"  onPress={() => setHideoldPass(!hideoldPass)} />
+        
+                    </View>
+                    
                     <Text>New Password</Text>
                     <View style={styles.form}>
                         
@@ -32,19 +42,20 @@ export default function Resetpass() {
                         <Feather style={{marginTop:5}}name={hideconfirmPass ? 'eye-off' : 'eye'} size={24} color="grey"  onPress={() => setHideconfirmPass(!hideconfirmPass)} />
         
                     </View>
+                   
                     <View style={{marginTop:"10%"}}>
                         <Text style={styles.title}>
                             Password Should be
                         </Text>
                         <View style={{marginTop:10}}>
                             <Text style={{color:"grey"}}>
-                                -Is longer than 7 characters
+                                - Is longer than 7 characters
                             </Text>
                             <Text style={{color:"grey"}}>
-                                -Does not match your old Username and Password
+                                - Does not match your old Username and Password
                             </Text>
                             <Text style={{color:"grey"}}>
-                                -Is not a common password
+                                - Is not a common password
                             </Text>
                         </View>
                     </View>
@@ -57,7 +68,7 @@ export default function Resetpass() {
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.send}>
-                                    <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Reset</Text>
+                                    <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Change</Text>
                                 </TouchableOpacity>
                             </View>
                     </View>

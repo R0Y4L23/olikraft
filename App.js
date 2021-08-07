@@ -8,8 +8,11 @@ import Home from './screens/Home';
 import SettingsPage from './screens/SettingsPage';
 import Contacts from './screens/Contacts';
 import Resetpass from './screens/Resetpass';
+import Resetconfirmation from './screens/Resetconfirmation';
+import Forgotpass from './screens/Forgotpass';
+import Changepass from './screens/Changepass';
 export default function App() {
   return (
-      <Contacts/>
+      <Changepass/>
   );
 }
