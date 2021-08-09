@@ -1,7 +1,6 @@
 import React from 'react'
 import { Appbar } from 'react-native-paper';
 import { ScrollView, View,Text,Image } from 'react-native'
-
 const ProductsComponent=({product,nprice,pprice,discount,discountPrice})=>{
     return (
         <View style={{width:325,height:140,margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
@@ -14,9 +13,7 @@ const ProductsComponent=({product,nprice,pprice,discount,discountPrice})=>{
     </View>
     )
 }
-
 const Products = () => {
-
     const ProductsJSON=[{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15},{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15},{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15}]
     return (
        <View style={{backgroundColor:"#f9f9f9"}}>
@@ -31,5 +28,4 @@ const Products = () => {
        </View>
     )
 }
-
 export default Products

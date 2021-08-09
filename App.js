@@ -11,8 +11,12 @@ import Resetpass from './screens/Resetpass';
 import Resetconfirmation from './screens/Resetconfirmation';
 import Forgotpass from './screens/Forgotpass';
 import Changepass from './screens/Changepass';
+import Products from './screens/Products';
+import Tutorial from "./screens/Tutorials"
+import WriteAReview from './screens/WriteAReview';
+import MoreOptions from './screens/MoreOptions';
 export default function App() {
   return (
-      <Changepass/>
+      <MoreOptions/>
   );
 }
