@@ -15,8 +15,15 @@ import Products from './screens/Products';
 import Tutorial from "./screens/Tutorials"
 import WriteAReview from './screens/WriteAReview';
 import MoreOptions from './screens/MoreOptions';
+import Profile from './screens/Profile';
+import Editprofile from './screens/Editprofile';
+import OrderConfirmation from './screens/OrderConfirmation';
+import ManageAddress from './screens/ManageAddress';
+import Address from './screens/Address';
+import MyOrders from './screens/MyOrders';
+import Checkout from './screens/Checkout';
 export default function App() {
   return (
-      <MoreOptions/>
+      <OrderConfirmation/>
   );
 }
