@@ -8,13 +8,15 @@ export default function Checkout() {
     const [checked, setChecked] = React.useState(false);
 
     return (
-        <View>
+        <View style={{flex:1}}>
+            <View>
              <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
                 <Appbar.Content title="Checkout" titleStyle={styles.title}/>
                 
             </Appbar.Header>
-            <ScrollView>
+            </View>
+            <ScrollView style={{marginBottom:15}}>
             <Card style={{marginTop:20,borderRadius:10,elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold"}}>General Information</Text>
@@ -134,8 +136,10 @@ export default function Checkout() {
             </Card>
 
             
+           
             </ScrollView>
-            <View style={styles.buttoncontainer}>
+            
+            <View>
                     <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel}>
                             <Text style={{fontSize:14,fontWeight:"bold"}}>Payable Amount</Text>
@@ -159,7 +163,8 @@ const styles = StyleSheet.create ({
         height:"100%"
     },
     item: {
-        backgroundColor : 'rgb(5,23,41)'
+        backgroundColor : 'rgb(5,23,41)',
+       
      },
     icon: {
         marginLeft: 20
@@ -175,15 +180,10 @@ const styles = StyleSheet.create ({
         
     },
 
-    buttoncontainer:{
-        backgroundColor:"rgb(249,249,249)",
-        
-    },
-
     button:{
         backgroundColor:"white",
         borderTopWidth:0.5,
-        marginTop:15,
+        marginTop:10,
         borderColor:"grey",
         flexDirection:"row",
         padding:15

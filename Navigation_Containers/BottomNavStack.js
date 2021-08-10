@@ -16,7 +16,7 @@ const More=({navigation})=>{
       style={{
         backgroundColor: 'white',
         padding: 26,
-        height: 250,
+        height: 400,
         position:"absolute",
         width:"100%",
         bottom:0,
@@ -44,6 +44,24 @@ const More=({navigation})=>{
      <Divider/>
      <TouchableOpacity onPress={()=>{navigation.navigate("Settings")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >Settings</Text>
+     </TouchableOpacity>
+     <Divider/>
+     <TouchableOpacity onPress={()=>{navigation.navigate("Orderconfirmation")}}>
+     <Text style={{fontSize:18,paddingBottom:11}} >Order Confirmation</Text>
+     </TouchableOpacity>
+     <Divider/>
+     <TouchableOpacity onPress={()=>{navigation.navigate("Checkout")}}>
+     <Text style={{fontSize:18,paddingBottom:11}} >Checkout</Text>
+     </TouchableOpacity>
+
+     <Divider/>
+     <TouchableOpacity onPress={()=>{navigation.navigate("Myorders")}}>
+     <Text style={{fontSize:18,paddingBottom:11}} >My orders</Text>
+     </TouchableOpacity>
+
+     <Divider/>
+     <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}>
+     <Text style={{fontSize:18,paddingBottom:11}} >My cart</Text>
      </TouchableOpacity>
     </View>
     )

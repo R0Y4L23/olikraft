@@ -9,6 +9,10 @@ import ManageAddress from "../screens/ManageAddress"
 import Profile from "../screens/Profile"
 import ContactUs from "../screens/Contacts"
 import Settings from '../screens/SettingsPage'
+import OrderConfirmation from '../screens/OrderConfirmation'
+import Checkout from "../screens/Checkout"
+import MyOrders from '../screens/MyOrders'
+import Mycart from '../screens/Mycart'
 const Stack = createNativeStackNavigator();
 const MainStack = () => {
     return (
@@ -22,6 +26,11 @@ const MainStack = () => {
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="ContactUs" component={ContactUs} />
             <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="Orderconfirmation" component={OrderConfirmation} />
+            <Stack.Screen name="Checkout" component={Checkout} />
+            <Stack.Screen name="Myorders" component={MyOrders} />
+            <Stack.Screen name="Mycart" component={Mycart} />
+            
         </Stack.Navigator>
     )
 }
