@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-const Signup = () => {
+const Signup = ({navigation}) => {
     const [name,setName]=useState("")
     const [number,setNumber]=useState("")
     const [email,setEmail]=useState("")
@@ -33,7 +33,7 @@ const Signup = () => {
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setConfirmPass} value={confirmPass} placeholder="Confirm Password"/>
                    <Feather name="eye-off" size={35} color="black" style={{flex:1.5}}/>
                </View>
-               <TouchableOpacity style={{backgroundColor:"#051729",height:40,width:300,display:"flex",justifyContent:"center",alignItems:"center"}}>
+               <TouchableOpacity style={{backgroundColor:"#051729",height:40,width:300,display:"flex",justifyContent:"center",alignItems:"center"}} onPress={()=>{navigation.navigate("Confirmation")}}>
                    <Text style={{color:"white",fontSize:16}}>Signup</Text>
                </TouchableOpacity>
                <TouchableOpacity style={{backgroundColor:"white",height:50,width:300,display:"flex",flexDirection:"row",alignItems:"center",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5}}>
@@ -44,7 +44,7 @@ const Signup = () => {
                    <Image style={{width:22,height:22,marginLeft:10}} source={require("../assets/facebook.png")}/> 
                    <Text style={{fontSize:15,color:"black",textAlign:"center",width:"90%"}}>Signup with Facebook</Text>
                </TouchableOpacity>
-               <Text>Already have an account? <Text style={{textDecorationLine:"underline"}}>Login</Text></Text>
+               <Text>Already have an account? <Text style={{textDecorationLine:"underline"}} onPress={()=>{navigation.navigate("Login")}}>Login</Text></Text>
        </View>
     )
 }

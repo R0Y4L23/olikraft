@@ -11,7 +11,6 @@ export default function Address() {
     const [country,setCountry]=useState("")
     const [zip, setZip] = useState("")
     return (
-       
            <View style={styles.container}>
                 <Appbar.Header style = {styles.item}>
                         <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />

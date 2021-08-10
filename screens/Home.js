@@ -48,10 +48,11 @@ const Home = () => {
     const SFFJSON=[{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"}]
     const RRJSON=[{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"},{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"},{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"}]
     return (
-       <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9",paddingTop:10}}>
-           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:450}}>
+       <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9",paddingTop:25}}>
+           <ScrollView>
+           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
                <Text style={{fontSize:20}}>Hi , John Doe</Text>
-               <View style={{display:"flex",flexDirection:"row",width:70,justifyContent:"space-between"}}>
+               <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
                    <SimpleLineIcons name="bag" size={26} color="black" />
                    <Ionicons name="search" size={26} color="black" />
                </View>
@@ -61,7 +62,7 @@ const Home = () => {
                    {TCJSON.map((item,index)=>{return <TopComponent content={item.content} key={index} />})}
                </ScrollView>
            </View>
-           <View style={{display:"flex",flexDirection:"row",width:"100%",justifyContent:"space-evenly",marginBottom:20,marginTop:10}}>
+           <View style={{display:"flex",flexDirection:"row",width:350,justifyContent:"space-evenly",marginBottom:20,marginTop:10}}>
                
                    <LinearGradient style={{display:"flex",flexDirection:"row",width:150,height:75,justifyContent:"space-between",padding:10,borderRadius:15}}  colors={['#E0B042', '#E7E75F', '#E78357']}>
                    <View>
@@ -78,7 +79,7 @@ const Home = () => {
                    <SimpleLineIcons name="present" size={30} color="white" />
                    </LinearGradient>
            </View>
-           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:400}}>
+           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:"80%"}}>
                <Text style={{fontSize:22}}>Shop from Favourites</Text>
                <AntDesign name="arrowright" size={24} color="black" />
            </View>
@@ -88,7 +89,7 @@ const Home = () => {
                </ScrollView>
            </View>
           
-           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:450}}>
+           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:"80%"}}>
                <Text style={{fontSize:22}}>Recent Reviews</Text>
                <AntDesign name="arrowright" size={24} color="black" />
            </View>
@@ -97,6 +98,7 @@ const Home = () => {
                    {RRJSON.map((item,index)=>{return <RecentReviewsComponent name={item.name} stars={item.stars} comment={item.comment} key={index}/>})}
                </ScrollView>
            </View>
+           </ScrollView>
        </View>
     )
 }

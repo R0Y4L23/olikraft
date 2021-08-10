@@ -14,7 +14,7 @@ const ProductsComponent=({product,nprice,pprice,discount,discountPrice})=>{
     )
 }
 const Products = () => {
-    const ProductsJSON=[{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15},{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15},{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15}]
+    const ProductsJSON=[{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15},{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15},{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15},{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15},{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15},{"product":"Premium Yarn Collection","nprice":19.99,"pprice":20.99,"discount":25,"discountPrice":15}]
     return (
        <View style={{backgroundColor:"#f9f9f9"}}>
            <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)"}}>

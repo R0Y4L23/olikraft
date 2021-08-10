@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import {View,Text,Image,TextInput,TouchableOpacity} from "react-native"
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-const Login = () => {
+const Login = ({navigation}) => {
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
     return (
@@ -17,7 +17,7 @@ const Login = () => {
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setPassword} value={password} placeholder="Password"/>
                    <Feather name="eye" size={35} color="black" style={{flex:1.5}}/>
                </View>
-               <TouchableOpacity style={{backgroundColor:"#051729",height:40,width:300,display:"flex",justifyContent:"center",alignItems:"center"}}>
+               <TouchableOpacity style={{backgroundColor:"#051729",height:40,width:300,display:"flex",justifyContent:"center",alignItems:"center"}} onPress={()=>{navigation.navigate("BNS")}}>
                    <Text style={{color:"white",fontSize:16}}>Login</Text>
                </TouchableOpacity>
                <View style={{width:300}}>
@@ -31,7 +31,7 @@ const Login = () => {
                    <Image style={{width:22,height:22,marginLeft:10}} source={require("../assets/facebook.png")}/> 
                    <Text style={{fontSize:15,color:"black",textAlign:"center",width:"90%"}}>Login with Facebook</Text>
                </TouchableOpacity>
-               <Text>If you dont have an account. <Text style={{textDecorationLine:"underline"}}>Signup</Text></Text>
+               <Text>If you dont have an account. <Text style={{textDecorationLine:"underline"}} onPress={()=>{navigation.navigate("Signup")}}>Signup</Text></Text>
        </View>
     )
 }
