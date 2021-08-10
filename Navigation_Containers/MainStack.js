@@ -20,6 +20,7 @@ import Editprofile from "../screens/Editprofile"
 import Forgotpass from "../screens/Forgotpass"
 import Resetconfirmation from "../screens/Resetconfirmation"
 import Resetpass from "../screens/Resetpass"
+import Cancelconfirmation from '../screens/Cancelconfirmation'
 const Stack = createNativeStackNavigator();
 const MainStack = () => {
     return (
@@ -37,7 +38,7 @@ const MainStack = () => {
             <Stack.Screen name="Checkout" component={Checkout} />
             <Stack.Screen name="Myorders" component={MyOrders} />
             <Stack.Screen name="Mycart" component={Mycart} />
-
+            <Stack.Screen name="Cancelconfirmation" component={Cancelconfirmation} />
             <Stack.Screen name="Address" component={Address} />
             <Stack.Screen name="Changepass" component={Changepass} />
             <Stack.Screen name="Contacts" component={Contacts} />

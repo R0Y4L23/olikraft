@@ -24,7 +24,7 @@ const More=({navigation})=>{
         borderTopLeftRadius:25
       }}
     >
-     <Text style={{fontSize:18,paddingBottom:11}} >My Cart</Text>
+     
      <Divider/>
      <TouchableOpacity onPress={()=>{navigation.navigate("MyOrder")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >My Orders</Text>
@@ -62,6 +62,11 @@ const More=({navigation})=>{
      <Divider/>
      <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >My cart</Text>
+     </TouchableOpacity>
+
+     <Divider/>
+     <TouchableOpacity onPress={()=>{navigation.navigate("Cancelconfirmation")}}>
+     <Text style={{fontSize:18,paddingBottom:11}} >Cancel Order</Text>
      </TouchableOpacity>
     </View>
     )
