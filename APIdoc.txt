@@ -1,0 +1,6 @@
+Site_url: https://olikraft.shubhchintak.co/
+replace wp-json with api
+
+
+username: customer
+password: customer123

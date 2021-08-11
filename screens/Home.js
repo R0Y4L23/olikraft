@@ -4,10 +4,10 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-const TopComponent=({content})=>{
+const TopComponent=({content,image})=>{
     return (
         <View style={{width:325,height:175,margin:15}}>
-            <ImageBackground source={require(`../assets/topcomponentimage1.jpg`)} style={{flex:1,justifyContent:"center"}} imageStyle={{borderRadius:25,height:175,backgroundColor:"black",opacity:0.7}}>
+            <ImageBackground source={{uri:image}} style={{flex:1,justifyContent:"center"}} imageStyle={{borderRadius:25,height:175,backgroundColor:"black",opacity:0.7}}>
                 <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",height:"100%",alignItems:"flex-end",paddingBottom:15}}>
                 <Text style={{textAlign:"center",color:"white",fontSize:20}}>{content}</Text>
                 <AntDesign name="arrowright" size={24} color="white" />
@@ -44,7 +44,7 @@ const RecentReviewsComponent=({name,stars,comment})=>{
 }
 
 const Home = () => {
-    const TCJSON=[{"content":"Stop winding yarn by hand"},{"content":"Yarn Sets"}]
+    const TCJSON=[{"content":"Stop winding yarn by hand","image":"https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner_1400x.progressive.png.jpg?v=1594881434"},{"content":"Yarn Sets","image":"https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner2_1400x.progressive.png.jpg?v=1594881663"}]
     const SFFJSON=[{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"}]
     const RRJSON=[{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"},{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"},{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"}]
     return (
@@ -59,7 +59,7 @@ const Home = () => {
            </View>
            <View style={{height:200}}>
                <ScrollView horizontal>
-                   {TCJSON.map((item,index)=>{return <TopComponent content={item.content} key={index} />})}
+                   {TCJSON.map((item,index)=>{return <TopComponent content={item.content} key={index} image={item.image} />})}
                </ScrollView>
            </View>
            <View style={{display:"flex",flexDirection:"row",width:350,justifyContent:"space-evenly",marginBottom:20,marginTop:10}}>
