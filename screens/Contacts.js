@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import {View,Text,Image,TextInput,TouchableOpacity, StyleSheet} from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
-export default function Contacts() {
+export default function Contacts({navigation}) {
     const [name, setName] = useState("")
     const [email,setEmail]=useState("")
     const [message,setMessage]=useState("")
@@ -10,7 +10,7 @@ export default function Contacts() {
        
            <View style={styles.container}>
                 <Appbar.Header style = {styles.item}>
-                        <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
+                        <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}}/>
                         <Appbar.Content title="Contact Us" titleStyle={styles.title}/>
                         
                     </Appbar.Header>

@@ -4,11 +4,11 @@ import { Card, Paragraph } from 'react-native-paper';
 import { Ionicons, Feather,EvilIcons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 
-export default function OrderConfirmation() {
+export default function OrderConfirmation({navigation}) {
     return (
         <View style={{backgroundColor:"rgb(249,249,249)",height:"100%"}}>
            <Appbar.Header style = {styles.item} >
-                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="black" />
+                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="black"  onPress={()=>{navigation.navigate("Home")}}/>
             </Appbar.Header>
             <View style={{alignItems:"center",height:160,justifyContent:"center"}}>
                 <View style={{borderWidth:1,borderColor:"rgb(225,248,235)",backgroundColor:"rgb(225,248,235)",height:70,width:70,borderRadius:50,justifyContent:"center",alignItems:"center"}}>
@@ -84,7 +84,7 @@ export default function OrderConfirmation() {
                 
             </View>
             <View style={{alignItems:"center",padding:40}}>
-                <TouchableOpacity style={{backgroundColor:'rgb(5,23,41)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}}>
+                <TouchableOpacity style={{backgroundColor:'rgb(5,23,41)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}} onPress={()=>{navigation.navigate("BNS")}}>
                     <Text style={{color:"white",fontSize:16}}>Continue Shopping</Text>
                 </TouchableOpacity>
                 </View>

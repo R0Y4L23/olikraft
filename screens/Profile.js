@@ -8,7 +8,7 @@ export default function Profile({navigation}) {
     return (
         <View>
             <Appbar.Header style = {styles.item}>
-                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
+                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}}/>
                 <Appbar.Content title="Profile" titleStyle={styles.title}/>
                 <TouchableOpacity onPress={()=>{navigation.navigate("Editprofile")}}>
                 <MaterialIcons style={styles.edit} name="edit" size={24} color="white" />

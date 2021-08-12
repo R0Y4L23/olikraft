@@ -4,7 +4,7 @@ import { Appbar } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 
 
-export default function Forgotpass () {
+export default function Forgotpass ({navigation}) {
     
     const [email,setEmail]=useState("")
     const handleForgotpass=async ()=>{
@@ -31,7 +31,7 @@ export default function Forgotpass () {
         <View style={{alignItems:"center",backgroundColor:"rgb(249,249,249)",height:"100%"}}>
             <View style={{width:"100%",margin:15}}>
                 <Appbar.Header style = {styles.item}>
-                    <Ionicons style ={styles.icon} name="arrow-back" size={24} color="black" />                    
+                    <Ionicons style ={styles.icon} name="arrow-back" size={24} color="black"  onPress={()=>{navigation.goBack()}}/>                    
                 </Appbar.Header>
             </View>
 

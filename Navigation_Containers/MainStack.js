@@ -21,11 +21,7 @@ import Forgotpass from "../screens/Forgotpass"
 import Resetconfirmation from "../screens/Resetconfirmation"
 import Resetpass from "../screens/Resetpass"
 import Cancelconfirmation from '../screens/Cancelconfirmation'
-<<<<<<< HEAD
-import Productdetails from "../screens/Productdetails"
-=======
 import ProductDetails from "../screens/Productdetails"
->>>>>>> 31c06a76a0e741faac4ea0ea00894db7304d67be
 const Stack = createNativeStackNavigator();
 const MainStack = () => {
     return (
@@ -51,12 +47,7 @@ const MainStack = () => {
             <Stack.Screen name="Forgotpass" component={Forgotpass} />
             <Stack.Screen name="Resetconfirmation" component={Resetconfirmation} />
             <Stack.Screen name="Resetpass" component={Resetpass} />
-<<<<<<< HEAD
-            <Stack.Screen name="Productdetails" component={Productdetails} />
-            
-=======
             <Stack.Screen name="ProductDetails" component={ProductDetails}/>
->>>>>>> 31c06a76a0e741faac4ea0ea00894db7304d67be
         </Stack.Navigator>
     )
 }

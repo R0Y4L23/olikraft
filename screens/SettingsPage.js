@@ -4,13 +4,13 @@ import { Appbar } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 
 
-export default function SettingsPage() {
+export default function SettingsPage({navigation}) {
     const [toggle, setToggle] = useState(false);
 
     return (
         <View style={styles.container}>
             <Appbar.Header style = {styles.item}>
-                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
+                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}} />
                 <Appbar.Content title="Settings" titleStyle={styles.title}/>
                 
             </Appbar.Header>

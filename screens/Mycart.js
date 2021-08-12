@@ -5,7 +5,8 @@ import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const axios = require('axios');
 export default function Mycart({navigation}) {
-    const [Counter,setCounter] = useState(0)
+    const [Counter,setCounter] = useState(1)
+
     const [Coupon,setCoupon] = useState("")
     const [cartitems,setCartitems]=useState([])
     const [carttotals,setCarttotals]=useState([])
@@ -58,7 +59,7 @@ export default function Mycart({navigation}) {
         <View style={{flex:1,justifyContent:"space-between"}}>
             <View style={{backgroundColor:"red",}}>
             <Appbar.Header style = {styles.item}>
-                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
+                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
                 <Appbar.Content title="My Cart" titleStyle={styles.title}/>
             </Appbar.Header>
             </View>
@@ -86,7 +87,7 @@ export default function Mycart({navigation}) {
                                 <Entypo name="minus" size={24} color="black" onPress={decrement}/>
                             </View>
                             <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                                <Text style={{fontWeight:"bold",fontSize:16}}>{item.quantity}</Text>
+                                <Text style={{fontWeight:"bold",fontSize:16}}>{Counter}</Text>
                             </View>
                             <View style={{flex:1,justifyContent:"center",alignItems:"flex-end",marginRight:10}}>
                                 <Entypo name="plus" size={24} color="black" onPress={increment}/>

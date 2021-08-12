@@ -113,7 +113,7 @@ function All() {
                       </View>
                       </Card.Content> 
               </Card>
-            <Card style={{elevation:10,marginTop:15,borderRadius:10}}>
+            {/* <Card style={{elevation:10,marginTop:15,borderRadius:10}}>
               
               <Card.Content>
                       <View style={{flexDirection:"row",margin:10}}>
@@ -159,7 +159,7 @@ function All() {
                       </View>
                       </Card.Content> 
               </Card>
-        
+         */}
         </ScrollView>
     );
   }
@@ -283,66 +283,66 @@ function Delievered() {
     );
   }
 
-  function Cancelled() {
-    return (
-        <ScrollView >
-            <Card style={{elevation:10,marginTop:15,borderRadius:10}}>
+//   function Cancelled() {
+//     return (
+//         <ScrollView >
+//             <Card style={{elevation:10,marginTop:15,borderRadius:10}}>
               
-              <Card.Content>
-                      <View style={{flexDirection:"row",margin:10}}>
-                          <View style={{justifyContent:"center"}}>
-                          <Image source={require("../assets/board.jpg")} style={{height:80,width:80}}/>
-                          </View>
-                          <View >
-                              <View style={{flexDirection:"row"}}>
-                                  <View style={{backgroundColor:"rgb(255,86,86)",width:"32%",alignItems:"center",borderRadius:5,padding:2}}>
-                                      <Text style={{alignItems:"center",fontWeight:"bold",textTransform:"uppercase",color:"white",fontSize:12}}>
-                                        Cancelled
-                                      </Text>
-                                  </View>
-                                  <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
-                                      <Text style={{fontSize:12,color:"grey"}}>Order no# :OKT0012</Text>
-                                  </View>
-                              </View>
-                              <View style={{flex:1 ,padding:5}}>
+//               <Card.Content>
+//                       <View style={{flexDirection:"row",margin:10}}>
+//                           <View style={{justifyContent:"center"}}>
+//                           <Image source={require("../assets/board.jpg")} style={{height:80,width:80}}/>
+//                           </View>
+//                           <View >
+//                               <View style={{flexDirection:"row"}}>
+//                                   <View style={{backgroundColor:"rgb(255,86,86)",width:"32%",alignItems:"center",borderRadius:5,padding:2}}>
+//                                       <Text style={{alignItems:"center",fontWeight:"bold",textTransform:"uppercase",color:"white",fontSize:12}}>
+//                                         Cancelled
+//                                       </Text>
+//                                   </View>
+//                                   <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
+//                                       <Text style={{fontSize:12,color:"grey"}}>Order no# :OKT0012</Text>
+//                                   </View>
+//                               </View>
+//                               <View style={{flex:1 ,padding:5}}>
                                   
-                                  <Text style={{fontWeight:"bold",fontSize:13}}>
-                                      Olikraft Handikraft Wooden Blocking Board
-                                  </Text>
+//                                   <Text style={{fontWeight:"bold",fontSize:13}}>
+//                                       Olikraft Handikraft Wooden Blocking Board
+//                                   </Text>
                                                   
-                                  <Text style={{color:"grey",marginTop:5}}>
-                                      11 inch | 2nos x $39.99 
-                                  </Text>
+//                                   <Text style={{color:"grey",marginTop:5}}>
+//                                       11 inch | 2nos x $39.99 
+//                                   </Text>
   
-                                  <Text style={{color:"grey",marginTop:5}}>
-                                      Shipping : $ 12.00
-                                  </Text>
-                                  <Text style={{color:"grey",marginTop:5}}>
-                                      Cancelled on 22 May 2021
-                                  </Text>
+//                                   <Text style={{color:"grey",marginTop:5}}>
+//                                       Shipping : $ 12.00
+//                                   </Text>
+//                                   <Text style={{color:"grey",marginTop:5}}>
+//                                       Cancelled on 22 May 2021
+//                                   </Text>
                               
-                              </View>
-                          </View>
-                      </View>
-                       <View style={styles.button}> 
+//                               </View>
+//                           </View>
+//                       </View>
+//                        <View style={styles.button}> 
                           
-                          <TouchableOpacity style={styles.send}>
-                              <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total: $91.98</Text>
-                          </TouchableOpacity>
-                      </View>
-                      </Card.Content> 
-              </Card>
-        </ScrollView>
-    );
-  }
+//                           <TouchableOpacity style={styles.send}>
+//                               <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total: $91.98</Text>
+//                           </TouchableOpacity>
+//                       </View>
+//                       </Card.Content> 
+//               </Card>
+//         </ScrollView>
+//     );
+//   }
 const Tab = createMaterialTopTabNavigator();
-export default function MyOrders() {
+export default function MyOrders({navigation}) {
     return (
         
             
             <NavigationContainer independent={true}>
                 <Appbar.Header style = {styles.item}>
-                    <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
+                    <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}}/>
                     <Appbar.Content title="My Orders" titleStyle={styles.title}/>
                     <Ionicons style={styles.edit} name="search" size={24} color="white" />
                 </Appbar.Header>
@@ -354,7 +354,7 @@ export default function MyOrders() {
                     <Tab.Screen name="All" component={All} />
                     <Tab.Screen name="Delivered" component={Delievered} />
                     <Tab.Screen name="On the way" component={Ontheway} />
-                    <Tab.Screen name="Cancelled" component={Cancelled} />
+                    {/* <Tab.Screen name="Cancelled" component={Cancelled} /> */}
                 </Tab.Navigator>
             </NavigationContainer>
      

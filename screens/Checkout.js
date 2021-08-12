@@ -11,7 +11,7 @@ export default function Checkout({navigation}) {
         <View style={{flex:1}}>
             <View>
              <Appbar.Header style = {styles.item}>
-                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
+                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}} />
                 <Appbar.Content title="Checkout" titleStyle={styles.title}/>
                 
             </Appbar.Header>

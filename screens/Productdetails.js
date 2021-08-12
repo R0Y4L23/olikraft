@@ -4,7 +4,7 @@ import { Ionicons,Entypo,FontAwesome5,EvilIcons,Octicons,FontAwesome} from '@exp
 import { Appbar, List } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const axios = require('axios');
-export default function Productdetails() {
+export default function Productdetails({navigation}) {
     const [Counter,setCounter] = useState(1)
     const [pro,setPro]=useState([])
     const getData = async () => {
@@ -148,7 +148,7 @@ export default function Productdetails() {
                 </View>  
 
                 <View style={{alignItems:"center",padding:20}}>
-                <TouchableOpacity style={{backgroundColor:'rgb(33,184,97)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}}>
+                <TouchableOpacity style={{backgroundColor:'rgb(33,184,97)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}} onPress={()=>{navigation.navigate("Mycart")}}>
                     <Text style={{color:"white",fontSize:16}}>Buy Now</Text>
                 </TouchableOpacity>
                 </View>
