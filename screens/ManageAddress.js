@@ -1,12 +1,12 @@
 import React, {useState,useEffect} from 'react'
-import { View, Text,StyleSheet } from 'react-native'
+import { View, Text,StyleSheet ,TouchableOpacity} from 'react-native'
 import { Appbar } from 'react-native-paper';
 import { Ionicons, AntDesign, EvilIcons} from '@expo/vector-icons';
 import { Card, Paragraph } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const axios = require('axios');
-export default function ManageAddress() {
+export default function ManageAddress({navigation}) {
     const [address,setAddress]=useState({})
     
     const getData = async () => {
@@ -51,7 +51,9 @@ export default function ManageAddress() {
            <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
                 <Appbar.Content title="Manage Address" titleStyle={styles.title}/>
+                <TouchableOpacity onPress={()=>{navigation.navigate("Address")}}>
                 <AntDesign style={styles.edit} name="plus" size={24} color="white" />
+                </TouchableOpacity>
             </Appbar.Header>
             {/* {address.map((ad,idx)=>{return(
                         <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>

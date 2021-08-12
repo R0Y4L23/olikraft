@@ -4,3 +4,11 @@ replace wp-json with api
 
 username: customer
 password: customer123
+
+Another Account made for testing register
+
+first_name : Subham,
+last_name : Roy,
+username : roy23,
+password : test1234,
+email : test@test.com

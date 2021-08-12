@@ -1,9 +1,11 @@
-import React from 'react'
-import { View,Text,ImageBackground,ScrollView,Image } from 'react-native'
+import React,{useState,useEffect} from 'react'
+import { View,Text,ImageBackground,ScrollView,Image,TouchableOpacity } from 'react-native'
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const axios=require("axios");
 const TopComponent=({content,image})=>{
     return (
         <View style={{width:325,height:175,margin:15}}>
@@ -16,15 +18,17 @@ const TopComponent=({content,image})=>{
         </View>
     )
 }
-const ShopFromFavouriteComponent=({product,nprice,pprice})=>{
+const ShopFromFavouriteComponent=({product,nprice,pprice,id,navigation,image})=>{
     return(
+        <TouchableOpacity onPress={()=>{navigation.navigate("ProductDetails",{"id":id})}}>
         <View style={{width:325,height:100,margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
-            <Image source={require("../assets/yarn.jpeg")} style={{height:75,width:75}}/>
+            <Image source={{uri:image}} style={{height:75,width:75}}/>
             <View>
-                <Text style={{fontSize:18,width:150}}>{product}</Text>
-                <Text style={{fontSize:15,fontWeight:"800",marginTop:10}}>${nprice} <Text style={{color:"red",textDecorationLine:"line-through"}}>${pprice}</Text></Text>
-            </View>
+                <Text style={{fontSize:12,width:150}}>{product}</Text>
+                <Text style={{fontSize:15,fontWeight:"800",marginTop:10}}>${nprice} <Text style={{color:"red",textDecorationLine:"line-through"}}>{pprice?`$ ${pprice}`:""}</Text></Text>
+            </View>  
         </View>
+        </TouchableOpacity>
     )
 }
 const RecentReviewsComponent=({name,stars,comment})=>{
@@ -43,17 +47,50 @@ const RecentReviewsComponent=({name,stars,comment})=>{
     )
 }
 
-const Home = () => {
+const Home = ({navigation}) => {
     const TCJSON=[{"content":"Stop winding yarn by hand","image":"https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner_1400x.progressive.png.jpg?v=1594881434"},{"content":"Yarn Sets","image":"https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner2_1400x.progressive.png.jpg?v=1594881663"}]
-    const SFFJSON=[{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"}]
+   // const SFFJSON=[{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"}]
     const RRJSON=[{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"},{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"},{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"}]
+    
+    const [pro,setPro]=useState([])
+    const getData = async () => {
+        try {
+          const value = await AsyncStorage.getItem('token')
+          if(value !== null) 
+          {
+           return value
+          }
+        } catch(e) {
+          console.log(e)
+        }
+      }
+      const fetchProducts=async ()=>{
+        let token=await getData()
+       await axios.get('https://olikraft.shubhchintak.co/api/letscms/v1/products?page=1', {
+           Headers:{
+               letscms_token:token
+           }
+         })
+         .then(function (response) {
+           setPro(response.data.data.products)
+         })
+         .catch(function (error) {
+            console.log(error);
+         })
+      }
+     useEffect(()=>{
+       fetchProducts()
+   },[])
+    
+    
+    
     return (
        <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9",paddingTop:25}}>
            <ScrollView>
            <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
                <Text style={{fontSize:20}}>Hi , John Doe</Text>
                <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
-                   <SimpleLineIcons name="bag" size={26} color="black" />
+                  <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={26} color="black"  /></TouchableOpacity>
                    <Ionicons name="search" size={26} color="black" />
                </View>
            </View>
@@ -83,9 +120,14 @@ const Home = () => {
                <Text style={{fontSize:22}}>Shop from Favourites</Text>
                <AntDesign name="arrowright" size={24} color="black" />
            </View>
-           <View style={{height:125}}>
+           {/* <View style={{height:125}}>
                <ScrollView horizontal>
                    {SFFJSON.map((item,index)=>{return <ShopFromFavouriteComponent product={item.product} nprice={item.NPrice} pprice={item.PPrice} key={index}/>})}
+               </ScrollView>
+           </View> */}
+           <View style={{height:125}}>
+               <ScrollView horizontal>
+                   {pro.length>0&&pro.map((item,index)=>{return <ShopFromFavouriteComponent product={item.name} nprice={item.price} pprice={item.regular_price} key={index} id={item.id} navigation={navigation} image={item.image}/>})}
                </ScrollView>
            </View>
           

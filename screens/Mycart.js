@@ -4,7 +4,7 @@ import { Ionicons,Entypo} from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const axios = require('axios');
-export default function Mycart() {
+export default function Mycart({navigation}) {
     const [Counter,setCounter] = useState(0)
     const [Coupon,setCoupon] = useState("")
     const [cartitems,setCartitems]=useState([])
@@ -37,7 +37,6 @@ export default function Mycart() {
     
       const fetchcart = async () =>{
         let token = await getData()
-       
         fetch("https://olikraft.shubhchintak.co/api/letscms/v1/cart/",{
             headers:{
                 letscms_token:token
@@ -61,7 +60,6 @@ export default function Mycart() {
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
                 <Appbar.Content title="My Cart" titleStyle={styles.title}/>
-                
             </Appbar.Header>
             </View>
             {cartitems.map((item,idx)=>{return(
@@ -82,7 +80,6 @@ export default function Mycart() {
                             </Text>
                         </View>
                     </View>
-                    
                     <View style={{flexDirection:"row",padding:5}} key={item.key}>
                         <View style={{backgroundColor:"white",flex:1,flexDirection:"row",borderWidth:1,borderLeftWidth:0,borderColor:"grey"}}>
                             <View style={{flex:1,marginLeft:5,justifyContent:"center"}}>
@@ -99,14 +96,12 @@ export default function Mycart() {
                             <Button title="Remove" color="rgb(5,23,41)"/>
                         </View>
                     </View>
-                    
                 </View>
             )})}
             <View style={{padding:15,flex:1,justifyContent:"center"}}>
                 <Text style={{fontSize:13,fontWeight:"bold",marginBottom:5}}>
                     Apply Coupon
                 </Text>
-                   
                 <View style={{flexDirection:"row",marginBottom:5}}>
                     <TextInput style={{ flex:1,height: 40,padding: 10,backgroundColor:"white",borderWidth:0.3,borderColor:"grey",borderRadius:5}} onChangeText={setCoupon} value={Coupon} placeholder="Enter Coupon Code.." />
                     <View style={{width:"30%",}}>
@@ -153,11 +148,11 @@ export default function Mycart() {
                 </View>
                
                     <View style={styles.button}> 
-                        <TouchableOpacity style={styles.cancel}>
+                        <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("BNS")}}>
                             <Text style={{fontSize:15,fontWeight:"bold"}}>Continue Shopping </Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.send} >
+                        <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Checkout")}}>
                             <Text style={{color:"white",fontSize:15,fontWeight:"bold"}}>Proceed to Checkout</Text>
                         </TouchableOpacity>
                     </View>

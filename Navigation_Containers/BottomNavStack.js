@@ -17,7 +17,7 @@ const More=({navigation})=>{
       style={{
         backgroundColor: 'white',
         padding: 26,
-        height: 450,
+        height: 250,
         position:"absolute",
         width:"100%",
         bottom:0,
@@ -25,7 +25,9 @@ const More=({navigation})=>{
         borderTopLeftRadius:25
       }}
     >
-     
+     <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}>
+     <Text style={{fontSize:18,paddingBottom:11}} >My cart</Text>
+     </TouchableOpacity>
      <Divider/>
      <TouchableOpacity onPress={()=>{navigation.navigate("MyOrder")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >My Orders</Text>
@@ -47,7 +49,7 @@ const More=({navigation})=>{
      <Text style={{fontSize:18,paddingBottom:11}} >Settings</Text>
      </TouchableOpacity>
      <Divider/>
-     <TouchableOpacity onPress={()=>{navigation.navigate("Orderconfirmation")}}>
+     {/* <TouchableOpacity onPress={()=>{navigation.navigate("Orderconfirmation")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >Order Confirmation</Text>
      </TouchableOpacity>
      <Divider/>
@@ -61,19 +63,9 @@ const More=({navigation})=>{
      </TouchableOpacity>
 
      <Divider/>
-     <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}>
-     <Text style={{fontSize:18,paddingBottom:11}} >My cart</Text>
-     </TouchableOpacity>
-
-     <Divider/>
      <TouchableOpacity onPress={()=>{navigation.navigate("Cancelconfirmation")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >Cancel Order</Text>
-     </TouchableOpacity>
-
-     <Divider/>
-     <TouchableOpacity onPress={()=>{navigation.navigate("Productdetails")}}>
-     <Text style={{fontSize:18,paddingBottom:11}} >Product details</Text>
-     </TouchableOpacity>
+     </TouchableOpacity> */}
     </View>
     )
 }

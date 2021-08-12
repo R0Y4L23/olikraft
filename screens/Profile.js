@@ -1,16 +1,18 @@
 import React, {useState} from 'react'
-import { View, Text , Image, StyleSheet, TextInput} from 'react-native'
+import { View, Text , Image, StyleSheet, TextInput,TouchableOpacity} from 'react-native'
 import { Appbar } from 'react-native-paper';
 import { Ionicons, MaterialIcons ,Feather} from '@expo/vector-icons';
 
-export default function Profile() {
+export default function Profile({navigation}) {
     const [hidecountry, setHidecountry] = useState(true);
     return (
         <View>
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
                 <Appbar.Content title="Profile" titleStyle={styles.title}/>
+                <TouchableOpacity onPress={()=>{navigation.navigate("Editprofile")}}>
                 <MaterialIcons style={styles.edit} name="edit" size={24} color="white" />
+                </TouchableOpacity>
             </Appbar.Header>
             
             <Image source={require('../assets/profile.png')} style={{height:"30%",width:"100%",opacity:0.75}} />
@@ -34,8 +36,9 @@ export default function Profile() {
                     <TextInput style={{ height: 40,flex:1}}  value="India" secureTextEntry={hidecountry ? true : false} placeholder="Enter here..." />
                     <Feather style={{marginTop:5}}name={hidecountry ? 'eye-off' : 'eye'} size={20} color="black"  onPress={() => setHidecountry(!hidecountry)} />
                 </View>
-
+                <TouchableOpacity onPress={()=>{navigation.navigate("Changepass")}}>
                 <Text style={{textDecorationLine:"underline",color:"rgb(5,23,41)"}}>Change Password</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
