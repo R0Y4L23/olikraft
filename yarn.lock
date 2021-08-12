@@ -1215,6 +1215,25 @@
     xcode "^3.0.1"
     xml2js "^0.4.23"
 
+"@expo/config-plugins@3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-3.0.7.tgz#50870e26d34b11740a5841076c921729381d4319"
+  integrity sha512-7YOoFtxB6XqDil+OlGXi7iredKHxXVFCAOIVfFyEDzO3oo0gBmWGmUnHgrPDvpMj0q+adCCh5BL8OcvGfc9ITQ==
+  dependencies:
+    "@expo/config-types" "^42.0.0"
+    "@expo/json-file" "8.2.33"
+    "@expo/plist" "0.0.13"
+    debug "^4.3.1"
+    find-up "~5.0.0"
+    fs-extra "9.0.0"
+    getenv "^1.0.0"
+    glob "7.1.6"
+    resolve-from "^5.0.0"
+    semver "^7.3.5"
+    slash "^3.0.0"
+    xcode "^3.0.1"
+    xml2js "^0.4.23"
+
 "@expo/config-types@^41.0.0":
   version "41.0.0"
   resolved "https://registry.npmjs.org/@expo/config-types/-/config-types-41.0.0.tgz"
@@ -1234,6 +1253,23 @@
     "@expo/config-plugins" "3.0.6"
     "@expo/config-types" "^42.0.0"
     "@expo/json-file" "8.2.32"
+    getenv "^1.0.0"
+    glob "7.1.6"
+    require-from-string "^2.0.2"
+    resolve-from "^5.0.0"
+    semver "7.3.2"
+    slugify "^1.3.4"
+    sucrase "^3.20.0"
+
+"@expo/config@5.0.7":
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/@expo/config/-/config-5.0.7.tgz#a419fd7a3ba897b1e10a8f8df8acf775f246aa69"
+  integrity sha512-7Wzao9uALHmRSf59FMsHk1vxW4m4alDCJmfo+enXnl5o6UYiCDYfjNXctMwnW+fBM3opta4FbmmPGIftfXOesw==
+  dependencies:
+    "@babel/code-frame" "~7.10.4"
+    "@expo/config-plugins" "3.0.7"
+    "@expo/config-types" "^42.0.0"
+    "@expo/json-file" "8.2.33"
     getenv "^1.0.0"
     glob "7.1.6"
     require-from-string "^2.0.2"
@@ -1343,6 +1379,15 @@
   version "8.2.32"
   resolved "https://registry.npmjs.org/@expo/json-file/-/json-file-8.2.32.tgz"
   integrity sha512-VnpoEnjMptBQr/zgkfGHd7L8iJBme9g2AVpUIecI+aoW6qmeIRbBViPmyNABgH4UUQn3ObQCxe+q1dAdJo8KGg==
+  dependencies:
+    "@babel/code-frame" "~7.10.4"
+    json5 "^1.0.1"
+    write-file-atomic "^2.3.0"
+
+"@expo/json-file@8.2.33":
+  version "8.2.33"
+  resolved "https://registry.yarnpkg.com/@expo/json-file/-/json-file-8.2.33.tgz#78f56f33a2cfb807b23c81e00237a33159aa1f32"
+  integrity sha512-CDnhjdirUs6OdN5hOSTJ2y3i9EiJMk7Z5iDljC5xyCHCrUex7oyI8vbRsZEojAahxZccgL/PrO+CjakiFFWurg==
   dependencies:
     "@babel/code-frame" "~7.10.4"
     json5 "^1.0.1"
@@ -1479,6 +1524,39 @@
     webpack-manifest-plugin "~2.2.0"
     webpackbar "^4.0.0"
     workbox-webpack-plugin "^6.1.5"
+
+"@expo/webpack-config@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@expo/webpack-config/-/webpack-config-0.14.0.tgz#ef06ee5cb0f86816ae061b4f8bb2ff36430ac8b8"
+  integrity sha512-YsWLjOQIUN/+pJ5CEmhWfERwjpp6KGjxbd2Nm2KWx4v69wphyPudyrKJaD/b/41Iw5TKHGjV3hlHrYWvZ6OFaA==
+  dependencies:
+    "@babel/core" "7.9.0"
+    "@expo/config" "5.0.7"
+    babel-loader "8.1.0"
+    chalk "^4.0.0"
+    clean-webpack-plugin "^3.0.0"
+    copy-webpack-plugin "~6.0.3"
+    css-loader "~3.6.0"
+    expo-pwa "0.0.92"
+    file-loader "~6.0.0"
+    find-yarn-workspace-root "~2.0.0"
+    getenv "^1.0.0"
+    html-loader "~1.1.0"
+    html-webpack-plugin "~4.3.0"
+    is-wsl "^2.0.0"
+    mini-css-extract-plugin "^0.5.0"
+    node-html-parser "^1.2.12"
+    optimize-css-assets-webpack-plugin "^5.0.3"
+    pnp-webpack-plugin "^1.5.0"
+    postcss-safe-parser "^4.0.2"
+    react-dev-utils "~11.0.1"
+    semver "~7.3.2"
+    style-loader "~1.2.1"
+    terser-webpack-plugin "^3.0.6"
+    url-loader "~4.1.0"
+    webpack "4.43.0"
+    webpack-manifest-plugin "~2.2.0"
+    webpackbar "^4.0.0"
 
 "@expo/xcpretty@^3.0.1":
   version "3.1.4"
@@ -5211,6 +5289,17 @@ expo-pwa@0.0.91:
   integrity sha512-hwi3eJhL85yHZBvv5ekdS0A1721wmgNAM53LMv5meawTBy5W0NNg8E6Ey+N3UCrL6BP1Kk7WByxX4V4kkzGV8A==
   dependencies:
     "@expo/config" "5.0.6"
+    "@expo/image-utils" "0.3.16"
+    chalk "^4.0.0"
+    commander "2.20.0"
+    update-check "1.5.3"
+
+expo-pwa@0.0.92:
+  version "0.0.92"
+  resolved "https://registry.yarnpkg.com/expo-pwa/-/expo-pwa-0.0.92.tgz#246cb33591fbb1d3337512492728ab09ba0f885e"
+  integrity sha512-lY+m28IQkqpCPZQdAlMBUGgm5HbTEHVaMNt0QnMAeX/siN11rfhxBr2nFQRYfK0R5Kklh6yUTyAjz+vOd2bSKw==
+  dependencies:
+    "@expo/config" "5.0.7"
     "@expo/image-utils" "0.3.16"
     chalk "^4.0.0"
     commander "2.20.0"

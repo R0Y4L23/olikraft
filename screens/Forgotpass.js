@@ -2,8 +2,30 @@ import React,{useState} from 'react';
 import { View,Text,Image,TouchableOpacity , TextInput,StyleSheet} from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
+
+
 export default function Forgotpass () {
+    
     const [email,setEmail]=useState("")
+    const handleForgotpass=async ()=>{
+        if(email)
+        {
+           await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/auth/forgot-password', {
+                username: email,
+                password: password
+              })
+              .then(async function (response) {
+                if(response.data.status)
+                {
+                    await storeToken(response.data.letscms_token)
+                    navigation.navigate("BNS")
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+        }
+    }
     return (
 
         <View style={{alignItems:"center",backgroundColor:"rgb(249,249,249)",height:"100%"}}>

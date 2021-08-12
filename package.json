@@ -1,5 +1,6 @@
 {
   "main": "node_modules/expo/AppEntry.js",
+  "proxy": "https://olikraft.shubhchintak.co/",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -33,7 +34,8 @@
     "redux": "^4.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.9.0",
+    "@expo/webpack-config": "^0.14.0"
   },
   "private": true
 }

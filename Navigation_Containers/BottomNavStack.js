@@ -11,6 +11,7 @@ import Products from "../screens/Products"
 import Tutorial from "../screens/Tutorials"
 const Tab = createBottomTabNavigator();
 const More=({navigation})=>{
+
     return(
       <View
       style={{
