@@ -21,6 +21,7 @@ import Forgotpass from "../screens/Forgotpass"
 import Resetconfirmation from "../screens/Resetconfirmation"
 import Resetpass from "../screens/Resetpass"
 import Cancelconfirmation from '../screens/Cancelconfirmation'
+import ProductDetails from "../screens/Productdetails"
 const Stack = createNativeStackNavigator();
 const MainStack = () => {
     return (
@@ -46,6 +47,7 @@ const MainStack = () => {
             <Stack.Screen name="Forgotpass" component={Forgotpass} />
             <Stack.Screen name="Resetconfirmation" component={Resetconfirmation} />
             <Stack.Screen name="Resetpass" component={Resetpass} />
+            <Stack.Screen name="ProductDetails" component={ProductDetails}/>
         </Stack.Navigator>
     )
 }

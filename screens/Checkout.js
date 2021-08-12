@@ -4,7 +4,7 @@ import { Card, Paragraph } from 'react-native-paper';
 import { Ionicons, Feather,EvilIcons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 import { Checkbox } from 'react-native-paper';
-export default function Checkout() {
+export default function Checkout({navigation}) {
     const [checked, setChecked] = React.useState(false);
 
     return (
@@ -146,7 +146,7 @@ export default function Checkout() {
                             <Text style={{fontSize:14,fontWeight:"bold"}}>$91.98</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.send}>
+                        <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Orderconfirmation")}}>
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Place Order</Text>
                         </TouchableOpacity>
                     </View>
