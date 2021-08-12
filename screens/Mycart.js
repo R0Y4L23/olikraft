@@ -84,7 +84,7 @@ export default function Mycart() {
                     </View>
                     
                     <View style={{flexDirection:"row",padding:5}} key={item.key}>
-                        <View style={{backgroundColor:"white",flex:1,flexDirection:"row",borderWidth:1,borderLeftWidth:0,borderColor:"grey",flex:1}}>
+                        <View style={{backgroundColor:"white",flex:1,flexDirection:"row",borderWidth:1,borderLeftWidth:0,borderColor:"grey"}}>
                             <View style={{flex:1,marginLeft:5,justifyContent:"center"}}>
                                 <Entypo name="minus" size={24} color="black" onPress={decrement}/>
                             </View>

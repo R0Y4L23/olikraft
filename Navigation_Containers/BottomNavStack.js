@@ -17,7 +17,7 @@ const More=({navigation})=>{
       style={{
         backgroundColor: 'white',
         padding: 26,
-        height: 400,
+        height: 450,
         position:"absolute",
         width:"100%",
         bottom:0,
@@ -68,6 +68,11 @@ const More=({navigation})=>{
      <Divider/>
      <TouchableOpacity onPress={()=>{navigation.navigate("Cancelconfirmation")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >Cancel Order</Text>
+     </TouchableOpacity>
+
+     <Divider/>
+     <TouchableOpacity onPress={()=>{navigation.navigate("Productdetails")}}>
+     <Text style={{fontSize:18,paddingBottom:11}} >Product details</Text>
      </TouchableOpacity>
     </View>
     )
