@@ -21,6 +21,14 @@ const Signup = ({navigation}) => {
          console.log(e)
         }
     }
+    const storeProfileData = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('profileData', jsonValue)
+        } catch (e) {
+          console.log(e)
+        }
+      }
     const handleSignup=async ()=>{
         if(name&&number&&email&&password&&confirmPass&&password==confirmPass)
         {
@@ -36,6 +44,7 @@ const Signup = ({navigation}) => {
                 if(response.data.status)
                 {
                     await storeToken(response.data.letscms_token)
+                    await storeProfileData(response.data.user)
                     navigation.navigate("Confirmation")
                 }
               })

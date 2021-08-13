@@ -36,10 +36,10 @@ export default function Forgotpass ({navigation}) {
                 </Appbar.Header>
             </View>
 
-            <View style={{alignItems:"center",flex:1,justifyContent:"center"}}>
+            <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
                 <Image style={{width:125,height:125,marginBottom:"5%"}} source={require("../assets/Forgotpass.png")}/> 
                 
-                <Text style={{fontSize:14,color:"black"}}>Please enter your registered Username and email address </Text>            
+                <Text style={{fontSize:14,color:"black",textAlign:"center"}}>Please enter your registered Username and email address </Text>            
                 <Text style={{fontSize:14,color:"black"}}>We will send the password reset link to your email</Text>            
                
             </View>
@@ -78,7 +78,6 @@ const styles = StyleSheet.create ({
         backgroundColor:"rgb(249,249,249)",
         flex:0.5,
         justifyContent:"flex-end",
-        marginBottom:18,
         width:"100%"
        
     },

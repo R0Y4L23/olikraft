@@ -45,12 +45,11 @@ export default function Mycart({navigation}) {
         })
         .then(response => response.json())
         .then((res) => {
-            // console.log(res.data)
-            setCartitems(res.data.cart_items)
-            setCarttotals(res.data.cart_totals)
+            //console.log(res.data)
+            //setCartitems(res.data.data.cart_items)
+            //setCarttotals(res.data.data.cart_totals)
         })
         .catch(error => console.log(error))
-    
       }
     useEffect(()=>{
         fetchcart()}
@@ -107,15 +106,10 @@ export default function Mycart({navigation}) {
                     <TextInput style={{ flex:1,height: 40,padding: 10,backgroundColor:"white",borderWidth:0.3,borderColor:"grey",borderRadius:5}} onChangeText={setCoupon} value={Coupon} placeholder="Enter Coupon Code.." />
                     <View style={{width:"30%",}}>
                         <Button title="Apply" color="rgb(5,23,41)" />
-                    </View>
-                    
+                    </View> 
                 </View>
-                
             </View>
-            
-            
-            
-            <View style={{justifyContent:"flex-start",flex:1}}>
+            <View style={{justifyContent:"flex-end",flex:1}}>
                 <View style={{justifyContent:"flex-end",borderBottomWidth:0.5,margin:10}}>
                         <View style={{flexDirection:'row',paddingBottom:5}}>
                             <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:10}}>
@@ -133,10 +127,7 @@ export default function Mycart({navigation}) {
                                 ${carttotals.shipping_total}
                             </Text>
                         </View>
-                        
                     </View>
-                    
-                
                 <View style={{marginHorizontal:10,marginBottom:15,justifyContent:"center"}}>
                     <View style={{flexDirection:'row'}}>
                         <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:10}}>
@@ -147,20 +138,15 @@ export default function Mycart({navigation}) {
                         </Text>
                     </View>
                 </View>
-               
                     <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("BNS")}}>
                             <Text style={{fontSize:15,fontWeight:"bold"}}>Continue Shopping </Text>
                         </TouchableOpacity>
-
                         <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Checkout")}}>
                             <Text style={{color:"white",fontSize:15,fontWeight:"bold"}}>Proceed to Checkout</Text>
                         </TouchableOpacity>
                     </View>
-             
             </View>
-        
-            
         </View>
     )
 }
