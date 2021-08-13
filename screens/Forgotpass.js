@@ -2,23 +2,24 @@ import React,{useState} from 'react';
 import { View,Text,Image,TouchableOpacity , TextInput,StyleSheet} from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
-
+const axios = require('axios');
 
 export default function Forgotpass ({navigation}) {
     
     const [email,setEmail]=useState("")
+    const [username,setUsername]=useState("")
     const handleForgotpass=async ()=>{
-        if(email)
+        if(email&&username)
         {
            await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/auth/forgot-password', {
-                username: email,
-                password: password
+                username: username,
+                email: email
               })
               .then(async function (response) {
                 if(response.data.status)
                 {
-                    await storeToken(response.data.letscms_token)
-                    navigation.navigate("BNS")
+                    alert(response.data.message)
+                    navigation.navigate("Login")
                 }
               })
               .catch(function (error) {
@@ -28,27 +29,31 @@ export default function Forgotpass ({navigation}) {
     }
     return (
 
-        <View style={{alignItems:"center",backgroundColor:"rgb(249,249,249)",height:"100%"}}>
-            <View style={{width:"100%",margin:15}}>
+        <View style={{alignItems:"center",backgroundColor:"rgb(249,249,249)",flex:1,justifyContent:"space-evenly"}}>
+            <View style={{width:"100%",flex:0.8,justifyContent:"flex-start"}}>
                 <Appbar.Header style = {styles.item}>
                     <Ionicons style ={styles.icon} name="arrow-back" size={24} color="black"  onPress={()=>{navigation.goBack()}}/>                    
                 </Appbar.Header>
             </View>
 
-            <View style={{alignItems:"center",marginTop:"30%"}}>
+            <View style={{alignItems:"center",flex:1,justifyContent:"center"}}>
                 <Image style={{width:125,height:125,marginBottom:"5%"}} source={require("../assets/Forgotpass.png")}/> 
-                <Text style={{fontSize:14,color:"black"}}>Please enter your registered email address </Text>            
-                <Text style={{fontSize:14,color:"black"}}>We will send the password reset link </Text>            
+                
+                <Text style={{fontSize:14,color:"black"}}>Please enter your registered Username and email address </Text>            
+                <Text style={{fontSize:14,color:"black"}}>We will send the password reset link to your email</Text>            
+               
             </View>
-            <TextInput  style={{ height: 50,marginTop:"10%",borderColor:"grey",borderWidth:0.5,borderRadius:10,backgroundColor:"white",width:"90%",paddingLeft:20}} placeholder="Enter here..." onChangeText={setEmail} value={email}/>
-           
+            <View style={{width:"100%",flex:1,justifyContent:"space-evenly",alignItems:"center",marginTop:10}}>
+            <TextInput  style={{ height: 50,borderColor:"grey",borderWidth:0.5,borderRadius:10,backgroundColor:"white",width:"90%",paddingLeft:20}} placeholder="Enter Username" onChangeText={setUsername} value={username}/>
+            <TextInput  style={{ height: 50,borderColor:"grey",borderWidth:0.5,borderRadius:10,backgroundColor:"white",width:"90%",paddingLeft:20}} placeholder="Enter Email" onChangeText={setEmail} value={email}/>
+            </View>
             <View style={styles.buttoncontainer}>
                 <View style={styles.button}> 
                     <TouchableOpacity style={styles.cancel}>
                         <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.send}>
+                    <TouchableOpacity style={styles.send} onPress={handleForgotpass}>
                         <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Submit</Text>
                     </TouchableOpacity>
                 </View>
@@ -71,7 +76,7 @@ const styles = StyleSheet.create ({
      },
      buttoncontainer:{
         backgroundColor:"rgb(249,249,249)",
-        flex:1,
+        flex:0.5,
         justifyContent:"flex-end",
         marginBottom:18,
         width:"100%"

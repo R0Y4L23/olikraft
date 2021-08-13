@@ -7,7 +7,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const axios = require('axios');
 export default function ManageAddress({navigation}) {
-    const [address,setAddress]=useState({})
+    const [ad,setAddress]=useState([])
+    const [shad,setshippingAddress]=useState([])
+    const [countrylist,setCountrylist] = useState([])
+    const [Statelist,setStatelist] = useState([])
+    const [country,setCountry] = useState()
+    const [State,setState] = useState()
     
     const getData = async () => {
         try {
@@ -20,59 +25,106 @@ export default function ManageAddress({navigation}) {
           console.log(e)
         }
       }
+
     
-      const fetchaddress = async () =>{
-        let token = await getData()
-       
-        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/billing",{
-            headers:{
-                letscms_token:token
-            }
-        })
-        .then(response => response.json())
-        .then((res) => {
-            console.log(res.data.address)
-            setAddress(res.data.address)
-            console.log("here starts something",address)
-            for (const property in address) {
-                console.log(`${property}: ${address[property]}`);
-              }
-              
-        })
-        .catch(error => console.log(error))
-    
-      }
+    const fetchbillingaddress = async () =>{
+            let token = await getData()
+        
+            fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/billing",{
+                headers:{
+                    letscms_token:token
+                }
+            })
+            .then(response => response.json())
+            .then((res) => {
+                // console.log(res.data.countries)
+                setAddress(res.data.address)
+                // setCountrylist(res.data.countries)
+                // setStatelist(res.data.states)
+                // setState(res.data.address.state)
+                // setCountry(res.data.address.country)
+            
+            })
+            .catch(error => console.log(error))
+        
+        }
+
+    const fetchshippingaddress= async ()=>{
+            let token = await getData()
+        
+            fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/shipping",{
+                headers:{
+                    letscms_token:token
+                }
+            })
+            .then(response => response.json())
+            .then((res) => {
+                // console.log(res.data.countries)
+                setshippingAddress(res.data.address)
+                // setCountrylist(res.data.countries)
+                // setStatelist(res.data.states)
+                // setState(res.data.address.state)
+                // setCountry(res.data.address.country)
+            
+            })
+            .catch(error => console.log(error))
+        
+        }
+
     useEffect(()=>{
-        fetchaddress()}
-       ,[])
+        fetchbillingaddress()
+        fetchshippingaddress()
+    },[])
+
     return (
 
         <View>
            <Appbar.Header style = {styles.item}>
-                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
+                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}} />
                 <Appbar.Content title="Manage Address" titleStyle={styles.title}/>
-                <TouchableOpacity onPress={()=>{navigation.navigate("Address")}}>
+                {/* <TouchableOpacity onPress={()=>{navigation.navigate("Address")}}>
                 <AntDesign style={styles.edit} name="plus" size={24} color="white" />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </Appbar.Header>
-            {/* {address.map((ad,idx)=>{return(
-                        <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
-                            <View style={{flexDirection:"row"}}>
-                                <Text style={{flex:1,fontSize:22,marginLeft:16,marginTop:10,color:"black"}}>{ad.firstname}{ad.last_name}</Text>
-                                <View style={{marginTop:10,marginRight:15}}>
-                                    <EvilIcons name="pencil" size={30} color="black" />
-                                </View>
-                            </View>
-                            <Card.Content>
-                    
-                                <Paragraph style={{fontSize:12}}>{ad.address_1}</Paragraph>
-                                <Paragraph style={{fontSize:12}}>,{ad.address_2},{ad.city},{ad.postcode}</Paragraph>
-                                <Paragraph style={{fontSize:12}}>,{ad.state},{ad.country}. </Paragraph>
-                            </Card.Content>
-                            
-                        
-                        </Card>)
-            })} */}
+
+            <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+                <View style={{flexDirection:"row"}}>
+                    <Text style={{flex:1,fontSize:22,marginLeft:16,marginTop:10,color:"black"}}>Billing Address</Text>
+                    <View style={{marginTop:10,marginRight:15}}>
+                        <EvilIcons name="pencil" size={30} color="black" />
+                    </View>
+                </View>
+                <Card.Content style={{marginTop:10}}>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.first_name} {ad.last_name},</Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.address_1},</Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.address_2},</Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.city},{ad.postcode},</Paragraph>
+                    {/* <Paragraph style={{fontSize:12}}>{Statelist[country][State]},{countrylist[country]}. </Paragraph> */}
+                </Card.Content>
+                
+            
+            </Card>
+
+            <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+                <View style={{flexDirection:"row"}}>
+                    <Text style={{flex:1,fontSize:22,marginLeft:16,marginTop:10,color:"black"}}>Shipping Address</Text>
+                    <View style={{marginTop:10,marginRight:15}}>
+                        <EvilIcons name="pencil" size={30} color="black" />
+                    </View>
+                </View>
+                <Card.Content style={{marginTop:10}}>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.first_name} {shad.last_name},</Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.address_1},</Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.address_2},</Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.city},{shad.postcode},</Paragraph>
+                    {/* <Paragraph style={{fontSize:12}}>{Statelist[country][State]},{countrylist[country]}. </Paragraph> */}
+                </Card.Content>
+                
+            
+            </Card>
+            {/* {console.log(Statelist)} */}
+        {/* {console.log(countrylist.IN)} */}
+            
 {/*
             <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>
