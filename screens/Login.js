@@ -16,23 +16,24 @@ const Login = ({navigation}) => {
         }
       }
     const handleLogin=async ()=>{
-        if(email&&password)
-        {
-           await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/auth/login', {
-                username: email,
-                password: password
-              })
-              .then(async function (response) {
-                if(response.data.status)
-                {
-                    await storeToken(response.data.letscms_token)
-                    navigation.navigate("BNS")
-                }
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-        }
+        // if(email&&password)
+        // {
+        //    await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/auth/login', {
+        //         username: email,
+        //         password: password
+        //       })
+        //       .then(async function (response) {
+        //         if(response.data.status)
+        //         {
+        //             await storeToken(response.data.letscms_token)
+        //             navigation.navigate("BNS")
+        //         }
+        //       })
+        //       .catch(function (error) {
+        //         console.log(error);
+        //       });
+        // }
+        navigation.navigate("BNS")
     }
     return (
        <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9"}}>

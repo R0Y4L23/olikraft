@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const axios = require('axios');
 const ProductsComponent=({product,nprice,pprice,discount,discountPrice,image,id,navigation})=>{
     return (
-      <TouchableOpacity onPress={()=>{navigation.navigate("ProductDetails",{"id":id})}}>
+      <TouchableOpacity onPress={()=>{navigation.navigate("Productsvariable",{"id":id})}}>
         <View style={{width:325,height:"auto",margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
         <Image source={{uri:image}} style={{height:75,width:75}}/>
         <View>
