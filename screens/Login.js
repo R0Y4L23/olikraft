@@ -15,6 +15,14 @@ const Login = ({navigation}) => {
          console.log(e)
         }
       }
+      const storeProfileData = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('profileData', jsonValue)
+        } catch (e) {
+          console.log(e)
+        }
+      }
     const handleLogin=async ()=>{
         if(email&&password)
         {
@@ -25,7 +33,9 @@ const Login = ({navigation}) => {
               .then(async function (response) {
                 if(response.data.status)
                 {
+                  console.log(response.data.user)
                     await storeToken(response.data.letscms_token)
+                    await storeProfileData(response.data.user)
                     navigation.navigate("BNS")
                 }
               })

@@ -12,7 +12,6 @@ export default function Cancelconfirmation() {
         {title:"The product does not fulfill my needs"},
         {title:"I don't want"},
         {title:"Some other reason"},
-        
     ]
     return (
         <View style={{backgroundColor:"rgb(249,249,249)",height:"100%"}}>
@@ -27,34 +26,27 @@ export default function Cancelconfirmation() {
             <View style={{alignItems:"flex-start",justifyContent:"center",marginTop:"15%"}}>
                 <Text>What is the reason to cancel this product</Text>
                 <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value}>
-                 
                     {props.map((prop,idx)=>{
                         return(
                             <View style={{flexDirection:"row"}} key={idx}>
-                        
                                 <RadioButton value={idx} color="rgb(5,23,41)" />
                                 <Text>{prop.title}</Text>
                             </View>
-                            
                         )
                     })}
                 </RadioButton.Group>
-                
             </View>
             <View style={styles.buttoncontainer}>
                     <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel}>
                             <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                         </TouchableOpacity>
-
                         <TouchableOpacity style={styles.send}>
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Cancel Order</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-         
-        </View>
-        
+        </View> 
     )
 }
 

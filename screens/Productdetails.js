@@ -54,7 +54,9 @@ export default function Productdetails({navigation}) {
         <View style={{flex:1}}>
             <View >
             <Appbar.Header style = {styles.item}>
-                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="rgb(5,23,41)" />
+                <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+                   <Ionicons style ={styles.icon} name="arrow-back" size={24} color="rgb(5,23,41)" />
+                </TouchableOpacity>
                 <Appbar.Content title="" titleStyle={styles.title}/>
                 <Entypo style={styles.edit} name="share" size={24} color="rgb(5,23,41)" />
             </Appbar.Header>

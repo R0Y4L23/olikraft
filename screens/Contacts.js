@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {View,Text,Image,TextInput,TouchableOpacity, StyleSheet} from "react-native"
+import {View,Text,TextInput,TouchableOpacity, StyleSheet} from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 export default function Contacts({navigation}) {
@@ -7,7 +7,6 @@ export default function Contacts({navigation}) {
     const [email,setEmail]=useState("")
     const [message,setMessage]=useState("")
     return (
-       
            <View style={styles.container}>
                 <Appbar.Header style = {styles.item}>
                         <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}}/>
@@ -45,7 +44,6 @@ export default function Contacts({navigation}) {
         </View>
     )
 }
-
 const styles = StyleSheet.create ({
     container:{
         backgroundColor:"rgb(249,249,249)",
@@ -66,7 +64,6 @@ const styles = StyleSheet.create ({
         
        padding:20
     },
-
     form:{
         backgroundColor:"white",
         borderRadius:8,
@@ -80,10 +77,7 @@ const styles = StyleSheet.create ({
         backgroundColor:"rgb(249,249,249)",
         flex:1,
         justifyContent:"flex-end",
-        marginBottom:18
-       
     },
-
     button:{
         backgroundColor:"white",
         elevation:5,
