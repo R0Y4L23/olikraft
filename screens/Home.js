@@ -108,7 +108,7 @@ const Home = ({navigation}) => {
     
     
     return (
-       <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9",paddingTop:25}}>
+       <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9",paddingTop:25,width:"100%",height:"100%"}}>
            <ScrollView>
            <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
                <Text style={{fontSize:20}}>Hi , {name}</Text>

@@ -1,14 +1,33 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import {View,Text,Image, StyleSheet, TextInput ,TouchableOpacity,ScrollView} from "react-native"
 import { Card, Paragraph } from 'react-native-paper';
 import { Ionicons, Feather,EvilIcons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 import { Checkbox } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Checkout({navigation}) {
     const [checked, setChecked] = React.useState(false);
+    const [name,setName]=useState("")
+    const [email,setEmail]=useState("")
+    useEffect(()=>{
+        const getProfileData = async () => {
+            try {
+              const jsonValue = await AsyncStorage.getItem('profileData')
+              if(jsonValue)
+              {
+                  let data=JSON.parse(jsonValue)
+                  setName(`${data.first_name} ${data.last_name}`)
+                  setEmail(data.user_email)
+              }
+            } catch(e) {
+             console.log(e)
+            }
+        }
+        getProfileData()
+    },[])
 
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1,width:"100%",justifyContent:'center'}}>
             <View>
              <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}} />
@@ -28,12 +47,12 @@ export default function Checkout({navigation}) {
          
                 <View>   
                 <Text style={styles.name}>Name</Text>
-                <TextInput style={{ height: 20}}  value="John Doe" placeholder="Full Name"  />
+                <TextInput style={{ height: 20}}  value={name} placeholder="Full Name"  />
                
                     
                 
                 <Text style={styles.name} >Email</Text>
-                <TextInput style={{ height: 20}}  value="johndoe152@gmail.com" placeholder="Email" />
+                <TextInput style={{ height: 20}}  value={email} placeholder="Email" />
                
                 
                 <Text style={styles.name}>Contact No#</Text>

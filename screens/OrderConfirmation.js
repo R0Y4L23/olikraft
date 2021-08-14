@@ -5,7 +5,7 @@ import { Ionicons, Feather} from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 export default function OrderConfirmation({navigation}) {
     return (
-        <View style={{backgroundColor:"rgb(249,249,249)",height:"100%"}}>
+        <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(249,249,249)",height:"100%",width:"100%"}}>
            <Appbar.Header style = {styles.item} >
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="black"  onPress={()=>{navigation.navigate("Home")}}/>
             </Appbar.Header>
