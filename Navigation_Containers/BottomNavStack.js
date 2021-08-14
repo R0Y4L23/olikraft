@@ -9,8 +9,30 @@ import { Divider } from 'react-native-paper';
 import Home from "../screens/Home"
 import Products from "../screens/Products"
 import Tutorial from "../screens/Tutorials"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Tab = createBottomTabNavigator();
 const More=({navigation})=>{
+
+  const removeToken = async () => {
+    try {
+      await AsyncStorage.removeItem("token")
+    } catch (e) {
+     console.log(e)
+    }
+  }
+  const removeProfileData = async () => {
+    try {
+      await AsyncStorage.removeItem("profileData")
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  
+  const handleLogout=async ()=>{
+    await removeToken()
+    await removeProfileData()
+    navigation.navigate("Login")
+  }
 
     return(
       <View
@@ -51,7 +73,12 @@ const More=({navigation})=>{
      <Divider/>
      <TouchableOpacity onPress={()=>{navigation.navigate("ProductDetails")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >Product Details</Text>
+     <TouchableOpacity onPress={handleLogout}>
+         <Text style={{fontSize:18,paddingBottom:11}} >Logout</Text>
      </TouchableOpacity>
+     {/* <TouchableOpacity onPress={()=>{navigation.navigate("Productsvariable")}}>
+     <Text style={{fontSize:18,paddingBottom:11}} >Products variable</Text>
+     </TouchableOpacity> */}
 
      {/* <TouchableOpacity onPress={()=>{navigation.navigate("Orderconfirmation")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >Order Confirmation</Text>

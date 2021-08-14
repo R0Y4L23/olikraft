@@ -96,7 +96,7 @@ export default function Productsvariable({route,navigation}) {
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="rgb(5,23,41)" onPress={()=>{navigation.goBack()}}/>
                 <Appbar.Content title="" titleStyle={styles.title}/>
-                
+
             </Appbar.Header>
             </View>
             <ScrollView style={{flex:1}}>

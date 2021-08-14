@@ -33,7 +33,6 @@ const Login = ({navigation}) => {
               .then(async function (response) {
                 if(response.data.status)
                 {
-                  console.log(response.data.user)
                     await storeToken(response.data.letscms_token)
                     await storeProfileData(response.data.user)
                     navigation.navigate("BNS")

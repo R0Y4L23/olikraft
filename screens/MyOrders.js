@@ -1,15 +1,44 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import { View, Text,StyleSheet , Image, TouchableOpacity, ScrollView} from 'react-native'
 import { Appbar } from 'react-native-paper';
 import { Ionicons} from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Card, Paragraph } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function All() {
+    const [order, setOrder] = useState([])
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('token')
+            if (value !== null) {
+                return value
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    const fetchOrders = async () => {
+        let token = await getData()
+        await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/orders', {
+            method: "GET",
+            headers: {
+                "letscms_token": token
+            }
+        }).then(function (response)
+         {
+            console.log(response);
+        }).catch((e)=>{
+            console.log(e)
+        })
+    }
+    useEffect(() => 
+    {
+    fetchOrders()
+    }, [])
     return (
         <ScrollView >
             <Card style={{elevation:10,marginTop:15,borderRadius:10}}>
-              
                 <Card.Content>
                     <View style={{flexDirection:"row",margin:10}}>
                         <View style={{justifyContent:"center"}}>
@@ -25,47 +54,35 @@ function All() {
                                 </View>
                             </View>
                             <View style={{flex:1 ,padding:5}}>
-                                
                                 <Text style={{fontWeight:"bold",fontSize:13}}>
                                     Olikraft Handikraft Wooden Blocking Board
-                                </Text>
-                                                
+                                </Text>            
                                 <Text style={{color:"grey",marginTop:5}}>
                                     11 inch | 2nos x $39.99 
                                 </Text>
-
                                 <Text style={{color:"grey",marginTop:5}}>
                                     Shipping : $ 12.00
                                 </Text>
                                 <Text style={{color:"grey",marginTop:5}}>
                                     Delievered by 22 May 2021
                                 </Text>
-                            
                             </View>
                         </View>
                     </View>
-                    
                     <View style={styles.button}> 
                         <TouchableOpacity style={styles.total}>
                             <Text style={{fontSize:14,fontWeight:"bold"}}>Total: $91.98</Text>
                         </TouchableOpacity>
-
                         <TouchableOpacity style={styles.send}>
                             <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Track Order</Text>
                         </TouchableOpacity>
-
                         <TouchableOpacity style={styles.cancel}>
                             <Text style={{fontSize:14,fontWeight:"bold"}}>Cancel Order</Text>
                         </TouchableOpacity>
                     </View>
-       
-       
                 </Card.Content>
-               
-               
             </Card>
-            <Card style={{elevation:10,marginTop:15,borderRadius:10}}>
-              
+            <Card style={{elevation:10,marginTop:15,borderRadius:10}}> 
               <Card.Content>
                       <View style={{flexDirection:"row",margin:10}}>
                           <View style={{justifyContent:"center"}}>
@@ -337,6 +354,7 @@ function Delievered() {
 //   }
 const Tab = createMaterialTopTabNavigator();
 export default function MyOrders({navigation}) {
+
     return (
         
             

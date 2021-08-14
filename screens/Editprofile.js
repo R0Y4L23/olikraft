@@ -3,9 +3,7 @@ import { View, Text , TouchableOpacity, StyleSheet, TextInput, ImageBackground,S
 import { Appbar } from 'react-native-paper';
 import { Ionicons, MaterialIcons ,Feather} from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import { color } from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const axios=require("axios")
 export default function Editprofile({navigation}) {
     const [hidecountry, setHidecountry] = useState(true);
     const [token,setToken]=useState("")
@@ -16,29 +14,31 @@ export default function Editprofile({navigation}) {
     const [passVisible,setPassVisible]=useState(false)
     const [confirmPassVisible,setConfirmPassVisible]=useState(false)
     const [confirmPass,setConfirmPass]=useState("")
-    const changeProfileData=async ()=>{
-        if(name&&email&&password&&confirmPass)
-        {
-            await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/account-details',{
-                first_name : name.split(" ")[0],
-                last_name : name.split(" ")[1],
-                display_name : username,
-                email : email,
-                password : password,
-                old_password:confirmPass
-              } ,{
-                Headers:{
-                    letscms_token:token
-                }
-              })
-              .then(async function (response) {
-                console.log(response)
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+    const storeProfileData = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('profileData', jsonValue)
+        } catch (e) {
+          console.log(e)
         }
-    }
+      }
+    const changeProfileData=async ()=>{
+        const response = await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/account-details', {
+            method: 'POST', 
+            headers: {
+              'Content-Type': 'application/json',
+              'letscms_token':token
+            },
+            body: JSON.stringify({ 
+            'first_name' : name.split(" ")[0],
+            'last_name' : name.split(" ")[1],
+            'display_name' :name,
+            'user_email' : email,
+            'password' : password,
+            'old_password':confirmPass})
+          })
+          return response.json()
+      }
     useEffect(()=>{
         const getProfileData = async () => {
             try {
@@ -74,7 +74,6 @@ export default function Editprofile({navigation}) {
                     </View>
                 </ImageBackground>
             </View>
-          
             <View style={{padding:15}}>
                 <Text style={{color:"grey"}}>Full Name</Text>
                 <View style={styles.form}>
@@ -105,7 +104,7 @@ export default function Editprofile({navigation}) {
                     <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.goBack()}}>
                         <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.send} onPress={changeProfileData}>
+                    <TouchableOpacity style={styles.send} onPress={()=>{changeProfileData().then((data)=>{console.log(data.data);storeProfileData(data.data)})}}>
                         <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
                     </TouchableOpacity>
                 </View>
@@ -114,38 +113,31 @@ export default function Editprofile({navigation}) {
         </View>
     )
 }
-
 const styles = StyleSheet.create ({
-  
     item: {
        backgroundColor : 'rgb(5,23,41)'
     },
     icon: {
         marginLeft: 20
     },
-
     title:{
         fontSize:17
     },
     name:{
         color:"grey",
         marginTop:10,
-        
     },
     edit:{
         marginRight:"3%"
     },
-    
     form:{
      flexDirection:"row",
      backgroundColor:"white",
      borderRadius:8,
      borderWidth:0.3,
-     
      marginVertical:10,
      borderColor:"grey",   
     },
-
     buttoncontainer:{
         marginTop:25,
         height:160  
@@ -156,7 +148,6 @@ const styles = StyleSheet.create ({
         borderColor:"grey",
         flexDirection:"row",
         padding:15,
-   
     },
     cancel:{
         backgroundColor:"white",

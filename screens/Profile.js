@@ -6,8 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Profile({navigation}) {
     const [hidecountry, setHidecountry] = useState(true);
     const [name,setName]=useState("")
-    const [email,setEmail]=useState("")
-        
+    const [email,setEmail]=useState("") 
     useEffect(()=>{
         const getProfileData = async () => {
             try {
@@ -15,7 +14,7 @@ export default function Profile({navigation}) {
               if(jsonValue)
               {
                   let data=JSON.parse(jsonValue)
-                  setName(data.display_name)
+                  setName(`${data.first_name} ${data.last_name}`)
                   setEmail(data.user_email)
               }
             } catch(e) {
