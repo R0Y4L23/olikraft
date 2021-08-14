@@ -1,6 +1,7 @@
 import React from 'react'
 import { Appbar } from 'react-native-paper';
 import { View,Text,Image,TouchableOpacity } from 'react-native'
+import { SimpleLineIcons } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
 
 const Tutorials = ({navigation}) => {
@@ -8,7 +9,7 @@ const Tutorials = ({navigation}) => {
         <View style={{backgroundColor:"#f9f9f9"}}>
              <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)"}}>
                 <Appbar.Content title="Tutorials" titleStyle={{fontSize:20}}/>
-              <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><Appbar.Action icon="briefcase"/></TouchableOpacity>
+              <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:10}}/></TouchableOpacity>
             </Appbar.Header>
             <View>
             <View style={{height:"100%",width:"100%",padding:25}}>

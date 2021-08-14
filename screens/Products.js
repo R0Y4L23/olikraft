@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { Appbar } from 'react-native-paper';
 import { ScrollView, View,Text,Image,TouchableOpacity } from 'react-native'
+import { SimpleLineIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const axios = require('axios');
 const ProductsComponent=({product,nprice,pprice,discount,discountPrice,image,id,navigation})=>{
@@ -51,10 +52,10 @@ const Products = ({navigation}) => {
        <View style={{backgroundColor:"#f9f9f9"}}>
            <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)"}}>
                 <Appbar.Content title="Products" titleStyle={{fontSize:20}}/>
-                <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><Appbar.Action icon="briefcase"/></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={20} color="white" style={{marginRight:10}}/></TouchableOpacity>
                 <Appbar.Action icon="magnify" />
             </Appbar.Header>
-            <View style={{height:"87%"}}>
+            <View style={{height:"87%",width:"100%"}}>
              <ScrollView>
                 {pro.length>0&&pro.map((item,index)=>{return <ProductsComponent key={index} product={item.name} nprice={item.price} pprice={item.regular_price} discount={(Number(item.regular_price===""?item.price:item.regular_price)-Number(item.price))/Number(item.regular_price===""?item.price:item.regular_price)} discountPrice={Number(item.regular_price===""?item.price:item.regular_price)-Number(item.price)} image={item.image} id={item.id} navigation={navigation}/>})}
             </ScrollView> 
