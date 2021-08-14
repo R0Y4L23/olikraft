@@ -7,7 +7,7 @@ import { Appbar } from 'react-native-paper';
 import { Ionicons} from '@expo/vector-icons';
 const axios = require('axios');
 export default function ProductDetails({route,navigation}) {
-    const [pro,setPro] = useState("")
+    const [pro,setPro] = React.useState("")
     
     const source = {
         html: `${pro}`

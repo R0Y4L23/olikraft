@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Searchbar} from "react-native-paper"
 const axios=require("axios");
 const TopComponent=({content,image})=>{
     return (
@@ -78,7 +79,7 @@ const Home = ({navigation}) => {
             const jsonValue = await AsyncStorage.getItem('profileData')
             if (jsonValue) {
                 let data = JSON.parse(jsonValue)
-                setName(`${data.first_name} ${data.last_name}`)
+                setName(`${data.first_name}`)
             }
             if (value !== null) {
                 return value
@@ -104,17 +105,21 @@ const Home = ({navigation}) => {
     useEffect(() => {
         fetchProducts()
     },[])
-    
-    
-    
+
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const [focus,setFocus]=React.useState(false);
+    const onChangeSearch = query => setSearchQuery(query);
+  
     return (
-       <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9",paddingTop:25,width:"100%",height:"100%"}}>
+       <View style={{flex:1,backgroundColor:"#f9f9f9",paddingTop:25}}>
            <ScrollView>
+               <View style={{marginLeft:'auto',marginRight:"auto",flex:1,justifyContent:"space-evenly",width:"100%",height:"100%"}}>
            <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
-               <Text style={{fontSize:20}}>Hi , {name}</Text>
+               <Text style={{fontSize:20}}>Hi, {name}</Text>
                <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
-                  <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={26} color="black"  /></TouchableOpacity>
-                   <Ionicons name="search" size={26} color="black" />
+                  <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}} style={{marginRight:15}}><SimpleLineIcons name="bag" size={26} color="black"  /></TouchableOpacity>
+                  {focus&&<Searchbar onChangeText={onChangeSearch} value={searchQuery} style={{height:30,width:150}} onBlur={()=>{setFocus(!focus)}}/>}
+                   {!focus&&<Ionicons name="search" size={26} color="black" onPress={()=>{setFocus(!focus)}}/> }
                </View>
            </View>
            <View style={{height:200}}>
@@ -123,7 +128,6 @@ const Home = ({navigation}) => {
                </ScrollView>
            </View>
            <View style={{display:"flex",flexDirection:"row",width:350,justifyContent:"space-evenly",marginBottom:20,marginTop:10}}>
-               
                    <LinearGradient style={{display:"flex",flexDirection:"row",width:150,height:75,justifyContent:"space-between",padding:10,borderRadius:15}}  colors={['#E0B042', '#E7E75F', '#E78357']}>
                    <View>
                        <Text style={{fontSize:20,color:"white"}}>10 %</Text>
@@ -154,7 +158,7 @@ const Home = ({navigation}) => {
                </ScrollView>
            </View>
           
-           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:"80%"}}>
+           {/* <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:"80%"}}>
                <Text style={{fontSize:22}}>Recent Reviews</Text>
                <AntDesign name="arrowright" size={24} color="black" />
            </View>
@@ -162,6 +166,7 @@ const Home = ({navigation}) => {
                <ScrollView horizontal>
                    {RRJSON.map((item,index)=>{return <RecentReviewsComponent name={item.name} stars={item.stars} comment={item.comment} key={index}/>})}
                </ScrollView>
+           </View> */}
            </View>
            </ScrollView>
        </View>
