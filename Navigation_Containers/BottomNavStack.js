@@ -38,8 +38,8 @@ const More=({navigation})=>{
       <View
       style={{
         backgroundColor: 'white',
-        padding: 26,
-        height: 350,
+        padding: 25,
+        height: "auto",
         position:"absolute",
         width:"100%",
         bottom:0,
@@ -74,6 +74,7 @@ const More=({navigation})=>{
      <TouchableOpacity onPress={()=>{navigation.navigate("ProductDetails")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >Product Details</Text>
      </TouchableOpacity>
+     <Divider/>
      <TouchableOpacity onPress={handleLogout}>
          <Text style={{fontSize:18,paddingBottom:11}} >Logout</Text>
      </TouchableOpacity>

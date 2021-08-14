@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { Appbar } from 'react-native-paper';
 import { ScrollView, View,Text,Image,TouchableOpacity } from 'react-native'
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { SimpleLineIcons,Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const axios = require('axios');
 const ProductsComponent=({product,nprice,pprice,discount,discountPrice,image,id,navigation})=>{
@@ -52,8 +52,8 @@ const Products = ({navigation}) => {
        <View style={{backgroundColor:"#f9f9f9"}}>
            <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)"}}>
                 <Appbar.Content title="Products" titleStyle={{fontSize:20}}/>
-                <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={20} color="white" style={{marginRight:10}}/></TouchableOpacity>
-                <Appbar.Action icon="magnify" />
+                <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:15}}/></TouchableOpacity>
+                <Ionicons name="search" size={25} color="white" style={{marginRight:15}}/>
             </Appbar.Header>
             <View style={{height:"87%",width:"100%"}}>
              <ScrollView>

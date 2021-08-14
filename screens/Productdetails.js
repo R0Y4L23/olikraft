@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const axios = require('axios');
 export default function ProductDetails({route,navigation}) {
-    const [pro,setPro] = useState("")
+    const [pro,setPro] = React.useState("")
     
     const source = {
         html: `${pro}`
