@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, TouchableHighlight,Switch } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, } from 'react-native'
 import { Ionicons,Entypo,FontAwesome5,EvilIcons,Octicons,FontAwesome} from '@expo/vector-icons';
 import { Appbar, List } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,15 +7,15 @@ import { SliderBox } from "react-native-image-slider-box";
 const axios = require('axios');
 export default function Productsvariable({route,navigation}) {
     const [Counter,setCounter] = useState(1)
-    const [name,setName] = useState("")
+    const [name,setName] = useState()
     const [images,setImages]=useState([])
-    const [price, setprice] = useState(0)
-    const [saleprice , setsaleprice] = useState(0)
-    const [rating,setrating] = useState(0)
+    const [price, setprice] = useState()
+    const [saleprice , setsaleprice] = useState()
+    const [rating,setrating] = useState()
     const [pro,setPro] = useState([])
     const [Attributes,setAttributes] = useState([])
     const [Children,setChildren] = useState([])
-    const [id,setid] = usestate(route.params.id)
+    const [proid,setid] = useState(route.params.id)
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -75,20 +75,21 @@ export default function Productsvariable({route,navigation}) {
                 setPro(response.data.data)
                 setImages(response.data.data.gallery_images)
                 setName(response.data.data.name)
-                setprice(Number(response.data.data.regular_price))
-                setsaleprice(Number(response.data.data.price))
-                setrating(response.data.data.average_rating)
-                setAttributes(Object.keys(response.data.data.attributes))
-                setChildren(response.data.data.children)
+                // setprice(Number(response.data.data.regular_price))
+                // setsaleprice(Number(response.data.data.price))
+                // setrating(response.data.data.average_rating)
+                // setAttributes(Object.keys(response.data.data.attributes))
+                setid(response.data.data.children[0])
           })
           .catch(function (error) {
             console.log(error);
           })
+          
     }
 
-    function fetchvaritem (id){
+    function fetchvaritem (){
         let token=getData()
-        axios.get("https://olikraft.shubhchintak.co/api/letscms/v1/product/" + id, {
+        axios.get("https://olikraft.shubhchintak.co/api/letscms/v1/product/" + proid, {
             Headers:{
                 letscms_token:token
             }
@@ -99,13 +100,33 @@ export default function Productsvariable({route,navigation}) {
                 setprice(Number(response.data.data.regular_price))
                 setsaleprice(Number(response.data.data.sale_price))
                 setrating(response.data.data.average_rating)
+                // console.log(response.data.data.name)
           })
           .catch(function (error) {
             console.log(error);
           })
+        }  
+    function fetchvarchildren (id){
+            
+            axios.get("https://olikraft.shubhchintak.co/api/wc/v3/products/" + id, {
+                auth: {
+                    username: 'ck_e296377c8e66081c9321b68f176b42812ca4c40a',
+                    password: 'cs_d3c061b568c0318c269f0b4c3ef6aa8a855e520e'
+                  }
+              })
+              .then(function (response) {
+                    
+                   setAttributes(response.data.attributes)
+              })
+              .catch(function (error) {
+                console.log(error);
+              })
     }
+
     useEffect(()=>{
         fetchrootitem()
+        // fetchvaritem()
+        fetchvarchildren(route.params.id)
     },[])
     // let Image_Http_URL ={ uri: pro.image};
     let discount=( Math.abs(price - saleprice) ) / price 
@@ -119,9 +140,14 @@ export default function Productsvariable({route,navigation}) {
 
             </Appbar.Header>
             </View>
+            {
+                proid ?
+                fetchvaritem()
+                :<View></View>
+            }
             <ScrollView style={{flex:1}}>
                 <View  style={{elevation:15,padding:5,borderRadius:10,backgroundColor:"white"}}>
-                    <SliderBox images={images} sliderBoxHeight={300} />
+                    <SliderBox images={images} sliderBoxHeight={270} resizeMode="contain"/>
                 </View>
                 <View style={{flexDirection:"row",padding:10}}>
                     <Text style={{marginLeft:5,fontSize:16,flex:1,fontWeight:"bold"}}>{name}</Text>
@@ -160,22 +186,34 @@ export default function Productsvariable({route,navigation}) {
 
                 }
                 
-                {   (Attributes.length != 0)? 
-                    Attributes.map((att,idx)=>{
+                {   
+                    (Attributes.length != 0)
+                    ?Attributes.map((att,idx)=>{
                         return(
                             <View key={idx}>
                                 <View style={{marginLeft:15}}>
-                                    <Text style={{color:"black",fontWeight:"bold",fontSize:19}}>{att} :</Text>
+                                    <Text style={{color:"black",fontWeight:"bold",fontSize:19}}>{att.name} :</Text>
                                 </View>
-                                <View style={{flexDirection:"row",backgroundColor:"white",marginVertical:5,marginHorizontal:15,borderWidth:0.5,borderColor:"grey"}}>
-                                    <TouchableOpacity style={{flex:1,marginLeft:5,padding:5,justifyContent:"center",alignItems:"center",}} onPress={()=>fetchvaritem(Children[0])}>
-                                        <Text style={{fontSize:17,fontWeight:"bold"}}>8-inches</Text>
-                                    </TouchableOpacity>
+                               
+                                    <View style={{flexDirection:"row",backgroundColor:"white",marginVertical:5,marginHorizontal:15,borderWidth:0.5,borderColor:"grey"}}>
+                                {
+                                    att.options.map((option,index)=>{
+                                        return(
+                                            (index===0)?
+                                            <TouchableOpacity style={{flex:1,padding:5,justifyContent:"center",alignItems:"flex-start",backgroundColor:"rgb(5,23,41)"}} onPress={()=>fetchvaritem(Children[0])} key={index}>
+                                                <Text style={{fontSize:14,fontWeight:"bold",color:"white"}}>{option}</Text>
+                                               
+                                            </TouchableOpacity>
+                                            :<TouchableOpacity style={{flex:1,padding:5,justifyContent:"center",alignItems:"flex-start",}} onPress={()=>fetchvaritem(Children[0])} key={index}>
+                                            <Text style={{fontSize:14,fontWeight:"bold"}}>{option}</Text>
+                                           
+                                            </TouchableOpacity>
+                                        )
+                                    })
                                     
-                                    <TouchableOpacity style={{flex:1,justifyContent:"center",padding:5,alignItems:"center",marginRight:10}} onPress={()=>fetchvaritem(Children[1])}>
-                                        <Text style={{fontSize:17,fontWeight:"bold"}}>11-inches</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                }
+                                    </View>
+                                       
                             </View>
                         )
                     })
@@ -215,7 +253,7 @@ export default function Productsvariable({route,navigation}) {
                     <Image source={require("../assets/mcafee.png")} style={{height:50,width:50,resizeMode:"stretch"}}/>
                 </View>
 
-                <View style={{backgroundColor:"white",elevation:5,height:40,borderRadius:15,justifyContent:"center"}}>
+                <TouchableOpacity style={{backgroundColor:"white",elevation:5,height:40,borderRadius:15,justifyContent:"center"}} onPress={()=>{navigation.navigate("ProductDetails",{"id":route.params.id})}} >
                     <View style={{flexDirection:"row"}}>
                         <View style={{flex:1,alignItems:"flex-start",marginLeft:15}}>
                             <Octicons name="info" size={24} color="black"  />
@@ -227,8 +265,8 @@ export default function Productsvariable({route,navigation}) {
                             <FontAwesome name="angle-right" size={24} color="black" />
                         </View>
                     </View>
-                </View>         
-                <View style={{backgroundColor:"white",elevation:5,height:40,marginTop:10,borderRadius:15,justifyContent:"center"}}>
+                </TouchableOpacity>         
+                <TouchableOpacity style={{backgroundColor:"white",elevation:5,height:40,marginTop:10,borderRadius:15,justifyContent:"center"}}>
                     <View style={{flexDirection:"row"}}>
                         <View style={{flex:1,alignItems:"flex-start",marginLeft:15}}>
                             <FontAwesome name="star-half-full" size={24} color="black" />
@@ -240,7 +278,7 @@ export default function Productsvariable({route,navigation}) {
                             <FontAwesome name="angle-right" size={24} color="black" />
                         </View>
                     </View>
-                </View>                       
+                </TouchableOpacity>                       
             </View>
             </ScrollView>
             <View style={{alignItems:"center",padding:20}}>

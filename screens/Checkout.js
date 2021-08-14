@@ -5,6 +5,8 @@ import { Ionicons, Feather,EvilIcons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 import { Checkbox } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Shippingaddress from './Shippingaddress';
+import Billingaddress from './Billingaddress';
 export default function Checkout({navigation}) {
     const [checked, setChecked] = React.useState(false);
     const [name,setName]=useState("")
@@ -62,23 +64,12 @@ export default function Checkout({navigation}) {
                 
                
             </Card>
-
-            <Card style={{marginTop:20,borderRadius:10,elevation:10}}>
-                <View style={{flexDirection:"row"}}>
-                    <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold"}}>Shipping Address</Text>
-                    <View style={{marginTop:10,marginRight:15}}>
-                        <EvilIcons name="pencil" size={30} color="black" />
-                    </View>
-                </View>
-                <Card.Content >
-         
-                <View>   
-                <Text style={styles.name}>Address Title</Text>
-                    <Paragraph style={{fontSize:14}}>128, UBI Avenue 4</Paragraph>
-                    <Paragraph style={{fontSize:14}}>Address Line 2</Paragraph>
-                    <Paragraph style={{fontSize:14}}>Address Line 3</Paragraph>
-                </View>
-                <View style={{flexDirection:"row"}}>
+            {
+                checked 
+                ?   <Billingaddress/>
+                :   <Shippingaddress/>
+            }
+           <View style={{flexDirection:"row"}}>
                 <Checkbox
                     status={checked ? 'checked' : 'unchecked'}
                     
@@ -87,13 +78,8 @@ export default function Checkout({navigation}) {
                     }}
                     color="black"
                     />
-                    <Text style={{marginTop:6,color:"grey"}}>Same as Billing address</Text>
+                    <Text style={{marginTop:6,color:"black"}}>Same as Billing address</Text>
                 </View>
-                </Card.Content>
-                
-               
-            </Card>
-
             <Card style={{marginTop:20,borderRadius:10,elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold"}}>Order Payment Information</Text>
