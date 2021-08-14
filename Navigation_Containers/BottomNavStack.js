@@ -49,8 +49,8 @@ const More=({navigation})=>{
      <Text style={{fontSize:18,paddingBottom:11}} >Settings</Text>
      </TouchableOpacity>
      <Divider/>
-     <TouchableOpacity onPress={()=>{navigation.navigate("Productsvariable")}}>
-     <Text style={{fontSize:18,paddingBottom:11}} >Products variable</Text>
+     <TouchableOpacity onPress={()=>{navigation.navigate("ProductDetails")}}>
+     <Text style={{fontSize:18,paddingBottom:11}} >Product Details</Text>
      </TouchableOpacity>
 
      {/* <TouchableOpacity onPress={()=>{navigation.navigate("Orderconfirmation")}}>

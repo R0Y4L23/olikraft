@@ -39,8 +39,7 @@ export default function Profile({navigation}) {
                 <TextInput style={{ height: 40}}  value={name} placeholder="Full Name"  />
                 <Text style={styles.name} >Email</Text>
                 <TextInput style={{ height: 40}}  value={email} placeholder="Email" />
-                <Text style={styles.name}>Contact No#</Text>
-                <TextInput style={{ height: 40}}  value="+65 5685 5685" placeholder="Enter here..." />
+                
                 <Text style={styles.name}>Country</Text>
                 <View style={styles.form}>
                     <TextInput style={{ height: 40,flex:1}}  value="India" secureTextEntry={hidecountry ? true : false} placeholder="Enter here..." />

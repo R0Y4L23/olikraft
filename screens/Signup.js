@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const axios = require('axios');
 const Signup = ({navigation}) => {
     const [name,setName]=useState("")
-    const [number,setNumber]=useState("")
+    
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
     const [passVisible,setPassVisible]=useState(false)
@@ -30,7 +30,7 @@ const Signup = ({navigation}) => {
         }
       }
     const handleSignup=async ()=>{
-        if(name&&number&&email&&password&&confirmPass&&password==confirmPass)
+        if(name&&email&&password&&confirmPass&&password==confirmPass)
         {
             await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/auth/register', {
                 first_name : name.split(" ")[0],
@@ -60,10 +60,7 @@ const Signup = ({navigation}) => {
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setName} value={name} placeholder="Full Name"/>
                    <FontAwesome name="user" size={35} color="black" style={{flex:1.5}}/>
                </View>
-               <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,borderColor:"grey",marginVertical:12}}>
-                   <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setNumber} value={number} placeholder="Contact Number"/>
-                   <Ionicons name="call" size={35} color="black" style={{flex:1.5}}/>
-               </View>
+               
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,borderColor:"grey",marginVertical:12}}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setEmail} value={email} placeholder="Email"/>
                    <MaterialIcons style={{flex:1.5}} name="email" size={35} color="black" />

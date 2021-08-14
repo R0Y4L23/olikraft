@@ -40,10 +40,7 @@ export default function Productsvariable({route,navigation}) {
         }
     }
 
-    function changecolor(){
-        setBgcolor("rgb(5,23,41)")
-    }
-
+    
     const fetchrootitem = async () =>{
         let token=getData()
         axios.get('https://olikraft.shubhchintak.co/api/letscms/v1/product/' + route.params.id, {

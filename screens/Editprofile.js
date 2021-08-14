@@ -84,12 +84,7 @@ export default function Editprofile({navigation}) {
                 <View style={styles.form}>
                     <TextInput style={{ height: 40,paddingLeft:10,}} onChangeText={setEmail}  value={email} placeholder="Email"/>
                 </View>               
-                <Text style={styles.name}>Contact No#</Text>
-                <View style={styles.form}>
-                    <TextInput style={{ height: 40,paddingLeft:10}}  value="+65"/><View style={{borderRightWidth:0.5,borderRadius:8,marginRight:20}}>
-                    <Entypo name="triangle-down" size={24} color="grey" style={{marginTop:8}}/></View>
-                    <TextInput style={{ height: 40,paddingLeft:10,}}  value="5685 5685" />
-                </View>
+                
                 <Text style={styles.name}>Country</Text>
                 <View style={styles.form}>
                     <TextInput style={{ height: 40,flex:1,paddingLeft:10,}}  value="India" secureTextEntry={hidecountry ? true : false} placeholder="Enter here..." />
