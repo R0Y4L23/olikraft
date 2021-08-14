@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import { Appbar } from 'react-native-paper';
+import { Appbar,Searchbar } from 'react-native-paper';
 import { ScrollView, View,Text,Image,TouchableOpacity } from 'react-native'
 import { SimpleLineIcons,Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -48,16 +48,23 @@ const Products = ({navigation}) => {
      useEffect(()=>{
        fetchProducts()
    },[])
+
+   const [searchQuery, setSearchQuery] = React.useState('');
+    const [focus,setFocus]=React.useState(false);
+    const onChangeSearch = query => setSearchQuery(query);
     return (
        <View style={{backgroundColor:"#f9f9f9"}}>
            <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)"}}>
                 <Appbar.Content title="Products" titleStyle={{fontSize:20}}/>
                 <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:15}}/></TouchableOpacity>
-                <Ionicons name="search" size={25} color="white" style={{marginRight:15}}/>
+                {focus&&<Searchbar onChangeText={onChangeSearch} value={searchQuery} style={{height:30,width:150}} onBlur={()=>{setFocus(!focus)}}/>}
+                   {!focus&&<Ionicons name="search" size={25} color="white" onPress={()=>{setFocus(!focus)}} style={{marginRight:15}}/> }
             </Appbar.Header>
             <View style={{height:"87%",width:"100%"}}>
              <ScrollView>
+               <View style={{marginLeft:'auto',marginRight:"auto"}}>
                 {pro.length>0&&pro.map((item,index)=>{return <ProductsComponent key={index} product={item.name} nprice={item.price} pprice={item.regular_price} discount={(Number(item.regular_price===""?item.price:item.regular_price)-Number(item.price))/Number(item.regular_price===""?item.price:item.regular_price)} discountPrice={Number(item.regular_price===""?item.price:item.regular_price)-Number(item.price)} image={item.image} id={item.id} navigation={navigation}/>})}
+                </View>
             </ScrollView> 
             </View>
        </View>
