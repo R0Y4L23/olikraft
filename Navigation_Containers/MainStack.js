@@ -1,5 +1,6 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { View,ActivityIndicator } from 'react-native'
 import Login from "../screens/Login"
 import Signup from "../screens/Signup"
 import Confirmation from "../screens/Confirmation"
@@ -23,10 +24,38 @@ import Resetpass from "../screens/Resetpass"
 import Cancelconfirmation from '../screens/Cancelconfirmation'
 import ProductDetails from "../screens/Productdetails"
 import Productsvariable from '../screens/Productsvariable'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const Stack = createNativeStackNavigator();
+
+const Loading = ({navigation}) => {
+    useEffect(()=>{
+        const getData = async () => {
+            try {
+                const value = await AsyncStorage.getItem('token')
+                if(value)
+                {
+                    navigation.navigate("BNS")
+                }
+                else{
+                    navigation.navigate("Login")
+                }
+                return value
+            } catch (e) {
+                console.log(e)
+            }
+        }
+        getData()
+    },[])
+    return(
+    <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+      <ActivityIndicator size="large" />
+    </View>
+  )
+};
 const MainStack = () => {
     return (
         <Stack.Navigator screenOptions={{headerShown:false}}>
+            <Stack.Screen name="Loading" component={Loading}/>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Signup" component={Signup} />
             <Stack.Screen name="Confirmation" component={Confirmation} />

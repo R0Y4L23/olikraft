@@ -48,39 +48,62 @@ const RecentReviewsComponent=({name,stars,comment})=>{
 }
 
 const Home = ({navigation}) => {
-    const TCJSON=[{"content":"Stop winding yarn by hand","image":"https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner_1400x.progressive.png.jpg?v=1594881434"},{"content":"Yarn Sets","image":"https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner2_1400x.progressive.png.jpg?v=1594881663"}]
-   // const SFFJSON=[{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"}]
-    const RRJSON=[{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"},{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"},{"name":"Jack Owens","stars":4,"comment":"lorem ipsum lorem ipsum"}]
-    
-    const [pro,setPro]=useState([])
+    const TCJSON = [{
+        "content": "Stop winding yarn by hand",
+        "image": "https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner_1400x.progressive.png.jpg?v=1594881434"
+    }, {
+        "content": "Yarn Sets",
+        "image": "https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner2_1400x.progressive.png.jpg?v=1594881663"
+    }]
+    // const SFFJSON=[{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"}]
+    const RRJSON = [{
+        "name": "Jack Owens",
+        "stars": 4,
+        "comment": "lorem ipsum lorem ipsum"
+    }, {
+        "name": "Jack Owens",
+        "stars": 4,
+        "comment": "lorem ipsum lorem ipsum"
+    }, {
+        "name": "Jack Owens",
+        "stars": 4,
+        "comment": "lorem ipsum lorem ipsum"
+    }]
+    const [name, setName] = useState("")
+    const [pro, setPro] = useState([])
     const getData = async () => {
         try {
-          const value = await AsyncStorage.getItem('token')
-          if(value !== null) 
-          {
-           return value
-          }
-        } catch(e) {
-          console.log(e)
+
+            const value = await AsyncStorage.getItem('token')
+            const jsonValue = await AsyncStorage.getItem('profileData')
+            if (jsonValue) {
+                let data = JSON.parse(jsonValue)
+                setName(`${data.first_name} ${data.last_name}`)
+            }
+            if (value !== null) {
+                return value
+            }
+        } catch (e) {
+            console.log(e)
         }
-      }
-      const fetchProducts=async ()=>{
-        let token=await getData()
-       await axios.get('https://olikraft.shubhchintak.co/api/letscms/v1/products?page=1', {
-           Headers:{
-               letscms_token:token
-           }
-         })
-         .then(function (response) {
-           setPro(response.data.data.products)
-         })
-         .catch(function (error) {
-            console.log(error);
-         })
-      }
-     useEffect(()=>{
-       fetchProducts()
-   },[])
+    }
+    const fetchProducts = async () => {
+        let token = await getData()
+        await axios.get('https://olikraft.shubhchintak.co/api/letscms/v1/products?page=1', {
+                Headers: {
+                    letscms_token: token
+                }
+            })
+            .then(function (response) {
+                setPro(response.data.data.products)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+    useEffect(() => {
+        fetchProducts()
+    },[])
     
     
     
@@ -88,7 +111,7 @@ const Home = ({navigation}) => {
        <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9",paddingTop:25}}>
            <ScrollView>
            <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
-               <Text style={{fontSize:20}}>Hi , John Doe</Text>
+               <Text style={{fontSize:20}}>Hi , {name}</Text>
                <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
                   <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={26} color="black"  /></TouchableOpacity>
                    <Ionicons name="search" size={26} color="black" />
