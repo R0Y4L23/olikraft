@@ -95,10 +95,10 @@ export default function ManageAddress({navigation}) {
                     </View>
                 </View>
                 <Card.Content style={{marginTop:10}}>
-                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.first_name} {ad.last_name},</Paragraph>
-                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.address_1},</Paragraph>
-                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.address_2},</Paragraph>
-                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.city},{ad.postcode},</Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.first_name} {ad.last_name} </Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.address_1} </Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.address_2} </Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{ad.city} {ad.postcode}</Paragraph>
                     {/* <Paragraph style={{fontSize:12}}>{Statelist[country][State]},{countrylist[country]}. </Paragraph> */}
                 </Card.Content>
                 
@@ -113,10 +113,10 @@ export default function ManageAddress({navigation}) {
                     </View>
                 </View>
                 <Card.Content style={{marginTop:10}}>
-                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.first_name} {shad.last_name},</Paragraph>
-                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.address_1},</Paragraph>
-                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.address_2},</Paragraph>
-                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.city},{shad.postcode},</Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.first_name} {shad.last_name}</Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.address_1}</Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.address_2}</Paragraph>
+                    <Paragraph style={{fontSize:12,fontWeight:"bold"}}>{shad.city} {shad.postcode}</Paragraph>
                     {/* <Paragraph style={{fontSize:12}}>{Statelist[country][State]},{countrylist[country]}. </Paragraph> */}
                 </Card.Content>
                 

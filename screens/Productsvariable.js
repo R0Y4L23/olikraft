@@ -15,6 +15,7 @@ export default function Productsvariable({route,navigation}) {
     const [pro,setPro] = useState([])
     const [Attributes,setAttributes] = useState([])
     const [Children,setChildren] = useState([])
+    const [id,setid] = usestate(route.params.id)
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -30,8 +31,8 @@ export default function Productsvariable({route,navigation}) {
       const addtocart=async ()=>{
       
            await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/cart/add-item', {
-                username: email,
-                password: password,
+                product_id:id,
+                quantity:Counter,
                 Headers:{
                     letscms_token:token
                 }
