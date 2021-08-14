@@ -39,7 +39,7 @@ const More=({navigation})=>{
       style={{
         backgroundColor: 'white',
         padding: 26,
-        height: 300,
+        height: 350,
         position:"absolute",
         width:"100%",
         bottom:0,
@@ -73,6 +73,7 @@ const More=({navigation})=>{
      <Divider/>
      <TouchableOpacity onPress={()=>{navigation.navigate("ProductDetails")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >Product Details</Text>
+     </TouchableOpacity>
      <TouchableOpacity onPress={handleLogout}>
          <Text style={{fontSize:18,paddingBottom:11}} >Logout</Text>
      </TouchableOpacity>

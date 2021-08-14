@@ -27,6 +27,28 @@ export default function Productsvariable({route,navigation}) {
         }
       }
 
+      const addtocart=async ()=>{
+      
+           await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/cart/add-item', {
+                username: email,
+                password: password,
+                Headers:{
+                    letscms_token:token
+                }
+              },)
+              .then(async function (response) {
+                if(response.data.status)
+                {
+                    await storeToken(response.data.letscms_token)
+                    await storeProfileData(response.data.user)
+                    navigation.navigate("BNS")
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+        
+    }
       function increment(){
         setCounter(Counter + 1)
     }
@@ -71,10 +93,7 @@ export default function Productsvariable({route,navigation}) {
             }
           })
           .then(function (response) {
-                // setPro(response.data.data)
-                // setImages(response.data.data.gallery_images)
                 
-                // console.log(response.data.data)
                 setName(response.data.data.name)
                 setprice(Number(response.data.data.regular_price))
                 setsaleprice(Number(response.data.data.sale_price))
