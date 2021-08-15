@@ -7,25 +7,135 @@ import { Checkbox } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Shippingaddress from './Shippingaddress';
 import Billingaddress from './Billingaddress';
-export default function Checkout({navigation}) {
+export default function Checkout({route,navigation}) {
     const [checked, setChecked] = React.useState(false);
     const [name,setName]=useState("")
     const [email,setEmail]=useState("")
-    useEffect(()=>{
-        const getProfileData = async () => {
-            try {
-              const jsonValue = await AsyncStorage.getItem('profileData')
-              if(jsonValue)
-              {
-                  let data=JSON.parse(jsonValue)
-                  setName(`${data.first_name} ${data.last_name}`)
-                  setEmail(data.user_email)
-              }
-            } catch(e) {
-             console.log(e)
-            }
+    const [cartitems,setCartitems]=useState([])
+    const [carttotals,setCarttotals]=useState([])
+    const [firstname,setfirstname] = useState("")
+    const [lastname,setlastname] = useState("")
+    const [country,setcountry] = useState("")
+    const [city,setcity] = useState("")
+    const [State,setState] = useState("")
+    const [postcode,setpostcode] = useState("")
+    const [phone,setphone] = useState("")
+
+    const [paymentmethod,setpaymentmethod] = useState("")
+    const [paymentmethodtitle,setpaymentmethodtitle] = useState("")
+    const [address1,setaddress1] = useState("")
+    const [address2,setaddress2] = useState("")
+    const getData = async () => {
+        try {
+          const value = await AsyncStorage.getItem('token')
+          if(value !== null) 
+          {
+           return value
+          }
+        } catch(e) {
+          console.log(e)
         }
+      }
+    
+      const fetchcart = async () =>{
+        let token = await getData()
+        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/cart/",{
+            headers:{
+                letscms_token:token
+            }
+        })
+        .then(response => response.json())
+        .then((res) => {
+            // console.log(res)
+            setCartitems(res.data.cart_items)
+            setCarttotals(res.data.cart_totals)
+        })
+        .catch(error => console.log(error))
+      }
+      const getProfileData = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem('profileData')
+          if(jsonValue)
+          {
+              let data=JSON.parse(jsonValue)
+              setName(`${data.first_name} ${data.last_name}`)
+              setEmail(data.user_email)
+          }
+        } catch(e) {
+         console.log(e)
+        }
+    }
+
+    const fetchshippingaddress= async ()=>{
+        let token = await getData()
+    
+        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/shipping",{
+            headers:{
+                letscms_token:token
+            }
+        })
+        .then(response => response.json())
+        .then((res) => {
+            setaddress1(res.data.address.address_1)
+            setaddress2(res.data.address.address_2)
+            setcity(res.data.address.city)
+            setcountry(res.data.address.country)
+            setfirstname(res.data.address.first_name)
+            setlastname(res.data.address.last_name)
+            setState(res.data.address.state)
+            setpostcode(res.data.address.postcode)
+            setpaymentmethod("COD")
+            setpaymentmethodtitle("Cash on Delivery")
+
+        })
+        .catch(error => console.log(error))
+    
+    }
+    
+    const placeorder=async ()=>{
+        let token = await getData()
+            
+            fetch('https://olikraft.shubhchintak.co/api/letscms/v1/order/create', {
+                method:"POST",
+                headers:{
+                    "letscms_token":token,
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                first_name:firstname,
+                last_name:lastname,
+                country:country,
+                city:city,
+                state:State,
+                postcode:postcode,
+                phone:phone,
+                email:email,
+                payment_method:paymentmethod,
+                payment_method_title:paymentmethodtitle,
+                address_1:address1,
+                address_2:address2,
+                coupons:route.params.coupon
+
+                }),
+                
+              },)
+              .then(response => response.json())
+              .then((response) =>{
+                
+                alert("Order Successfully Placed.Thanks for ordering!!")
+                navigation.navigate("Orderconfirmation",{orderid:response.data.order_id,cartitems:cartitems,carttotals:carttotals})
+                
+                
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+        
+    }
+    useEffect(()=>{
+        fetchcart()
         getProfileData()
+        fetchshippingaddress()
     },[])
 
     return (
@@ -41,9 +151,9 @@ export default function Checkout({navigation}) {
             <Card style={{marginTop:20,borderRadius:10,elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold"}}>General Information</Text>
-                    <View style={{marginTop:10,marginRight:15}}>
+                    {/* <View style={{marginTop:10,marginRight:15}}>
                         <EvilIcons name="pencil" size={30} color="black" />
-                    </View>
+                    </View> */}
                 </View>
                 <Card.Content >
          
@@ -83,57 +193,63 @@ export default function Checkout({navigation}) {
             <Card style={{marginTop:20,borderRadius:10,elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold"}}>Order Payment Information</Text>
-                    <View style={{marginTop:10,marginRight:15}}>
+                    {/* <View style={{marginTop:10,marginRight:15}}>
                         <EvilIcons name="pencil" size={30} color="black" />
-                    </View>
+                    </View> */}
                 </View>
                 <Card.Content >
-                <View style={{flexDirection:"row",borderBottomWidth:0.5,marginBottom:10}}>
-                       
-                        <View style={{justifyContent:"center",width:"50%",padding:10}}>
-                            <Text style={{fontSize:13,fontWeight:"bold",}}>
-                                Olikraft Handikraft Wooden Blocking Board
+                    {   cartitems.map((item,idx)=>{return(
+                    <ScrollView contentContainerStyle={{flex:1,justifyContent:"center"}} key={item.product_id}>
+                        <View style={{margin:15,flex:1}} key={idx}>
+                            <Text style={{fontSize:13,fontWeight:"bold",marginBottom:5}}>
+                                {item.product_name}
                             </Text>
-                            <Text style={{color:"grey"}}>
-                                11 inch
-                            </Text>
+                            
+                            <View style={{flexDirection:"row"}}>
+                                <Text style={{color:"grey"}}>
+                                    ${item.product_price} x {item.quantity}
+                                </Text>
+                                <Text style={{flex:1,fontWeight:"bold",fontSize:14,marginRight:"5%",textAlign:"right"}}>
+                                    ${item.line_total}
+                                </Text>
                             </View>
-                        <View style={{flex:1,alignItems:"flex-end"}}>
-                            <Text style={{color:"grey",marginTop:10}}>
-                                2nos x $39.99 
-                            </Text>
                         </View>
-                    </View>
-                    <View style={{marginTop:10,borderBottomWidth:0.5}}>
+                        
+                    </ScrollView>
+                )})}
+                <View style={{justifyContent:"flex-start",flex:1}}>
+                <View style={{justifyContent:"flex-end",borderBottomWidth:0.5,margin:10}}>
                         <View style={{flexDirection:'row',paddingBottom:5}}>
-                            <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:10}}>
+                            <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:5}}>
                                 Item Total
                             </Text>
-                            <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginLeft:15}}>
-                                $79.98
+                            <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
+                                ${carttotals.cart_contents_total}
                             </Text>
                         </View>
                         <View style={{flexDirection:'row',paddingBottom:10}}>
-                            <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:10}}>
+                            <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:5}}>
                                 Shipping
                             </Text>
-                            <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold"}}>
-                                $12.00
+                            <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
+                                ${carttotals.shipping_total}
                             </Text>
                         </View>
-                        
                     </View>
-                    
-                
-                <View style={{marginTop:10}}>
+                <View style={{marginHorizontal:10,marginBottom:15,justifyContent:"center"}}>
                     <View style={{flexDirection:'row'}}>
-                        <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:10}}>
+                        <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:5}}>
                             Grand Total
                         </Text>
-                        <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold"}}>
-                            $91.98
+                        <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
+                            ${carttotals.total}
                         </Text>
                     </View>
+                </View>
+            </View>
+            <View style={{flex:1,margin:15}}>
+                    <Text style={{fontWeight:"bold",paddingVertical:10}}>Enter Mobile number:</Text>
+                    <TextInput placeholder="Enter mobile number" style={{borderWidth:1, height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setphone} value={phone}/>
                 </View>
                 </Card.Content>
                 
@@ -151,7 +267,7 @@ export default function Checkout({navigation}) {
                             <Text style={{fontSize:14,fontWeight:"bold"}}>$91.98</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Orderconfirmation")}}>
+                        <TouchableOpacity style={styles.send} onPress={placeorder}>
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Place Order</Text>
                         </TouchableOpacity>
                     </View>

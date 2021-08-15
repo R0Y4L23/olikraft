@@ -70,10 +70,7 @@ const More=({navigation})=>{
      <TouchableOpacity onPress={()=>{navigation.navigate("Settings")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >Settings</Text>
      </TouchableOpacity>
-     <Divider/>
-     <TouchableOpacity onPress={()=>{navigation.navigate("ProductDetails")}}>
-     <Text style={{fontSize:18,paddingBottom:11}} >Product Details</Text>
-     </TouchableOpacity>
+   
      <Divider/>
      <TouchableOpacity onPress={handleLogout}>
          <Text style={{fontSize:18,paddingBottom:11}} >Logout</Text>

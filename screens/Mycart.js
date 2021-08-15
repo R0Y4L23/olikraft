@@ -1,16 +1,17 @@
 import React, {useState,useEffect} from 'react'
-import { StyleSheet,View, Text, Button, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet,View, Text, Button, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import { Ionicons,Entypo} from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const axios = require('axios');
 export default function Mycart({navigation}) {
     const [Counter,setCounter] = useState(1)
-
+    const [keys,setkeys] = useState(0)
     const [Coupon,setCoupon] = useState("")
     const [cartitems,setCartitems]=useState([])
     const [carttotals,setCarttotals]=useState([])
-
+   
     function increment(){
         setCounter(Counter + 1)
     }
@@ -35,6 +36,32 @@ export default function Mycart({navigation}) {
           console.log(e)
         }
       }
+      const removefromcart=async (key)=>{
+        let token = await getData()
+
+            fetch('https://olikraft.shubhchintak.co/api/letscms/v1/cart/remove-item/' + key, {
+                method:"POST",
+                headers:{
+                    "letscms_token":token,
+                },
+                
+              },)
+              .then(response => response.json())
+              .then((response) =>{
+                if(response.status){
+                // alert(response.message)
+                
+                console.log(response)
+                setkeys(keys + 1)
+                
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+        
+    }
+
     
       const fetchcart = async () =>{
         let token = await getData()
@@ -45,32 +72,32 @@ export default function Mycart({navigation}) {
         })
         .then(response => response.json())
         .then((res) => {
-            //console.log(res.data)
-            //setCartitems(res.data.data.cart_items)
-            //setCarttotals(res.data.data.cart_totals)
+            // console.log(res)
+            setCartitems(res.data.cart_items)
+            setCarttotals(res.data.cart_totals)
         })
         .catch(error => console.log(error))
       }
+
     useEffect(()=>{
         fetchcart()}
        ,[])
     return (
-        <View style={{flex:1,justifyContent:"space-between"}}>
-            <View style={{backgroundColor:"red",}}>
+        <View style={{flex:1,justifyContent:"space-between"}} key={keys}>
+            <View>
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
                 <Appbar.Content title="My Cart" titleStyle={styles.title}/>
             </Appbar.Header>
             </View>
+            <ScrollView>
             {cartitems.map((item,idx)=>{return(
-                <View style={{flex:1,justifyContent:"center"}} key={item.product_id}>
-                    <View style={{padding:15,flex:1,justifyContent:"space-evenly"}} key={idx}>
+                <ScrollView contentContainerStyle={{flex:1,justifyContent:"space-between"}} key={item.product_id}>
+                    <View style={{padding:15,flex:1}} key={idx}>
                         <Text style={{fontSize:13,fontWeight:"bold",marginBottom:5}}>
                             {item.product_name}
                         </Text>
-                        <Text style={{fontSize:13,color:"grey",marginBottom:5}}>
-                            11 inch
-                        </Text>
+                        
                         <View style={{flexDirection:"row",marginBottom:5}}>
                             <Text style={{color:"grey"}}>
                                 ${item.product_price} x {item.quantity}
@@ -80,23 +107,25 @@ export default function Mycart({navigation}) {
                             </Text>
                         </View>
                     </View>
+                    <View style={{flex:1}}>
                     <View style={{flexDirection:"row",padding:5}} key={item.key}>
                         <View style={{backgroundColor:"white",flex:1,flexDirection:"row",borderWidth:1,borderLeftWidth:0,borderColor:"grey"}}>
                             <View style={{flex:1,marginLeft:5,justifyContent:"center"}}>
                                 <Entypo name="minus" size={24} color="black" onPress={decrement}/>
                             </View>
                             <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                                <Text style={{fontWeight:"bold",fontSize:16}}>{Counter}</Text>
+                                <Text style={{fontWeight:"bold",fontSize:16}}>{item.quantity}</Text>
                             </View>
                             <View style={{flex:1,justifyContent:"center",alignItems:"flex-end",marginRight:10}}>
                                 <Entypo name="plus" size={24} color="black" onPress={increment}/>
                             </View>
                         </View>
                         <View style={{flex:1}}>
-                            <Button title="Remove" color="rgb(5,23,41)"/>
+                            <Button title="Remove" color="rgb(5,23,41)" onPress={()=>removefromcart(item.key)}/>
                         </View>
                     </View>
-                </View>
+                    </View>
+                </ScrollView>
             )})}
             <View style={{padding:15,flex:1,justifyContent:"center"}}>
                 <Text style={{fontSize:13,fontWeight:"bold",marginBottom:5}}>
@@ -109,7 +138,7 @@ export default function Mycart({navigation}) {
                     </View> 
                 </View>
             </View>
-            <View style={{justifyContent:"flex-end",flex:1}}>
+            <View style={{justifyContent:"flex-start",flex:1}}>
                 <View style={{justifyContent:"flex-end",borderBottomWidth:0.5,margin:10}}>
                         <View style={{flexDirection:'row',paddingBottom:5}}>
                             <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:10}}>
@@ -138,15 +167,18 @@ export default function Mycart({navigation}) {
                         </Text>
                     </View>
                 </View>
-                    <View style={styles.button}> 
+                
+                    
+            </View>
+            </ScrollView>
+            <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("BNS")}}>
                             <Text style={{fontSize:15,fontWeight:"bold"}}>Continue Shopping </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Checkout")}}>
+                        <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Checkout",{coupon:Coupon})}}>
                             <Text style={{color:"white",fontSize:15,fontWeight:"bold"}}>Proceed to Checkout</Text>
                         </TouchableOpacity>
                     </View>
-            </View>
         </View>
     )
 }

@@ -47,9 +47,9 @@ export default function Shippingaddress() {
         <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
             <View style={{flexDirection:"row"}}>
                 <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold",color:"black"}}>Shipping Address</Text>
-                <View style={{marginTop:10,marginRight:15}}>
+                {/* <View style={{marginTop:10,marginRight:15}}>
                     <EvilIcons name="pencil" size={30} color="black" />
-                </View>
+                </View> */}
             </View>
             <Card.Content style={{marginTop:10}}>
                 <Paragraph style={{fontSize:12,}}>{shad.first_name} {shad.last_name}</Paragraph>

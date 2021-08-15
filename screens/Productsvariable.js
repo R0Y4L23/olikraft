@@ -16,6 +16,12 @@ export default function Productsvariable({route,navigation}) {
     const [Attributes,setAttributes] = useState([])
     const [Children,setChildren] = useState([])
     const [proid,setid] = useState(route.params.id)
+    const variations = []
+    const filteredattributes = [] 
+    const [filteredvariations ,setfilteredvariations] = useState([])
+    const [fa,setfa] = useState([])
+    const [a,seta] = useState([])
+    var [ans,setans] = useState()
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -28,22 +34,28 @@ export default function Productsvariable({route,navigation}) {
         }
       }
 
-      const addtocart=async ()=>{
       
-           await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/cart/add-item', {
-                product_id:id,
+      const addtocart=async ()=>{
+        let token = await getData()
+
+            fetch('https://olikraft.shubhchintak.co/api/letscms/v1/cart/add-item', {
+                method:"POST",
+                headers:{
+                    "letscms_token":token,
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                product_id:proid,
                 quantity:Counter,
-                Headers:{
-                    letscms_token:token
-                }
+                }),
+                
               },)
-              .then(async function (response) {
-                if(response.data.status)
-                {
-                    await storeToken(response.data.letscms_token)
-                    await storeProfileData(response.data.user)
-                    navigation.navigate("BNS")
-                }
+              .then(response => response.json())
+              .then((response) =>{
+                
+                alert(response.message)
+                navigation.navigate("Mycart")
+                
               })
               .catch(function (error) {
                 console.log(error);
@@ -121,16 +133,67 @@ export default function Productsvariable({route,navigation}) {
               .catch(function (error) {
                 console.log(error);
               })
-    }
 
+            axios.get("https://olikraft.shubhchintak.co/api/wc/v3/products/" + id + "/variations", {
+                auth: {
+                    username: 'ck_e296377c8e66081c9321b68f176b42812ca4c40a',
+                    password: 'cs_d3c061b568c0318c269f0b4c3ef6aa8a855e520e'
+                  }
+              })
+              .then(function (response) {
+
+                    setfilteredvariations(response.data.map(({id,attributes,...rest}) => ({id,attributes})))
+                    filteredvariations.map((element) => {
+                        return {...element, subElements: element.subElements.filter((subElement) => subElement.option === 1)}
+                      })
+                    setfa(response.data.map(({attributes,...rest}) => ({attributes})))
+                    
+              })
+              .catch(function (error) {
+                console.log(error);
+              })
+
+            
+    }
+    // function filterattributes(){
+    //     fa.map((att=>{
+    //         return(
+    //             // att.attributes.map(at=>{
+    //             //     return(console.log(at))
+    //             // })
+    //             console.log(att.attributes)
+    //         )
+    //     }))
+    // }
+    
+    function matchvardetails(option){
+        variations.push(option)
+        
+        if(variations.length === Attributes.length){
+            let ans = variations[0]
+            for(let i = 0; i < variations.length; i++)
+            {
+                ans = (ans&variations[i]);
+            }
+            setans(ans)
+
+
+        }
+    }
+    function matchfilteredvar(ans){
+        
+    }
+    
     useEffect(()=>{
         fetchrootitem()
         // fetchvaritem()
         fetchvarchildren(route.params.id)
+        // filterattributes()
     },[])
     // let Image_Http_URL ={ uri: pro.image};
     let discount=( Math.abs(price - saleprice) ) / price 
     let discountPrice = Math.abs(price - saleprice)
+    console.log(fa)
     return (
         <View style={{flex:1}}>
             <View >
@@ -152,9 +215,9 @@ export default function Productsvariable({route,navigation}) {
                 <View style={{flexDirection:"row",padding:10}}>
                     <Text style={{marginLeft:5,fontSize:16,flex:1,fontWeight:"bold"}}>{name}</Text>
                     <View style={{flex:0.5,alignItems:"flex-end",marginRight:16,justifyContent:"center"}}>
-                        <View style={{backgroundColor:"white",justifyContent:"center",alignItems:"center",borderRadius:50,height:40,width:40}}>
+                        <TouchableOpacity style={{backgroundColor:"white",justifyContent:"center",alignItems:"center",borderRadius:50,height:40,width:40}} onPress={()=>{navigation.navigate("Mycart")}}>
                             <FontAwesome5 name="shopping-bag" size={16} color="black" />
-                        </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{backgroundColor:"rgb(33,184,97)",borderRadius:5,marginLeft:15,width:"15%",flexDirection:"row",justifyContent:"space-evenly"}}>
@@ -200,11 +263,11 @@ export default function Productsvariable({route,navigation}) {
                                     att.options.map((option,index)=>{
                                         return(
                                             (index===0)?
-                                            <TouchableOpacity style={{flex:1,padding:5,justifyContent:"center",alignItems:"flex-start",backgroundColor:"rgb(5,23,41)"}} onPress={()=>fetchvaritem(Children[0])} key={index}>
+                                            <TouchableOpacity style={{flex:1,padding:5,justifyContent:"center",alignItems:"flex-start",backgroundColor:"rgb(5,23,41)"}} onPress={()=>matchvardetails(option)} key={index}>
                                                 <Text style={{fontSize:14,fontWeight:"bold",color:"white"}}>{option}</Text>
                                                
                                             </TouchableOpacity>
-                                            :<TouchableOpacity style={{flex:1,padding:5,justifyContent:"center",alignItems:"flex-start",}} onPress={()=>fetchvaritem(Children[0])} key={index}>
+                                            :<TouchableOpacity style={{flex:1,padding:5,justifyContent:"center",alignItems:"flex-start",}} onPress={()=>matchvardetails(option)} key={index}>
                                             <Text style={{fontSize:14,fontWeight:"bold"}}>{option}</Text>
                                            
                                             </TouchableOpacity>
@@ -282,7 +345,7 @@ export default function Productsvariable({route,navigation}) {
             </View>
             </ScrollView>
             <View style={{alignItems:"center",padding:20}}>
-                    <TouchableOpacity style={{backgroundColor:'rgb(33,184,97)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}} onPress={()=>{navigation.navigate("Mycart")}}>
+                    <TouchableOpacity style={{backgroundColor:'rgb(33,184,97)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}} onPress={addtocart}>
                         <Text style={{color:"white",fontSize:16}}>Buy Now</Text>
                     </TouchableOpacity>
                 </View>
