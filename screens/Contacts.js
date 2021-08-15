@@ -51,7 +51,7 @@ const styles = StyleSheet.create ({
         flex:1
     },
     item: {
-       backgroundColor : 'rgb(5,23,41)'
+       backgroundColor : 'rgb(5,23,41)',height:35,paddingBottom:17
     },
     icon: {
         marginLeft: 20

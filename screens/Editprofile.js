@@ -83,12 +83,11 @@ export default function Editprofile({navigation}) {
                 <View style={styles.form}>
                     <TextInput style={{ height: 40,paddingLeft:10,}} onChangeText={setEmail}  value={email} placeholder="Email"/>
                 </View>               
-                
-                <Text style={styles.name}>Country</Text>
+                {/* <Text style={styles.name}>Country</Text>
                 <View style={styles.form}>
                     <TextInput style={{ height: 40,flex:1,paddingLeft:10,}}  value="India" secureTextEntry={hidecountry ? true : false} placeholder="Enter here..." />
                     <Feather style={{margin:10}}name={hidecountry ? 'eye-off' : 'eye'} size={20} color="black"  onPress={() => setHidecountry(!hidecountry)} />
-                </View>
+                </View> */}
                 <View style={styles.form}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setPassword} value={password} placeholder="Password" secureTextEntry={!passVisible}/>
                    <Feather name={`${passVisible?"eye-off":"eye"}`} size={35} color="black" style={{flex:1.5}} onPress={()=>{setPassVisible(!passVisible)}}/>
@@ -115,7 +114,7 @@ export default function Editprofile({navigation}) {
 }
 const styles = StyleSheet.create ({
     item: {
-       backgroundColor : 'rgb(5,23,41)'
+       backgroundColor : 'rgb(5,23,41)',height:35,paddingBottom:17
     },
     icon: {
         marginLeft: 20
@@ -140,7 +139,7 @@ const styles = StyleSheet.create ({
     },
     buttoncontainer:{
         marginTop:25,
-        height:160  
+        height:140 
     },
     button:{
         backgroundColor:"white",

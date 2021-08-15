@@ -7,7 +7,7 @@ import * as Linking from 'expo-linking';
 const Tutorials = ({navigation}) => {
     return (
         <View style={{backgroundColor:"#f9f9f9"}}>
-             <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)"}}>
+             <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)",height:35,paddingBottom:17}}>
                 <Appbar.Content title="Tutorials" titleStyle={{fontSize:20}}/>
               <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:10}}/></TouchableOpacity>
             </Appbar.Header>
