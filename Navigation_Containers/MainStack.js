@@ -25,6 +25,7 @@ import Cancelconfirmation from '../screens/Cancelconfirmation'
 import ProductDetails from "../screens/Productdetails"
 import Productsvariable from '../screens/Productsvariable'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Products from '../screens/Products'
 const Stack = createNativeStackNavigator();
 
 const Loading = ({navigation}) => {
@@ -57,6 +58,7 @@ const MainStack = () => {
         <Stack.Navigator screenOptions={{headerShown:false}}>
             <Stack.Screen name="Loading" component={Loading}/>
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Products" component={Products} />
             <Stack.Screen name="Signup" component={Signup} />
             <Stack.Screen name="Confirmation" component={Confirmation} />
             <Stack.Screen name="BNS" component={BottomNavStack} />

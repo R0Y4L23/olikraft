@@ -49,10 +49,8 @@ export default function Mycart({navigation}) {
               .then(response => response.json())
               .then((response) =>{
                 if(response.status){
-                // alert(response.message)
-                
-                console.log(response)
-                setkeys(keys + 1)
+                    alert(response.message)
+                    navigation.navigate("Products")
                 
                 }
               })
@@ -83,14 +81,16 @@ export default function Mycart({navigation}) {
         fetchcart()}
        ,[])
     return (
-        <View style={{flex:1,justifyContent:"space-between"}} key={keys}>
+        <View style={{flex:1,justifyContent:"space-between"}}>
             <View>
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
                 <Appbar.Content title="My Cart" titleStyle={styles.title}/>
             </Appbar.Header>
             </View>
+            { cartitems!=0 ?
             <ScrollView>
+                
             {cartitems.map((item,idx)=>{return(
                 <ScrollView contentContainerStyle={{flex:1,justifyContent:"space-between"}} key={item.product_id}>
                     <View style={{padding:15,flex:1}} key={idx}>
@@ -171,6 +171,14 @@ export default function Mycart({navigation}) {
                     
             </View>
             </ScrollView>
+            :<View style={{flex:1,justifyContent:"center",alignItems:'center'}}>
+                    <Text>
+                        No Prodcuts added to cart
+                    </Text>
+                </View>
+            }
+            {
+                cartitems!=0?
             <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("BNS")}}>
                             <Text style={{fontSize:15,fontWeight:"bold"}}>Continue Shopping </Text>
@@ -179,6 +187,9 @@ export default function Mycart({navigation}) {
                             <Text style={{color:"white",fontSize:15,fontWeight:"bold"}}>Proceed to Checkout</Text>
                         </TouchableOpacity>
                     </View>
+                    :<View>
+                        </View>
+}
         </View>
     )
 }

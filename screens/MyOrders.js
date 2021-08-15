@@ -18,23 +18,23 @@ function All() {
             console.log(e)
         }
     }
-    const fetchOrders = async () => {
-        let token = await getData()
-        await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/orders', {
-            method: "GET",
-            headers: {
-                "letscms_token": token
-            }
-        }).then(function (response)
-         {
-            console.log(response);
-        }).catch((e)=>{
-            console.log(e)
-        })
-    }
+    // const fetchOrders = async () => {
+    //     let token = await getData()
+    //     await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/orders', {
+    //         method: "GET",
+    //         headers: {
+    //             "letscms_token": token
+    //         }
+    //     }).then(function (response)
+    //      {
+    //         console.log(response);
+    //     }).catch((e)=>{
+    //         console.log(e)
+    //     })
+    // }
     useEffect(() => 
     {
-    fetchOrders()
+    // fetchOrders()
     }, [])
     return (
         <ScrollView >
