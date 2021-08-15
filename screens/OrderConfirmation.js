@@ -95,7 +95,7 @@ const styles = StyleSheet.create ({
         height:"100%"
     },
     item: {
-       backgroundColor : 'white'
+       backgroundColor : 'white',height:35,paddingBottom:17
     },
     icon: {
         marginLeft: 20

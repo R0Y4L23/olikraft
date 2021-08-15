@@ -30,7 +30,7 @@ export default function ManageAddress({navigation}) {
 const styles = StyleSheet.create ({
   
     item: {
-       backgroundColor : 'rgb(5,23,41)'
+       backgroundColor : 'rgb(5,23,41)',height:35,paddingBottom:17
     },
     icon: {
         marginLeft: 20,

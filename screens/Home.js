@@ -79,7 +79,7 @@ const Home = ({navigation}) => {
             const jsonValue = await AsyncStorage.getItem('profileData')
             if (jsonValue) {
                 let data = JSON.parse(jsonValue)
-                setName(`${data.first_name}`)
+                setName(data.display_name.split(" ")[0])
             }
             if (value !== null) {
                 return value
@@ -114,7 +114,7 @@ const Home = ({navigation}) => {
        <View style={{flex:1,backgroundColor:"#f9f9f9",paddingTop:25}}>
            <ScrollView>
                <View style={{marginLeft:'auto',marginRight:"auto",flex:1,justifyContent:"space-evenly",width:"100%",height:"100%"}}>
-           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
+           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",marginBottom:30}}>
                <Text style={{fontSize:20}}>Hi, {name}</Text>
                <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
                   <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}} style={{marginRight:15}}><SimpleLineIcons name="bag" size={26} color="black"  /></TouchableOpacity>

@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {View,Text,TextInput,TouchableOpacity} from "react-native"
+import {View,Text,TextInput,TouchableOpacity,ActivityIndicator} from "react-native"
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -13,6 +13,8 @@ const Signup = ({navigation}) => {
     const [passVisible,setPassVisible]=useState(false)
     const [confirmPassVisible,setConfirmPassVisible]=useState(false)
     const [confirmPass,setConfirmPass]=useState("")
+    const [error,setError]=useState("")
+    const [loading,setLoading]=useState(false)
     const storeToken = async (value) => {
         try {
           await AsyncStorage.setItem('token', value)
@@ -29,6 +31,8 @@ const Signup = ({navigation}) => {
         }
       }
     const handleSignup=async ()=>{
+        setError("")
+        setLoading(true)
         if(name&&email&&password&&confirmPass&&password==confirmPass)
         {
             await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/auth/register', {
@@ -42,14 +46,29 @@ const Signup = ({navigation}) => {
                   console.log(response.data)
                 if(response.data.status)
                 {
+                    setLoading(false)
                     await storeToken(response.data.letscms_token)
                     await storeProfileData(response.data.user)
                     navigation.navigate("Confirmation")
+                }
+                else
+                {
+                    setLoading(false)
+                    setError(`${response.data.errors.username?response.data.errors.username:""}\n${response.data.errors.password?response.data.errors.password:""}`)
                 }
               })
               .catch(function (error) {
                 console.log(error);
               });
+        }
+        else if(password!=confirmPass)
+        {
+            setLoading(false)
+            setError("Passwords are not equal")
+        }
+        else{
+            setLoading(false)
+            setError("All fields must be filled")
         }
     }
     return (
@@ -75,8 +94,10 @@ const Signup = ({navigation}) => {
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setConfirmPass} value={confirmPass} placeholder="Confirm Password" secureTextEntry={!confirmPassVisible}/>
                    <Feather name={`${confirmPassVisible?"eye-off":"eye"}`} size={35} color="black" style={{flex:1.5}} onPress={()=>{setConfirmPassVisible(!confirmPassVisible)}}/>
                </View>
+               <Text>{error&&<Text style={{color:"red",marginVertical:8,textTransform:"capitalize",textAlign:"center"}}>{error}</Text>}</Text>
                <TouchableOpacity style={{backgroundColor:"#051729",height:40,width:300,display:"flex",justifyContent:"center",alignItems:"center",marginVertical:12}} onPress={handleSignup}>
-                   <Text style={{color:"white",fontSize:16}}>Signup</Text>
+                   {!loading&&<Text style={{color:"white",fontSize:16}}>Signup</Text>}
+                   {loading&&<ActivityIndicator size="small" color="white"/>}
                </TouchableOpacity>
                {/* <TouchableOpacity style={{backgroundColor:"white",height:50,width:300,display:"flex",flexDirection:"row",alignItems:"center",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5}}>
                    <Image style={{width:22,height:22,marginLeft:10}} source={require("../assets/google.png")}/> 
@@ -86,7 +107,7 @@ const Signup = ({navigation}) => {
                    <Image style={{width:22,height:22,marginLeft:10}} source={require("../assets/facebook.png")}/> 
                    <Text style={{fontSize:15,color:"black",textAlign:"center",width:"90%"}}>Signup with Facebook</Text>
                </TouchableOpacity> */}
-               <Text style={{marginTop:80}}>Already have an account? <Text style={{textDecorationLine:"underline"}} onPress={()=>{navigation.navigate("Login")}}>Login</Text></Text>
+               <Text style={{marginTop:70}}>Already have an account? <Text style={{textDecorationLine:"underline"}} onPress={()=>{navigation.navigate("Login")}}>Login</Text></Text>
        </View>
     )
 }
