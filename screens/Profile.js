@@ -32,18 +32,17 @@ export default function Profile({navigation}) {
                 <MaterialIcons style={styles.edit} name="edit" size={24} color="white" />
                 </TouchableOpacity>
             </Appbar.Header>
-            <Image source={require('../assets/profile.png')} style={{height:"30%",width:"100%",opacity:0.75}} />
-            <View style={{padding:15}}>
+            {/* <Image source={require('../assets/profile.png')} style={{height:"30%",width:"100%",opacity:0.75}} /> */}
+            <View style={{flex:1,padding:15,marginLeft:20}}>
                 <Text style={styles.name}>Full Name</Text>
                 <TextInput style={{ height: 40}}  value={name} placeholder="Full Name"  />
                 <Text style={styles.name} >Email</Text>
-                <TextInput style={{ height: 40}}  value={email} placeholder="Email" />
-                
-                <Text style={styles.name}>Country</Text>
+                <TextInput style={{ height: 40,marginBottom:30}}  value={email} placeholder="Email" />
+                {/* <Text style={styles.name}>Country</Text>
                 <View style={styles.form}>
                     <TextInput style={{ height: 40,flex:1}}  value="India" secureTextEntry={hidecountry ? true : false} placeholder="Enter here..." />
                     <Feather style={{marginTop:5}}name={hidecountry ? 'eye-off' : 'eye'} size={20} color="black"  onPress={() => setHidecountry(!hidecountry)} />
-                </View>
+                </View> */}
                 <TouchableOpacity onPress={()=>{navigation.navigate("Changepass")}}>
                 <Text style={{textDecorationLine:"underline",color:"rgb(5,23,41)"}}>Change Password</Text>
                 </TouchableOpacity>

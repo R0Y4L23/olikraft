@@ -16,11 +16,8 @@ export default function Shippingaddress() {
           console.log(e)
         }
       }
-
-
     const fetchshippingaddress= async ()=>{
         let token = await getData()
-    
         fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/shipping",{
             headers:{
                 letscms_token:token
