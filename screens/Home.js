@@ -19,16 +19,17 @@ const TopComponent=({content,image})=>{
         </View>
     )
 }
-const ShopFromFavouriteComponent=({product,nprice,pprice,id,navigation,image})=>{
+const ShopFromFavouriteComponent=({product,nprice,pprice,id,navigation,image,featured})=>{
     return(
         <TouchableOpacity onPress={()=>{navigation.navigate("ProductDetails",{"id":id})}}>
-        <View style={{width:325,height:100,margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
-            <Image source={{uri:image}} style={{height:75,width:75}}/>
-            <View>
-                <Text style={{fontSize:12,width:150}}>{product}</Text>
-                <Text style={{fontSize:15,fontWeight:"800",marginTop:10}}>${nprice} <Text style={{color:"red",textDecorationLine:"line-through"}}>{pprice?`$ ${pprice}`:""}</Text></Text>
-            </View>  
-        </View>
+            {featured&&<View
+                style={{width:325,height:100,margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
+                <Image source={{uri:image}} style={{height:75,width:75}} />
+                <View>
+                    <Text style={{fontSize:12,width:150}}>{product}</Text>
+                    <Text style={{fontSize:15,fontWeight:"800",marginTop:10}}>${nprice} <Text style={{color:"red",textDecorationLine:"line-through"}}>{pprice?`$ ${pprice}`:""}</Text></Text>
+                </View>
+            </View>}
         </TouchableOpacity>
     )
 }
@@ -47,7 +48,6 @@ const RecentReviewsComponent=({name,stars,comment})=>{
         </View>
     )
 }
-
 const Home = ({navigation}) => {
     const TCJSON = [{
         "content": "Stop winding yarn by hand",
@@ -105,11 +105,9 @@ const Home = ({navigation}) => {
     useEffect(() => {
         fetchProducts()
     },[])
-
     const [searchQuery, setSearchQuery] = React.useState('');
     const [focus,setFocus]=React.useState(false);
     const onChangeSearch = query => setSearchQuery(query);
-  
     return (
        <View style={{flex:1,backgroundColor:"#f9f9f9",paddingTop:25}}>
            <ScrollView>
@@ -143,10 +141,12 @@ const Home = ({navigation}) => {
                    <SimpleLineIcons name="present" size={30} color="white" />
                    </LinearGradient>
            </View>
-           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:"80%"}}>
+           <TouchableOpacity onPress={()=>{navigation.navigate("Products")}}>
+           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:"100%"}}>
                <Text style={{fontSize:22}}>Shop from Favourites</Text>
                <AntDesign name="arrowright" size={24} color="black" />
            </View>
+           </TouchableOpacity>
            {/* <View style={{height:125}}>
                <ScrollView horizontal>
                    {SFFJSON.map((item,index)=>{return <ShopFromFavouriteComponent product={item.product} nprice={item.NPrice} pprice={item.PPrice} key={index}/>})}
@@ -154,7 +154,7 @@ const Home = ({navigation}) => {
            </View> */}
            <View style={{height:125}}>
                <ScrollView horizontal>
-                   {pro.length>0&&pro.map((item,index)=>{return <ShopFromFavouriteComponent product={item.name} nprice={item.price} pprice={item.regular_price} key={index} id={item.id} navigation={navigation} image={item.image}/>})}
+                   {pro.length>0&&pro.map((item,index)=>{return <ShopFromFavouriteComponent product={item.name} nprice={item.price} pprice={item.regular_price} key={index} id={item.id} navigation={navigation} image={item.image} featured={item.featured}/>})}
                </ScrollView>
            </View>
           

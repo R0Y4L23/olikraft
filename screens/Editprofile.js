@@ -59,13 +59,13 @@ export default function Editprofile({navigation}) {
         getProfileData()
     },[])
     return (
-        <View>
+        <View style={{flex:1}}>
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
                 <Appbar.Content title="Profile" titleStyle={styles.title}/>
             </Appbar.Header>
             <ScrollView>
-            <View style={{width:"100%",height:240}}>
+            {/* <View style={{width:"100%",height:240}}>
                 <ImageBackground source={require(`../assets/profile.png`)} style={{flex:1,justifyContent:"center"}} imageStyle={{height:205,backgroundColor:"black"}}>
                     <View style={{flex:1,justifyContent:"flex-end",height:50,alignItems:"flex-end",paddingBottom:15}}>
                         <View style={{backgroundColor:"rgb(5,23,41)",height:50,width:50,justifyContent:"center",alignItems:"center",borderRadius:50,marginRight:20}}>
@@ -73,7 +73,7 @@ export default function Editprofile({navigation}) {
                         </View>
                     </View>
                 </ImageBackground>
-            </View>
+            </View> */}
             <View style={{padding:15}}>
                 <Text style={{color:"grey"}}>Full Name</Text>
                 <View style={styles.form}>
@@ -98,7 +98,8 @@ export default function Editprofile({navigation}) {
                </View>
                 <Text style={{textDecorationLine:"underline",color:"rgb(5,23,41)",textAlign:"right",marginTop:5}} onPress={()=>{navigation.navigate("Changepass")}}>Change Password</Text>
             </View>
-            <View style={styles.buttoncontainer}>
+        </ScrollView>
+        <View style={styles.buttoncontainer}>
                 <View style={styles.button}> 
                     <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.goBack()}}>
                         <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
@@ -107,9 +108,8 @@ export default function Editprofile({navigation}) {
                         <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
-            </ScrollView>
         </View>
+    </View>
     )
 }
 const styles = StyleSheet.create ({
@@ -138,8 +138,9 @@ const styles = StyleSheet.create ({
      borderColor:"grey",   
     },
     buttoncontainer:{
-        marginTop:25,
-        height:140 
+        position:'absolute',
+        bottom:0,
+        width:"100%"
     },
     button:{
         backgroundColor:"white",

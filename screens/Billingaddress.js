@@ -17,11 +17,8 @@ export default function Billingaddress() {
           console.log(e)
         }
       }
-
-    
     const fetchbillingaddress = async () =>{
             let token = await getData()
-        
             fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/billing",{
                 headers:{
                     letscms_token:token
@@ -35,18 +32,12 @@ export default function Billingaddress() {
                 // setStatelist(res.data.states)
                 // setState(res.data.address.state)
                 // setCountry(res.data.address.country)
-            
             })
             .catch(error => console.log(error))
-        
         }
-
-    
-
     useEffect(()=>{
         fetchbillingaddress()
     },[])
-
     return (
             <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>
@@ -62,8 +53,6 @@ export default function Billingaddress() {
                     <Paragraph style={{fontSize:12,}}>{ad.city} {ad.postcode}</Paragraph>
                     {/* <Paragraph style={{fontSize:12}}>{Statelist[country][State]},{countrylist[country]}. </Paragraph> */}
                 </Card.Content>
-                
-            
             </Card>
     )
 }
