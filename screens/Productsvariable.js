@@ -17,9 +17,9 @@ export default function Productsvariable({route,navigation}) {
     const [Children,setChildren] = useState([])
     const [proid,setid] = useState(route.params.id)
     const variations = []
-    const filteredattributes = [] 
+    const titles = []
     const [filteredvariations ,setfilteredvariations] = useState([])
-    const [fa,setfa] = useState([])
+    var fa = []
     const [a,seta] = useState([])
     var [ans,setans] = useState()
     const getData = async () => {
@@ -87,11 +87,12 @@ export default function Productsvariable({route,navigation}) {
                 setPro(response.data.data)
                 setImages(response.data.data.gallery_images)
                 setName(response.data.data.name)
-                // setprice(Number(response.data.data.regular_price))
-                // setsaleprice(Number(response.data.data.price))
-                // setrating(response.data.data.average_rating)
+                setprice(Number(response.data.data.price))
+                setsaleprice(Number(response.data.data.sale_price))
+                setrating(response.data.data.average_rating)
                 // setAttributes(Object.keys(response.data.data.attributes))
-                setid(response.data.data.children[0])
+                // setid(response.data.data.children[0])
+                // fetchvarchildren(route.params.id)
           })
           .catch(function (error) {
             console.log(error);
@@ -99,25 +100,26 @@ export default function Productsvariable({route,navigation}) {
           
     }
 
-    function fetchvaritem (){
-        let token=getData()
-        axios.get("https://olikraft.shubhchintak.co/api/letscms/v1/product/" + proid, {
-            Headers:{
-                letscms_token:token
-            }
-          })
-          .then(function (response) {
+    // function fetchvaritem (){
+    //     let token=getData()
+    //     axios.get("https://olikraft.shubhchintak.co/api/letscms/v1/product/" + proid, {
+    //         Headers:{
+    //             letscms_token:token
+    //         }
+    //       })
+    //       .then(function (response) {
                 
-                setName(response.data.data.name)
-                setprice(Number(response.data.data.regular_price))
-                setsaleprice(Number(response.data.data.sale_price))
-                setrating(response.data.data.average_rating)
-                // console.log(response.data.data.name)
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-        }  
+    //             setName(response.data.data.name)
+    //             setprice(Number(response.data.data.regular_price))
+    //             setsaleprice(Number(response.data.data.sale_price))
+    //             setrating(response.data.data.average_rating)
+    //             // console.log(response.data.data.name)
+                
+    //       })
+    //       .catch(function (error) {
+    //         console.log(error);
+    //       })
+    //     }  
     function fetchvarchildren (id){
             
             axios.get("https://olikraft.shubhchintak.co/api/wc/v3/products/" + id, {
@@ -142,12 +144,20 @@ export default function Productsvariable({route,navigation}) {
               })
               .then(function (response) {
 
-                    setfilteredvariations(response.data.map(({id,attributes,...rest}) => ({id,attributes})))
-                    filteredvariations.map((element) => {
-                        return {...element, subElements: element.subElements.filter((subElement) => subElement.option === 1)}
-                      })
-                    setfa(response.data.map(({attributes,...rest}) => ({attributes})))
+                    fa = (response.data.map(({id,attributes,...rest}) => ({id,attributes}))).map(function(row){  // For each row in data.
+                        // Set the static data in the result row
+                        var reference = { id: row.id};
+                        
+                        // Iterate over `row.references`, and add the current reference to the result.
+                        row.attributes.reduce(function(previous, current){
+                            previous[ current.name] = current.option;
+                            return previous;
+                        }, reference);
+                        
+                        return reference;
+                        });
                     
+                    console.log(fa)
               })
               .catch(function (error) {
                 console.log(error);
@@ -155,45 +165,60 @@ export default function Productsvariable({route,navigation}) {
 
             
     }
-    // function filterattributes(){
-    //     fa.map((att=>{
-    //         return(
-    //             // att.attributes.map(at=>{
-    //             //     return(console.log(at))
-    //             // })
-    //             console.log(att.attributes)
-    //         )
-    //     }))
-    // }
     
-    function matchvardetails(option){
+    function matchvardetails(option,title){
         variations.push(option)
-        
+        titles.push(title)
         if(variations.length === Attributes.length){
             let ans = variations[0]
             for(let i = 0; i < variations.length; i++)
             {
                 ans = (ans&variations[i]);
             }
-            setans(ans)
+            console.log(ans)
+            let sliced = Object.values(fa).slice(0,Attributes.length)
+            let ans2 = sliced[0]
+            console.log(sliced,ans2)
+            
+            // for(let i=0;i<sliced.length;i++)
+            // {
+            //     ans2 = (ans2 & sliced[i])
+            //     if(ans === ans2){
+            //         filteredvariations = fa.filter((filt,index)=>{
+            //             return index===i
+            //         })
+            //         console.log(filteredvariations)
+            //         break;
+            //     }
+            // }
+            
 
+
+            
 
         }
+        // console.log(Attributes.length)
     }
     function matchfilteredvar(ans){
-        
+        result.map(res=>{
+            return(
+            console.log(Object.values(res).slice(0,2))
+            )})
+                      
     }
     
     useEffect(()=>{
         fetchrootitem()
         // fetchvaritem()
-        fetchvarchildren(route.params.id)
+        // fetchvarchildren(route.params.id)
+        
         // filterattributes()
     },[])
     // let Image_Http_URL ={ uri: pro.image};
     let discount=( Math.abs(price - saleprice) ) / price 
     let discountPrice = Math.abs(price - saleprice)
-    console.log(fa)
+    
+  
     return (
         <View style={{flex:1}}>
             <View >
@@ -203,12 +228,13 @@ export default function Productsvariable({route,navigation}) {
 
             </Appbar.Header>
             </View>
-            {
+            {/* {
                 proid ?
                 fetchvaritem()
                 :<View></View>
-            }
+            } */}
             <ScrollView style={{flex:1}}>
+                {console.log(fa)}
                 <View  style={{elevation:15,padding:5,borderRadius:10,backgroundColor:"white"}}>
                     <SliderBox images={images} sliderBoxHeight={270} resizeMode="contain"/>
                 </View>
@@ -226,7 +252,7 @@ export default function Productsvariable({route,navigation}) {
                 </View>
                 {
 
-                    (saleprice != discountPrice)
+                    (saleprice != 0)
                         ?   <View>
                                 <View style={{flexDirection:"row",width:"50%",padding:10,marginLeft:5,}}>
                                     <Text style={{color:"rgb(5,23,41)",fontSize:15,flex:0.5}}>
@@ -243,7 +269,7 @@ export default function Productsvariable({route,navigation}) {
                             
                         :   <View style={{flexDirection:"row",width:"50%",padding:10,marginLeft:5,}}>
                                 <Text style={{color:"rgb(5,23,41)",fontSize:15,flex:0.5,fontWeight:"bold"}}>
-                                    ${saleprice}
+                                    ${price}
                                 </Text>
                             </View>
 
@@ -263,11 +289,11 @@ export default function Productsvariable({route,navigation}) {
                                     att.options.map((option,index)=>{
                                         return(
                                             (index===0)?
-                                            <TouchableOpacity style={{flex:1,padding:5,justifyContent:"center",alignItems:"flex-start",backgroundColor:"rgb(5,23,41)"}} onPress={()=>matchvardetails(option)} key={index}>
+                                            <TouchableOpacity style={{flex:1,padding:5,justifyContent:"center",alignItems:"flex-start",backgroundColor:"rgb(5,23,41)"}} onPress={()=>matchvardetails(option,att.name)} key={index}>
                                                 <Text style={{fontSize:14,fontWeight:"bold",color:"white"}}>{option}</Text>
                                                
                                             </TouchableOpacity>
-                                            :<TouchableOpacity style={{flex:1,padding:5,justifyContent:"center",alignItems:"flex-start",}} onPress={()=>matchvardetails(option)} key={index}>
+                                            :<TouchableOpacity style={{flex:1,padding:5,justifyContent:"center",alignItems:"flex-start",}} onPress={()=>matchvardetails(option,att.name)} key={index}>
                                             <Text style={{fontSize:14,fontWeight:"bold"}}>{option}</Text>
                                            
                                             </TouchableOpacity>

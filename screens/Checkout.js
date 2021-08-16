@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {View,Text,Image, StyleSheet, TextInput ,TouchableOpacity,ScrollView} from "react-native"
+import {View,Text,Image, StyleSheet, TextInput ,TouchableOpacity,ScrollView,Button} from "react-native"
 import { Card, Paragraph } from 'react-native-paper';
 import { Ionicons, Feather,EvilIcons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
@@ -7,6 +7,8 @@ import { Checkbox } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Shippingaddress from './Shippingaddress';
 import Billingaddress from './Billingaddress';
+import { CardField, useStripe } from '@stripe/stripe-react-native';
+import { useConfirmPayment } from '@stripe/stripe-react-native';
 export default function Checkout({route,navigation}) {
     const [checked, setChecked] = React.useState(false);
     const [name,setName]=useState("")
@@ -20,7 +22,7 @@ export default function Checkout({route,navigation}) {
     const [State,setState] = useState("")
     const [postcode,setpostcode] = useState("")
     const [phone,setphone] = useState("")
-
+    const {confirmPayment, loading} = useConfirmPayment();
     const [paymentmethod,setpaymentmethod] = useState("")
     const [paymentmethodtitle,setpaymentmethodtitle] = useState("")
     const [address1,setaddress1] = useState("")
@@ -132,6 +134,42 @@ export default function Checkout({route,navigation}) {
               });
         
     }
+    // const fetchPaymentIntentClientSecret = async () => {
+    //     const response = await fetch("https://olikraft.shubhchintak.co/create-payment-intent", {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify({
+    //         currency: 'usd',
+    //       }),
+    //     });
+    //     const {clientSecret} = await response.json();
+    
+    //     return clientSecret;
+    //   };
+    
+    //   const handlePayPress = async () => {
+            
+    //     const billingDetails = {
+    //         email: 'jenny.rosen@example.com',
+    //       };
+      
+    //       // Fetch the intent client secret from the backend
+    //       const clientSecret = await fetchPaymentIntentClientSecret();
+      
+    //       // Confirm the payment with the card details
+    //       const {paymentIntent, error} = await confirmPayment(clientSecret, {
+    //         type: 'Card',
+    //         billingDetails,
+    //       });
+      
+    //       if (error) {
+    //         console.log('Payment confirmation error', error);
+    //       } else if (paymentIntent) {
+    //         console.log('Success from promise', paymentIntent);
+    //       }
+    //   };
     useEffect(()=>{
         fetchcart()
         getProfileData()
@@ -255,8 +293,32 @@ export default function Checkout({route,navigation}) {
                 
                
             </Card>
-
-            
+                {/* <View style={{elevation:10}}>
+                    <Text style={{fontWeight:"bold",marginHorizontal:15,marginTop:10}}>Enter your card details here</Text>
+                    <CardField
+                        postalCodeEnabled={true}
+                        placeholder={{
+                        number: '4242 4242 4242 4242',
+                        }}
+                        cardStyle={{
+                        backgroundColor: '#FFFFFF',
+                        textColor: 'black',
+                        }}
+                        style={{
+                        width: '100%',
+                        height: 50,
+                        marginVertical: 10,
+                        }}
+                        // onCardChange={(cardDetails) => {
+                        // console.log('cardDetails', cardDetails);
+                        // }}
+                        // onFocus={(focusedField) => {
+                        // console.log('focusField', focusedField);
+                        // }}
+                    />
+                    <Button onPress={handlePayPress} title="Pay" disabled={loading} />
+                </View>
+             */}
            
             </ScrollView>
             

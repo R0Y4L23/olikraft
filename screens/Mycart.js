@@ -3,6 +3,7 @@ import { StyleSheet,View, Text, Button, TextInput, TouchableOpacity, ScrollView 
 import { Ionicons,Entypo} from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { QuantityInput } from './QuantityInput';
 
 const axios = require('axios');
 export default function Mycart({navigation}) {
@@ -109,17 +110,8 @@ export default function Mycart({navigation}) {
                     </View>
                     <View style={{flex:1}}>
                     <View style={{flexDirection:"row",padding:5}} key={item.key}>
-                        <View style={{backgroundColor:"white",flex:1,flexDirection:"row",borderWidth:1,borderLeftWidth:0,borderColor:"grey"}}>
-                            <View style={{flex:1,marginLeft:5,justifyContent:"center"}}>
-                                <Entypo name="minus" size={24} color="black" onPress={decrement}/>
-                            </View>
-                            <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                                <Text style={{fontWeight:"bold",fontSize:16}}>{item.quantity}</Text>
-                            </View>
-                            <View style={{flex:1,justifyContent:"center",alignItems:"flex-end",marginRight:10}}>
-                                <Entypo name="plus" size={24} color="black" onPress={increment}/>
-                            </View>
-                        </View>
+                       
+                        <QuantityInput qt={item.quantity} ct={item} id = {item.key}/>
                         <View style={{flex:1}}>
                             <Button title="Remove" color="rgb(5,23,41)" onPress={()=>removefromcart(item.key)}/>
                         </View>
@@ -145,7 +137,7 @@ export default function Mycart({navigation}) {
                                 Item Total
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:15}}>
-                                ${carttotals.cart_contents_total}
+                                ${Number(carttotals.cart_contents_total).toPrecision(5)}
                             </Text>
                         </View>
                         <View style={{flexDirection:'row',paddingBottom:10}}>
@@ -163,7 +155,7 @@ export default function Mycart({navigation}) {
                             Grand Total
                         </Text>
                         <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:15}}>
-                            ${carttotals.total}
+                            ${Number(carttotals.total).toPrecision(5)}
                         </Text>
                     </View>
                 </View>

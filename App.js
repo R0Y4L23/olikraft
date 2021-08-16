@@ -10,15 +10,22 @@ if (!global.btoa) {  global.btoa = encode }
 
 if (!global.atob) { global.atob = decode } 
 
+import { StripeProvider } from '@stripe/stripe-react-native';
 export default function App() {
   return (
-    <NavigationContainer>
-      <View style={styles.droidSafeArea}>
-      <SafeAreaView style={{flex:1}}>
-      <MainStack/>
-      </SafeAreaView>
-      </View>
-    </NavigationContainer>  
+    <StripeProvider
+      publishableKey="pk_test_51JKywdEyBNY91bY3zLmqaya4imvi1coc9AlCCmQZQhKHBSmBTYAQsq61rz8a2HpHF5lHl54Tlp7OIXSq1EyH0haP00g9TnJ7Sj"
+      // urlScheme="stripe-example" // required for 3D Secure and bank redirects
+      merchantIdentifier="merchant.com.{{olikraft}}" // required for Apple Pay
+    >
+      <NavigationContainer>
+        <View style={styles.droidSafeArea}>
+        <SafeAreaView style={{flex:1}}>
+        <MainStack/>
+        </SafeAreaView>
+        </View>
+      </NavigationContainer>  
+    </StripeProvider>
   );
 }
 const styles = StyleSheet.create({
