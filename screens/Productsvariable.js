@@ -13,6 +13,7 @@ export default function Productsvariable({route,navigation}) {
     const [images,setImages]=useState([])
     const [price, setprice] = useState()
     const [saleprice , setsaleprice] = useState()
+    const [nprice , setnprice] = useState()
     const [rating,setrating] = useState()
     const [pro,setPro] = useState([])
     const [varid,setvarid] = useState(route.params.id)
@@ -91,7 +92,9 @@ export default function Productsvariable({route,navigation}) {
                 setPro(response.data.data)
                 setImages(response.data.data.gallery_images)
                 setName(response.data.data.name)
-                setprice(Number(response.data.data.price))
+                setprice(Number(response.data.data.regular_price))
+                setnprice(Number(response.data.data.price))
+            
                 setsaleprice(Number(response.data.data.sale_price))
                 setrating(response.data.data.average_rating)
                 // setAttributes(Object.keys(response.data.data.attributes))
@@ -150,7 +153,7 @@ export default function Productsvariable({route,navigation}) {
                 </View>
                 {
 
-                    (saleprice != 0)
+                    (saleprice != 0 )
                         ?   <View>
                                 <View style={{flexDirection:"row",width:"50%",padding:10,marginLeft:5,}}>
                                     <Text style={{color:"rgb(5,23,41)",fontSize:15,flex:0.5}}>
@@ -167,7 +170,7 @@ export default function Productsvariable({route,navigation}) {
                             
                         :   <View style={{flexDirection:"row",width:"50%",padding:10,marginLeft:5,}}>
                                 <Text style={{color:"rgb(5,23,41)",fontSize:15,flex:0.5,fontWeight:"bold"}}>
-                                    ${price}
+                                    ${nprice}
                                 </Text>
                             </View>
 
