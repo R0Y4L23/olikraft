@@ -18,8 +18,8 @@ export default function ManageAddress({navigation}) {
                 <Appbar.Content title="Manage Address" titleStyle={styles.title}/>
                 <AntDesign name="plus" size={24} color="white" style={{marginRight:10}} onPress={()=>{navigation.navigate("Address")}}/>
             </Appbar.Header>
-            <Billingaddress/>
-            <Shippingaddress/>
+            <Billingaddress navigation={navigation}/>
+            <Shippingaddress navigation={navigation}/>
 
         </View>
     )

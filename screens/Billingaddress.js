@@ -4,7 +4,7 @@ import { EvilIcons} from '@expo/vector-icons';
 import { Card, Paragraph } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Billingaddress() {
+export default function Billingaddress({navigation}) {
     const [ad,setAddress]=useState([])
     const getData = async () => {
         try {
@@ -19,7 +19,7 @@ export default function Billingaddress() {
       }
     const fetchbillingaddress = async () =>{
             let token = await getData()
-            fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/billing",{
+            await fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/billing",{
                 headers:{
                     letscms_token:token
                 }
@@ -35,9 +35,12 @@ export default function Billingaddress() {
             })
             .catch(error => console.log(error))
         }
-    useEffect(()=>{
-        fetchbillingaddress()
-    },[])
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+          fetchbillingaddress()
+        });
+        return unsubscribe;
+      }, [navigation]);
     return (
             <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>
@@ -46,13 +49,13 @@ export default function Billingaddress() {
                         <EvilIcons name="pencil" size={30} color="black" />
                     </View> */}
                 </View>
-                <Card.Content style={{marginTop:10}}>
+                {ad&&<Card.Content style={{marginTop:10}}>
                     <Paragraph style={{fontSize:12,}}>{ad.first_name} {ad.last_name} </Paragraph>
                     <Paragraph style={{fontSize:12,}}>{ad.address_1} </Paragraph>
                     <Paragraph style={{fontSize:12,}}>{ad.address_2} </Paragraph>
                     <Paragraph style={{fontSize:12,}}>{ad.city} {ad.postcode}</Paragraph>
                     {/* <Paragraph style={{fontSize:12}}>{Statelist[country][State]},{countrylist[country]}. </Paragraph> */}
-                </Card.Content>
+                </Card.Content>}
             </Card>
     )
 }

@@ -103,8 +103,11 @@ const Home = ({navigation}) => {
             })
     }
     useEffect(() => {
-        fetchProducts()
-    },[])
+        const unsubscribe = navigation.addListener('focus', () => {
+          fetchProducts()
+        });
+        return unsubscribe;
+      }, [navigation]);
     const [searchQuery, setSearchQuery] = React.useState('');
     const [focus,setFocus]=React.useState(false);
     const onChangeSearch = query => setSearchQuery(query);

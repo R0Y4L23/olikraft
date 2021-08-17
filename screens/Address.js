@@ -1,31 +1,72 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {View,Text,Image,TextInput,TouchableOpacity, StyleSheet,Picker} from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons'; 
-export default function Address() {
-    const [address, setAddress] = useState("")
+import AsyncStorage from '@react-native-async-storage/async-storage';
+export default function Address({navigation}) {
+    const [name,setName]=useState("")
+    const [email,setEmail]=useState("")
+    const [token,setToken]=useState("")
     const [street,setStreet]=useState("")
     const [building,setBuilding]=useState("")
     const [city, setCity] = useState("")
     const [country,setCountry]=useState("")
     const [zip, setZip] = useState("")
+    const [state,setState]=useState("")
+    const [phone,setPhone]=useState("")
+
+    const saveAddress=async ()=>{
+        const response = await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/address/billing', {
+            method: 'POST', 
+            headers: {
+              'Content-Type': 'application/json',
+              'letscms_token':token
+            },
+            body: JSON.stringify({ 
+            'first_name' : name.split(" ")[0],
+            'last_name' : name.split(" ")[1],
+            'email' : email,
+            'country':country,
+            'city':city,
+            'state':state,
+            'postcode':zip,
+            'phone':phone,
+            'address_1':`${building}, ${street}, ${city}-${zip}, ${state}, ${country}`,
+            'address_2':`${building}, ${street}, ${city}-${zip}, ${state}, ${country}`})
+          })
+          return response.json()
+      }
+      useEffect(()=>{
+        const getProfileData = async () => {
+            try {
+              const jsonValue = await AsyncStorage.getItem('profileData')
+              const token2=await AsyncStorage.getItem('token')
+              if(jsonValue&&token2)
+              {
+                  let data=JSON.parse(jsonValue)
+                  setName(data.display_name)
+                  setEmail(data.user_email)
+                  setToken(token2)
+              }
+            } catch(e) {
+             console.log(e)
+            }
+        }
+        getProfileData()
+    },[])
     return (
            <View style={styles.container}>
                 <Appbar.Header style = {styles.item}>
-                        <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
+                        <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
                         <Appbar.Content title="Add Address" titleStyle={styles.title}/>
                     </Appbar.Header>
                  <View style={styles.content}>
-                    <Text>Address Title</Text>
-                    <View style={styles.form}>
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setAddress} value={address} placeholder="Enter here..."  />
-                    </View>
-                   <Text>No. and street name</Text>
+                   <Text>Street name</Text>
                     <View style={styles.form}>    
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setStreet} value={street} placeholder="Enter here..." />
                     </View>
-                    <Text>Building(if any)</Text>
+                    <Text>Building</Text>
                     <View style={styles.form}>
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",textAlignVertical:"top"}} onChangeText={setBuilding} value={building} placeholder="Enter here..." />
                     </View>
@@ -33,22 +74,30 @@ export default function Address() {
                     <View style={styles.form}>
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setCity} value={city} placeholder="Enter here..."  />
                     </View>
+                    <Text>State</Text>
+                    <View style={styles.form}>
+                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setState} value={state} placeholder="Enter here..."  />
+                    </View>
                     <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                         <Text style={{flex:1}}>Country</Text>
                         <Text style={{flex:1}}>Postal/Zip code</Text>
                     </View>
                     <View style={styles.country}>    
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",flex:1,borderColor:"grey",}} onChangeText={setCountry} value={country}/>
+                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",flex:1,borderColor:"grey",}} onChangeText={setCountry} value={country} placeholder="Enter here..."/>
                         <Entypo name="triangle-down" size={24} color="black" />
                         <TextInput style={{ height: 40,padding: 10,marginLeft:5,backgroundColor:"white",flex:1}} onChangeText={setZip} value={zip} placeholder="Enter here..." />
                     </View> 
+                    <Text>Phone</Text>
+                    <View style={styles.form}>
+                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setPhone} value={phone} placeholder="Enter here..." keyboardType="number-pad" />
+                    </View>
                 </View> 
                 <View style={styles.buttoncontainer}>
                     <View style={styles.button}> 
-                        <TouchableOpacity style={styles.cancel}>
+                        <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("ManageAddress")}}>
                             <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.send}>
+                        <TouchableOpacity style={styles.send} onPress={()=>{saveAddress().then((data)=>{console.log(data.data)})}}>
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
                         </TouchableOpacity>
                     </View>
@@ -68,23 +117,19 @@ const styles = StyleSheet.create ({
     icon: {
         marginLeft: 20
     },
-
     title:{
         fontSize:17
     },
     content:{
-        
        padding:20
     },
-
     form:{
         backgroundColor:"white",
         borderRadius:8,
         borderWidth:0.5,
         // padding:10,
         marginVertical:10,
-        borderColor:"grey",
-        
+        borderColor:"grey", 
     },
     country:{
         flexDirection:"row",

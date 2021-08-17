@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { Card, Paragraph } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons, AntDesign, EvilIcons} from '@expo/vector-icons';
-export default function Shippingaddress() {
+export default function Shippingaddress({navigation}) {
     const [shad,setshippingAddress]=useState([])
     const getData = async () => {
         try {
@@ -36,10 +36,12 @@ export default function Shippingaddress() {
         .catch(error => console.log(error))
     
     }
-    useEffect(()=>{
-        fetchshippingaddress()
-    },[])
-
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+         fetchshippingaddress()
+        });
+        return unsubscribe;
+      }, [navigation]);
     return (
         <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
             <View style={{flexDirection:"row"}}>
@@ -55,8 +57,6 @@ export default function Shippingaddress() {
                 <Paragraph style={{fontSize:12,}}>{shad.city} {shad.postcode}</Paragraph>
                 {/* <Paragraph style={{fontSize:12}}>{Statelist[country][State]},{countrylist[country]}. </Paragraph> */}
             </Card.Content>
-            
-        
         </Card>
     )
 }

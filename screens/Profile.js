@@ -7,22 +7,25 @@ export default function Profile({navigation}) {
     const [hidecountry, setHidecountry] = useState(true);
     const [name,setName]=useState("")
     const [email,setEmail]=useState("") 
-    useEffect(()=>{
-        const getProfileData = async () => {
-            try {
-              const jsonValue = await AsyncStorage.getItem('profileData')
-              if(jsonValue)
-              {
-                  let data=JSON.parse(jsonValue)
-                  setName(`${data.first_name} ${data.last_name}`)
-                  setEmail(data.user_email)
-              }
-            } catch(e) {
-             console.log(e)
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            const getProfileData = async () => {
+                try {
+                  const jsonValue = await AsyncStorage.getItem('profileData')
+                  if(jsonValue)
+                  {
+                      let data=JSON.parse(jsonValue)
+                      setName(`${data.first_name} ${data.last_name}`)
+                      setEmail(data.user_email)
+                  }
+                } catch(e) {
+                 console.log(e)
+                }
             }
-        }
-        getProfileData()
-    },[])
+            getProfileData()
+        });
+        return unsubscribe;
+      }, [navigation]);
     return (
         <View>
             <Appbar.Header style = {styles.item}>
