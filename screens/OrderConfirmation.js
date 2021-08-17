@@ -79,6 +79,14 @@ export default function OrderConfirmation({route,navigation}) {
                                     ${carttotals.shipping_total}
                                 </Text>
                             </View>
+                            <View style={{flexDirection:'row',paddingBottom:10}}>
+                            <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:5}}>
+                                Coupon Discounts
+                            </Text>
+                            <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
+                                ${Number(carttotals.discount_total).toPrecision(5)}
+                            </Text>
+                        </View>
                         </View>
                     <View style={{marginHorizontal:10,marginBottom:15,justifyContent:"center"}}>
                         <View style={{flexDirection:'row'}}>

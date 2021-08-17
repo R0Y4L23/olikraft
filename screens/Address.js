@@ -3,7 +3,7 @@ import {View,Text,Image,TextInput,TouchableOpacity, StyleSheet,Picker} from "rea
 import { Ionicons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons'; 
-export default function Address() {
+export default function Address({navigation}) {
     const [address, setAddress] = useState("")
     const [street,setStreet]=useState("")
     const [building,setBuilding]=useState("")
@@ -13,7 +13,7 @@ export default function Address() {
     return (
            <View style={styles.container}>
                 <Appbar.Header style = {styles.item}>
-                        <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" />
+                        <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}} />
                         <Appbar.Content title="Add Address" titleStyle={styles.title}/>
                     </Appbar.Header>
                  <View style={styles.content}>

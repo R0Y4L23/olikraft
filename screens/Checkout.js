@@ -13,8 +13,7 @@ export default function Checkout({route,navigation}) {
     const [checked, setChecked] = React.useState(false);
     const [name,setName]=useState("")
     const [email,setEmail]=useState("")
-    const [cartitems,setCartitems]=useState([])
-    const [carttotals,setCarttotals]=useState([])
+    
     const [firstname,setfirstname] = useState("")
     const [lastname,setlastname] = useState("")
     const [country,setcountry] = useState("")
@@ -39,21 +38,7 @@ export default function Checkout({route,navigation}) {
         }
       }
     
-      const fetchcart = async () =>{
-        let token = await getData()
-        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/cart/",{
-            headers:{
-                letscms_token:token
-            }
-        })
-        .then(response => response.json())
-        .then((res) => {
-            // console.log(res)
-            setCartitems(res.data.cart_items)
-            setCarttotals(res.data.cart_totals)
-        })
-        .catch(error => console.log(error))
-      }
+      
       const getProfileData = async () => {
         try {
           const jsonValue = await AsyncStorage.getItem('profileData')
@@ -125,7 +110,7 @@ export default function Checkout({route,navigation}) {
               .then((response) =>{
                 
                 alert("Order Successfully Placed.Thanks for ordering!!")
-                navigation.navigate("Orderconfirmation",{orderid:response.data.order_id,cartitems:cartitems,carttotals:carttotals})
+                navigation.navigate("Orderconfirmation",{orderid:response.data.order_id,cartitems:route.params.cartitems,carttotals:route.params.carttotals})
                 
                 
               })
@@ -171,7 +156,7 @@ export default function Checkout({route,navigation}) {
     //       }
     //   };
     useEffect(()=>{
-        fetchcart()
+        
         getProfileData()
         fetchshippingaddress()
     },[])
@@ -236,7 +221,7 @@ export default function Checkout({route,navigation}) {
                     </View> */}
                 </View>
                 <Card.Content >
-                    {   cartitems.map((item,idx)=>{return(
+                    {   route.params.cartitems.map((item,idx)=>{return(
                     <ScrollView contentContainerStyle={{flex:1,justifyContent:"center"}} key={item.product_id}>
                         <View style={{margin:15,flex:1}} key={idx}>
                             <Text style={{fontSize:13,fontWeight:"bold",marginBottom:5}}>
@@ -262,7 +247,7 @@ export default function Checkout({route,navigation}) {
                                 Item Total
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
-                                ${carttotals.cart_contents_total}
+                                ${route.params.carttotals.cart_contents_total}
                             </Text>
                         </View>
                         <View style={{flexDirection:'row',paddingBottom:10}}>
@@ -270,7 +255,15 @@ export default function Checkout({route,navigation}) {
                                 Shipping
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
-                                ${carttotals.shipping_total}
+                                ${route.params.carttotals.shipping_total}
+                            </Text>
+                        </View>
+                        <View style={{flexDirection:'row',paddingBottom:10}}>
+                            <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:5}}>
+                                Coupon Discounts
+                            </Text>
+                            <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
+                                ${Number(route.params.carttotals.discount_total).toPrecision(5)}
                             </Text>
                         </View>
                     </View>
@@ -280,7 +273,7 @@ export default function Checkout({route,navigation}) {
                             Grand Total
                         </Text>
                         <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
-                            ${carttotals.total}
+                            ${route.params.carttotals.total}
                         </Text>
                     </View>
                 </View>
@@ -326,7 +319,7 @@ export default function Checkout({route,navigation}) {
                     <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel}>
                             <Text style={{fontSize:14,fontWeight:"bold"}}>Payable Amount</Text>
-                            <Text style={{fontSize:14,fontWeight:"bold"}}>$91.98</Text>
+                            <Text style={{fontSize:14,fontWeight:"bold"}}>${route.params.carttotals.total}</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.send} onPress={placeorder}>

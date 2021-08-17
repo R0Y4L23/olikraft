@@ -58,6 +58,7 @@ export default function Editprofile({navigation}) {
         }
         getProfileData()
     },[])
+    let Image_Http_URL ={ uri: "https://m.media-amazon.com/images/I/71B1FM3ZR-L._SX679_.jpg"};
     return (
         <View style={{flex:1}}>
             <Appbar.Header style = {styles.item}>
@@ -65,15 +66,12 @@ export default function Editprofile({navigation}) {
                 <Appbar.Content title="Profile" titleStyle={styles.title}/>
             </Appbar.Header>
             <ScrollView>
-            {/* <View style={{width:"100%",height:240}}>
-                <ImageBackground source={require(`../assets/profile.png`)} style={{flex:1,justifyContent:"center"}} imageStyle={{height:205,backgroundColor:"black"}}>
-                    <View style={{flex:1,justifyContent:"flex-end",height:50,alignItems:"flex-end",paddingBottom:15}}>
-                        <View style={{backgroundColor:"rgb(5,23,41)",height:50,width:50,justifyContent:"center",alignItems:"center",borderRadius:50,marginRight:20}}>
-                            <Entypo name="camera" size={24} color="white" />
-                        </View>
-                    </View>
+            <View style={{width:"100%",height:300}}>
+                <ImageBackground source={Image_Http_URL} style={{flex:1,justifyContent:"center"}} imageStyle={{height:280,backgroundColor:"black"}} resizeMode="contain">
+                    
                 </ImageBackground>
-            </View> */}
+            </View>
+            {/* <Image source={Image_Http_URL} style={{height:"70%",width:"100%",opacity:0.9}} resizeMode="stretch"/> */}
             <View style={{padding:15}}>
                 <Text style={{color:"grey"}}>Full Name</Text>
                 <View style={styles.form}>

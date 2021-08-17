@@ -5,26 +5,19 @@ import { Appbar, List } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SliderBox } from "react-native-image-slider-box";
 import Attributesarray from './Attributes';
-import { rotate } from 'jimp';
 const axios = require('axios');
-export default function Productsvariable({route,navigation}) {
+
+export default function NewProductsvariable({route,navigation}) {
     const [Counter,setCounter] = useState(1)
     const [name,setName] = useState()
-    const [images,setImages]=useState([])
+ 
     const [price, setprice] = useState()
     const [saleprice , setsaleprice] = useState()
     const [rating,setrating] = useState()
     const [pro,setPro] = useState([])
-    const [varid,setvarid] = useState(route.params.id)
     
-    const [proid,setid] = useState(route.params.id)
-    
-    var fa = []
-    
-    // function updateid (updatedid){
-    //     setvarid(updatedid)
-    //     console.log(varid)
-    // }
+    const [proid,setid] = useState(20)
+ 
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -48,8 +41,8 @@ export default function Productsvariable({route,navigation}) {
                     'Content-Type': 'application/json'
                 },
                 body:JSON.stringify({
-                    product_id:proid,
-                    quantity:Counter,
+                product_id:route.params.id,
+                quantity:Counter,
                 }),
                 
               },)
@@ -81,29 +74,27 @@ export default function Productsvariable({route,navigation}) {
     
     const fetchrootitem = async () =>{
         let token=getData()
-
-        axios.get('https://olikraft.shubhchintak.co/api/letscms/v1/product/' + varid, {
+        axios.get('https://olikraft.shubhchintak.co/api/letscms/v1/product/' + route.params.id, {
             Headers:{
                 letscms_token:token
             }
           })
           .then(function (response) {
                 setPro(response.data.data)
-                setImages(response.data.data.gallery_images)
                 setName(response.data.data.name)
-                setprice(Number(response.data.data.price))
+                setprice(Number(response.data.data.regular_price))
                 setsaleprice(Number(response.data.data.sale_price))
                 setrating(response.data.data.average_rating)
-                // setAttributes(Object.keys(response.data.data.attributes))
-                // setid(response.data.data.children[0])
-                // fetchvarchildren(route.params.id)
+                
           })
           .catch(function (error) {
             console.log(error);
           })
+
           
     }
 
+   
     
     useEffect(()=>{
         fetchrootitem()
@@ -121,20 +112,16 @@ export default function Productsvariable({route,navigation}) {
         <View style={{flex:1}}>
             <View >
             <Appbar.Header style = {styles.item}>
-                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="rgb(5,23,41)" onPress={()=>{navigation.goBack()}}/>
+                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="rgb(5,23,41)" onPress={()=>{navigation.navigate("BNS")}}/>
                 <Appbar.Content title="" titleStyle={styles.title}/>
 
             </Appbar.Header>
             </View>
-            {/* {
-                proid ?
-                fetchvaritem()
-                :<View></View>
-            } */}
+           
             <ScrollView style={{flex:1}}>
-                {console.log(fa)}
+           
                 <View  style={{elevation:15,padding:5,borderRadius:10,backgroundColor:"white"}}>
-                    <SliderBox images={images} sliderBoxHeight={270} resizeMode="contain"/>
+                    <SliderBox images={route.params.Images} sliderBoxHeight={270} resizeMode="contain"/>
                 </View>
                 <View style={{flexDirection:"row",padding:10}}>
                     <Text style={{marginLeft:5,fontSize:16,flex:1,fontWeight:"bold"}}>{name}</Text>
@@ -173,7 +160,7 @@ export default function Productsvariable({route,navigation}) {
 
                 }
                 
-                <Attributesarray id = {route.params.id} Images={images}/>
+                <Attributesarray id = {proid}/>
                 
                 <View style={{flex:1,padding:15,justifyContent:"flex-start"}}>
                     <Text style={{color:"black",fontSize:19}}>Quantity</Text>
@@ -208,7 +195,7 @@ export default function Productsvariable({route,navigation}) {
                     <Image source={require("../assets/mcafee.png")} style={{height:50,width:50,resizeMode:"stretch"}}/>
                 </View>
 
-                <TouchableOpacity style={{backgroundColor:"white",elevation:5,height:40,borderRadius:15,justifyContent:"center"}} onPress={()=>{navigation.navigate("ProductDetails",{"id":route.params.id})}} >
+                <TouchableOpacity style={{backgroundColor:"white",elevation:5,height:40,borderRadius:15,justifyContent:"center"}} onPress={()=>{navigation.navigate("ProductDetails",{"id":20})}} >
                     <View style={{flexDirection:"row"}}>
                         <View style={{flex:1,alignItems:"flex-start",marginLeft:15}}>
                             <Octicons name="info" size={24} color="black"  />

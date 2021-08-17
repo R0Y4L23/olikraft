@@ -23,6 +23,7 @@ export default function Profile({navigation}) {
         }
         getProfileData()
     },[])
+    let Image_Http_URL ={ uri: "https://m.media-amazon.com/images/I/71B1FM3ZR-L._SX679_.jpg"};
     return (
         <View>
             <Appbar.Header style = {styles.item}>
@@ -32,7 +33,7 @@ export default function Profile({navigation}) {
                 <MaterialIcons style={styles.edit} name="edit" size={24} color="white" />
                 </TouchableOpacity>
             </Appbar.Header>
-            {/* <Image source={require('../assets/profile.png')} style={{height:"30%",width:"100%",opacity:0.75}} /> */}
+            <Image source={Image_Http_URL} style={{height:"50%",width:"95%",opacity:0.9,marginLeft:10}} resizeMode="contain"/>
             <View style={{flex:1,padding:15,marginLeft:20}}>
                 <Text style={styles.name}>Full Name</Text>
                 <TextInput style={{ height: 40}}  value={name} placeholder="Full Name"  />

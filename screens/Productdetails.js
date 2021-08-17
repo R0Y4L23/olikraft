@@ -57,6 +57,9 @@ export default function ProductDetails({route,navigation}) {
                 contentWidth={width}
                 source={source}
                 />
+                <View style={{flex:1}}>
+                    <Text>The end</Text>
+                </View>
         </ScrollView>
       </View>
     )
