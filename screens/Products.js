@@ -59,8 +59,8 @@ const Products = ({navigation}) => {
            <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)",height:35,paddingBottom:17}}>
                 <Appbar.Content title="Products" titleStyle={{fontSize:20}}/>
                 <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:15}}/></TouchableOpacity>
-                {focus&&<Searchbar onChangeText={onChangeSearch} value={searchQuery} style={{height:30,width:150,marginRight:10}} onBlur={()=>{setFocus(!focus)}}/>}
-                   {!focus&&<Ionicons name="search" size={25} color="white" onPress={()=>{setFocus(!focus)}} style={{marginRight:15}}/> }
+                {/* {focus&&<Searchbar onChangeText={onChangeSearch} value={searchQuery} style={{height:30,width:150,marginRight:10}} onBlur={()=>{setFocus(!focus)}}/>}
+                   {!focus&&<Ionicons name="search" size={25} color="white" onPress={()=>{setFocus(!focus)}} style={{marginRight:15}}/> } */}
             </Appbar.Header>
             <View style={{height:"87%",width:"100%"}}>
              <ScrollView>

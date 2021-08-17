@@ -19,6 +19,18 @@ function All() {
             console.log(e)
         }
     }
+
+    const bgcolor = (status) =>{
+        if(status === "processing"){
+            return "rgb(241,196,15)"
+        }
+        else if(status === "completed"){
+            return "rgb(46,204,113)"
+        }
+        else if(status === "cancelled"){
+            return "rgb(255,86,86)"
+        } 
+    }
     const fetchOrders = async () => {
         let token = await getData()
         await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/orders', {
@@ -51,7 +63,7 @@ function All() {
                             <Card.Content>
                                 <View>
                                     <View style={{flexDirection:"row",alignItems:"flex-start"}}>
-                                        <View style={{backgroundColor:"rgb(241,196,15)",width:"32%",alignItems:"center",borderRadius:5,padding:2}}>
+                                        <View style={{backgroundColor:bgcolor(order.order_status),width:"32%",alignItems:"center",borderRadius:5,padding:2}}>
                                             <Text style={{alignItems:"center",fontWeight:"bold",textTransform:"uppercase",color:"white",fontSize:12}}> {order.order_status}</Text>
                                         </View>
                                         <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
@@ -60,7 +72,10 @@ function All() {
                                     </View>
                                     <Myorderchild id={order.order_id}/>
                                 </View>
-                                <View style={styles.button}> 
+                                {
+                                order.order_status === "processing"?
+                                <View style={styles.button}>
+                                     
                                     <TouchableOpacity style={styles.total}>
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
                                     </TouchableOpacity>
@@ -68,7 +83,17 @@ function All() {
                                     <TouchableOpacity style={styles.send}>
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Write a Review</Text>
                                     </TouchableOpacity>
+                                    
                                 </View>
+                                :
+                                <View style={styles.button}>
+                                     
+                                    <TouchableOpacity style={styles.total}>
+                                        <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
+                                    </TouchableOpacity>
+                                    
+                                </View>
+                                }
                             </Card.Content>
                         </Card>
                     )
@@ -104,7 +129,7 @@ function Delievered() {
         .then(function (response)
          {
             setOrders(response.data.orders.filter((order)=>{
-                return order.order_status === "delievered"
+                return order.order_status === "completed"
             }));
             
         }).catch((e)=>{
@@ -128,7 +153,7 @@ function Delievered() {
                             <Card.Content>
                                 <View>
                                     <View style={{flexDirection:"row",alignItems:"flex-start"}}>
-                                        <View style={{backgroundColor:"rgb(241,196,15)",width:"32%",alignItems:"center",borderRadius:5,padding:2}}>
+                                        <View style={{backgroundColor:"rgb(46,204,113)",width:"32%",alignItems:"center",borderRadius:5,padding:2}}>
                                             <Text style={{alignItems:"center",fontWeight:"bold",textTransform:"uppercase",color:"white",fontSize:12}}> {order.order_status}</Text>
                                         </View>
                                         <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
@@ -142,9 +167,7 @@ function Delievered() {
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
                                     </TouchableOpacity>
                                     
-                                    <TouchableOpacity style={styles.send}>
-                                        <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Write a Review</Text>
-                                    </TouchableOpacity>
+                                    
                                 </View>
                             </Card.Content>
                         </Card>
@@ -184,8 +207,10 @@ function Delievered() {
         .then(response => response.json())
         .then(function (response)
          {
-            setOrders(response.data.orders);
-            
+           
+            setOrders(response.data.orders.filter(order=>{
+                return order.order_status === "processing"
+            }))
         }).catch((e)=>{
             console.log(e)
         })
@@ -238,6 +263,84 @@ function Delievered() {
     </ScrollView>
     );
   }
+
+  function Cancelled() {
+    const [orders, setOrders] = useState([])
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('token')
+            if (value !== null) {
+                return value
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    const fetchOrders = async () => {
+        let token = await getData()
+        await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/orders', {
+            
+            headers: {
+                "letscms_token": token
+            }
+        })
+        .then(response => response.json())
+        .then(function (response)
+         {
+           
+            setOrders(response.data.orders.filter(order=>{
+                return order.order_status === "cancelled"
+            }))
+        }).catch((e)=>{
+            console.log(e)
+        })
+    }
+    
+    useEffect(() => 
+    {
+    fetchOrders()
+    
+    }, [])
+
+    return (
+        <ScrollView >
+        {   orders.length != 0 ?
+            orders.map((order,idx)=>{
+                
+                return(
+                    <Card style={{elevation:10,marginTop:15,borderRadius:10}} key={idx}>
+                        <Card.Content>
+                            <View>
+                                <View style={{flexDirection:"row",alignItems:"flex-start"}}>
+                                    <View style={{backgroundColor:"rgb(255,86,86)",width:"32%",alignItems:"center",borderRadius:5,padding:2}}>
+                                        <Text style={{alignItems:"center",fontWeight:"bold",textTransform:"uppercase",color:"white",fontSize:12}}> {order.order_status}</Text>
+                                    </View>
+                                    <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
+                                        <Text style={{fontSize:14,color:"grey"}}>Order no# :{order.order_id}</Text>
+                                    </View>
+                                </View>
+                                <Myorderchild id={order.order_id}/>
+                            </View>
+                            <View style={styles.button}> 
+                                <TouchableOpacity style={styles.total}>
+                                    <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
+                                </TouchableOpacity>
+                                
+                               
+                            </View>
+                        </Card.Content>
+                    </Card>
+                )
+            })
+            :<View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"red",height:"100%"}}>
+                <Text style={{fontWeight:"bold",fontSize:15}}>No Orders cancelled yet</Text>
+            </View>
+       
+         }
+        
+    </ScrollView>
+    );
+  }
 const Tab = createMaterialTopTabNavigator();
 export default function MyOrders({navigation}) {
 
@@ -258,6 +361,7 @@ export default function MyOrders({navigation}) {
                     <Tab.Screen name="All" component={All} />
                     <Tab.Screen name="Delivered" component={Delievered} />
                     <Tab.Screen name="On the way" component={Ontheway} />
+                    <Tab.Screen name="Cancelled" component={Cancelled} />
                     
                 </Tab.Navigator>
             </NavigationContainer>

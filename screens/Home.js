@@ -6,17 +6,19 @@ import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Searchbar} from "react-native-paper"
+
 const axios=require("axios");
-const TopComponent=({content,image})=>{
+const TopComponent=({content,image,link})=>{
+   
     return (
-        <View style={{width:325,height:175,margin:15}}>
+        <TouchableOpacity style={{width:325,height:175,margin:15}} >
             <ImageBackground source={{uri:image}} style={{flex:1,justifyContent:"center"}} imageStyle={{borderRadius:25,height:175,backgroundColor:"black",opacity:0.7}}>
                 <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",height:"100%",alignItems:"flex-end",paddingBottom:15}}>
                 <Text style={{textAlign:"center",color:"white",fontSize:20}}>{content}</Text>
                 <AntDesign name="arrowright" size={24} color="white" />
                 </View>
             </ImageBackground>
-        </View>
+        </TouchableOpacity>
     )
 }
 const ShopFromFavouriteComponent=({product,nprice,pprice,id,navigation,image,featured})=>{
@@ -51,7 +53,8 @@ const RecentReviewsComponent=({name,stars,comment})=>{
 const Home = ({navigation}) => {
     const TCJSON = [{
         "content": "Stop winding yarn by hand",
-        "image": "https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner_1400x.progressive.png.jpg?v=1594881434"
+        "image": "https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner_1400x.progressive.png.jpg?v=1594881434",
+        "link":"Tutorials"
     }, {
         "content": "Yarn Sets",
         "image": "https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner2_1400x.progressive.png.jpg?v=1594881663"

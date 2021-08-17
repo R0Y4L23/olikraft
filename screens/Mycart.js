@@ -5,26 +5,16 @@ import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { QuantityInput } from './QuantityInput';
 
+const useForceUpdate = () => useState()[1];
 const axios = require('axios');
 export default function Mycart({navigation}) {
-    const [Counter,setCounter] = useState(1)
-    const [keys,setkeys] = useState(0)
+    
     const [Coupon,setCoupon] = useState("")
     const [cartitems,setCartitems]=useState([])
     const [carttotals,setCarttotals]=useState([])
+    
    
-    function increment(){
-        setCounter(Counter + 1)
-    }
-
-    function decrement(){
-        if(Counter > 0){
-            setCounter(Counter - 1)
-        }
-        else{
-            setCounter(0)
-        }
-    }
+    const forceUpdate = useForceUpdate();
 
     const getData = async () => {
         try {
@@ -60,6 +50,23 @@ export default function Mycart({navigation}) {
               });
         
     }
+
+    const addcoupon = async () =>{
+        let token = await getData()
+        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/cart?coupons[]=" + Coupon,{
+            headers:{
+                letscms_token:token
+            }
+        })
+        .then(response => response.json())
+        .then((res) => {
+            console.log(res.data.coupon_discount_totals)
+            setCartitems(res.data.cart_items)
+            setCarttotals(res.data.cart_totals)
+            forceUpdate()
+        })
+        .catch(error => console.log(error))
+      }
 
     
       const fetchcart = async () =>{
@@ -111,7 +118,7 @@ export default function Mycart({navigation}) {
                     <View style={{flex:1}}>
                     <View style={{flexDirection:"row",padding:5}} key={item.key}>
                        
-                        <QuantityInput qt={item.quantity} ct={item} id = {item.key}/>
+                        <QuantityInput qt={item.quantity} fetchcart={fetchcart} id = {item.key}/>
                         <View style={{flex:1}}>
                             <Button title="Remove" color="rgb(5,23,41)" onPress={()=>removefromcart(item.key)}/>
                         </View>
@@ -125,9 +132,9 @@ export default function Mycart({navigation}) {
                 </Text>
                 <View style={{flexDirection:"row",marginBottom:5}}>
                     <TextInput style={{ flex:1,height: 40,padding: 10,backgroundColor:"white",borderWidth:0.3,borderColor:"grey",borderRadius:5}} onChangeText={setCoupon} value={Coupon} placeholder="Enter Coupon Code.." />
-                    <View style={{width:"30%",}}>
-                        <Button title="Apply" color="rgb(5,23,41)" />
-                    </View> 
+                    <TouchableOpacity style={{width:"30%",backgroundColor:"rgb(5,23,41)",justifyContent:"center",alignItems:"center"}} onPress={addcoupon}>
+                        <Text style={{fontWeight:"bold",color:"white"}}> Apply </Text>
+                    </TouchableOpacity> 
                 </View>
             </View>
             <View style={{justifyContent:"flex-start",flex:1}}>
@@ -146,6 +153,14 @@ export default function Mycart({navigation}) {
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:15}}>
                                 ${carttotals.shipping_total}
+                            </Text>
+                        </View>
+                        <View style={{flexDirection:'row',paddingBottom:10}}>
+                            <Text style={{flex:1,fontSize:13,fontWeight:"bold",marginLeft:10}}>
+                                Coupon Discounts
+                            </Text>
+                            <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:15}}>
+                                ${Number(carttotals.discount_total).toPrecision(5)}
                             </Text>
                         </View>
                     </View>
@@ -175,7 +190,7 @@ export default function Mycart({navigation}) {
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("BNS")}}>
                             <Text style={{fontSize:15,fontWeight:"bold"}}>Continue Shopping </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Checkout",{coupon:Coupon})}}>
+                        <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Checkout",{coupon:Coupon,cartitems:cartitems,carttotals:carttotals})}}>
                             <Text style={{color:"white",fontSize:15,fontWeight:"bold"}}>Proceed to Checkout</Text>
                         </TouchableOpacity>
                     </View>

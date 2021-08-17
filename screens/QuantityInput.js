@@ -3,17 +3,26 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import { Ionicons,Entypo} from '@expo/vector-icons';
 import { useQuantity } from '../hooks/useQuantity';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-export const QuantityInput = ({qt,ct,id}) => {
+import { useNavigation } from '@react-navigation/native';
+export const QuantityInput = ({qt,fetchcart,id}) => {
     const quantity = useQuantity(qt); // Use quantity here, do not need to pass from props
-    const updatedquantity = {quantity:quantity.value}
+    const navigation = useNavigation(); 
     // var [cartdata,setCartdata] = useState([])
     const decrement = () => {
         // setCartdata(ct)
         quantity.setValue(quantity.value - 1);
         // console.log(ct)
-        quantityupdate(ct,quantity.value - 1,id)
+        quantityupdate(quantity.value - 1,id)
         
     };
+
+    const increment = () => {
+      // setCartdata(ct)
+      quantity.setValue(quantity.value + 1);
+      // console.log(ct)
+      quantityupdate(quantity.value + 1,id)
+      
+  };
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -25,14 +34,13 @@ export const QuantityInput = ({qt,ct,id}) => {
           console.log(e)
         }
       }
-    const quantityupdate=async (cart,quan,id)=>{
+    const quantityupdate=async (quan,id)=>{
         let token = await getData()
-        // console.log(cart)
-        cart.quantity = quan
+  
+      
         let cartdata={}
-        cartdata[id] = cart
-        // console.log(cartdata)
-        //   console.log(CartData)
+        cartdata[id] = quan
+
             fetch('https://olikraft.shubhchintak.co/api/letscms/v1/cart/update-quantities', {
                 method:"POST",
                 headers:{
@@ -46,11 +54,9 @@ export const QuantityInput = ({qt,ct,id}) => {
               },)
               .then(response => response.json())
               .then((response) =>{
-                console.log(cart)
-                // alert("Order Successfully Placed.Thanks for ordering!!")
-                // navigation.navigate("Orderconfirmation",{orderid:response.data.order_id,cartitems:cartitems,carttotals:carttotals})
-                console.log(response)
-                
+                // console.log(response.message)
+                // navigation.navigate("Mycart")
+                fetchcart()
               })
               .catch(function (error) {
                 console.log(error);
@@ -58,9 +64,7 @@ export const QuantityInput = ({qt,ct,id}) => {
         
     }
     
-    const increment = () => {
-      quantity.setValue(quantity.value + 1);
-    };
+   
   
     return (
         
