@@ -19,17 +19,17 @@ export default function Buttons({index,title,len,fa,option,images}) {
             titles.push(title)
 
     
-        // if(title === "WEIGHT"){
-        //     variationsweight.push(option)
-        //     titlesweight.push(title)
+        if(title === "WEIGHT"){
+            variationsweight.push(option)
+            titlesweight.push(title)
         
-        // }
+        }
 
-        // if(title === "COLOR"){
-        //     variationscolor.push(option)
-        //     titlescolor.push(title)
+        else if(title === "COLOR"){
+            variationscolor.push(option)
+            titlescolor.push(title)
         
-        // }
+        }
 
         
         // console.log(variationscolor,variationsweight)
@@ -47,7 +47,7 @@ export default function Buttons({index,title,len,fa,option,images}) {
         //     navigation.navigate("NewProductsvariable",{"id":objectfinal[0].id , "Images":images})
 
         // }
-        if((variations.length === 1) & (titles.length === 1)){
+        if((variations.length === len) & (titles.length === len)){
 
             let object = {}
             object[titles[0]] = variations[0]

@@ -60,9 +60,9 @@ export default function Profile({navigation}) {
                     <TextInput style={{ height: 40,flex:1}}  value="India" secureTextEntry={hidecountry ? true : false} placeholder="Enter here..." />
                     <Feather style={{marginTop:5}}name={hidecountry ? 'eye-off' : 'eye'} size={20} color="black"  onPress={() => setHidecountry(!hidecountry)} />
                 </View> */}
-                <TouchableOpacity onPress={()=>{navigation.navigate("Changepass")}}>
+                {/* <TouchableOpacity onPress={()=>{navigation.navigate("Changepass")}}>
                 <Text style={{textDecorationLine:"underline",color:"rgb(5,23,41)"}}>Change Password</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     )

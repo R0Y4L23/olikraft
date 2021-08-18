@@ -1,5 +1,5 @@
 import React , {useState}from 'react'
-import { View, Text,StyleSheet,Switch } from 'react-native'
+import { View, Text,StyleSheet,Switch, TouchableOpacity } from 'react-native'
 import { Appbar } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -26,20 +26,20 @@ export default function SettingsPage({navigation}) {
                 />
 
             </View>
-            <View style={styles.notification}>
+            <TouchableOpacity style={styles.notification} onPress={()=>navigation.navigate("Privacypolicy")}>
                 <Text style={styles.notificationtext}>
                    Privacy Policy
                 </Text>
                 <Ionicons name="chevron-forward-sharp" size={24} color="black" />
 
-            </View>
-            <View style={styles.notification}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.notification} onPress={()=>navigation.navigate("Termsofuse")}>
                 <Text style={styles.notificationtext}>
                     Terms of use
                 </Text>
                 <Ionicons name="chevron-forward-sharp" size={24} color="black" />
 
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }
