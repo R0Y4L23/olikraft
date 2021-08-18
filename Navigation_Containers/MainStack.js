@@ -28,6 +28,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Products from '../screens/Products'
 import NewProductsvariable from '../screens/NewProductsvariable'
 import Tutorials from '../screens/Tutorials'
+import WriteAReview from "../screens/WriteAReview"
 const Stack = createNativeStackNavigator();
 
 const Loading = ({navigation}) => {
@@ -85,6 +86,7 @@ const MainStack = () => {
             <Stack.Screen name="Productsvariable" component={Productsvariable}/>
             <Stack.Screen name="NewProductsvariable" component={NewProductsvariable}/>
             <Stack.Screen name="Tutorials" component={Tutorials}/>
+            <Stack.Screen name="Review" component={WriteAReview}/>
         </Stack.Navigator>
     )
 }

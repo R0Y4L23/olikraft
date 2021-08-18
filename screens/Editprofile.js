@@ -68,7 +68,6 @@ export default function Editprofile({navigation}) {
             <ScrollView>
             <View style={{width:"100%",height:300}}>
                 <ImageBackground source={Image_Http_URL} style={{flex:1,justifyContent:"center"}} imageStyle={{height:280,backgroundColor:"black"}} resizeMode="contain">
-                    
                 </ImageBackground>
             </View>
             {/* <Image source={Image_Http_URL} style={{height:"70%",width:"100%",opacity:0.9}} resizeMode="stretch"/> */}
@@ -96,8 +95,7 @@ export default function Editprofile({navigation}) {
                </View>
                 <Text style={{textDecorationLine:"underline",color:"rgb(5,23,41)",textAlign:"right",marginTop:5}} onPress={()=>{navigation.navigate("Changepass")}}>Change Password</Text>
             </View>
-        </ScrollView>
-        <View style={styles.buttoncontainer}>
+            <View style={styles.buttoncontainer}>
                 <View style={styles.button}> 
                     <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.goBack()}}>
                         <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
@@ -107,6 +105,8 @@ export default function Editprofile({navigation}) {
                     </TouchableOpacity>
                 </View>
         </View>
+        </ScrollView>
+       
     </View>
     )
 }
@@ -136,8 +136,6 @@ const styles = StyleSheet.create ({
      borderColor:"grey",   
     },
     buttoncontainer:{
-        position:'absolute',
-        bottom:0,
         width:"100%"
     },
     button:{

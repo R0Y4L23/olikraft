@@ -18,7 +18,7 @@ export default function Shippingaddress({navigation}) {
       }
     const fetchshippingaddress= async ()=>{
         let token = await getData()
-        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/shipping",{
+        fetch(/*"https://olikraft.shubhchintak.co/api/letscms/v1/address/shipping"*/"https://olikraft.shubhchintak.co/api/letscms/v1/address/billing",{
             headers:{
                 letscms_token:token
             }
@@ -31,7 +31,6 @@ export default function Shippingaddress({navigation}) {
             // setStatelist(res.data.states)
             // setState(res.data.address.state)
             // setCountry(res.data.address.country)
-        
         })
         .catch(error => console.log(error))
     
@@ -46,9 +45,9 @@ export default function Shippingaddress({navigation}) {
         <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
             <View style={{flexDirection:"row"}}>
                 <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold",color:"black"}}>Shipping Address</Text>
-                {/* <View style={{marginTop:10,marginRight:15}}>
-                    <EvilIcons name="pencil" size={30} color="black" />
-                </View> */}
+                 <View style={{marginTop:10,marginRight:15}}>
+                    <EvilIcons name="pencil" size={30} color="black" onPress={()=>{navigation.navigate("Address",{"name" :"Shipping"})}}/>
+                </View>
             </View>
             <Card.Content style={{marginTop:10}}>
                 <Paragraph style={{fontSize:12,}}>{shad.first_name} {shad.last_name}</Paragraph>

@@ -7,7 +7,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Card, Paragraph } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Myorderchild from './Myorderchild';
-function All() {
+function All({navigation}) {
     const [orders, setOrders] = useState([])
     const getData = async () => {
         try {
@@ -75,23 +75,19 @@ function All() {
                                 {
                                 order.order_status === "processing"?
                                 <View style={styles.button}>
-                                     
                                     <TouchableOpacity style={styles.total}>
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
                                     </TouchableOpacity>
                                     
-                                    <TouchableOpacity style={styles.send}>
+                                    <TouchableOpacity style={styles.send} onPress={()=>{navigation.goBack().navigate("Review")}}>
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Write a Review</Text>
                                     </TouchableOpacity>
-                                    
                                 </View>
                                 :
                                 <View style={styles.button}>
-                                     
                                     <TouchableOpacity style={styles.total}>
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
                                     </TouchableOpacity>
-                                    
                                 </View>
                                 }
                             </Card.Content>
@@ -184,7 +180,7 @@ function Delievered() {
     );
   }
 
-  function Ontheway() {
+  function Ontheway({navigation}) {
     const [orders, setOrders] = useState([])
     const getData = async () => {
         try {
@@ -246,7 +242,7 @@ function Delievered() {
                                     <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
                                 </TouchableOpacity>
                                 
-                                <TouchableOpacity style={styles.send}>
+                                <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Review")}}>
                                     <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Write a Review</Text>
                                 </TouchableOpacity>
                             </View>

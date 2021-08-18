@@ -8,10 +8,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Searchbar} from "react-native-paper"
 
 const axios=require("axios");
-const TopComponent=({content,image,link})=>{
+const TopComponent=({content,image,link,navigation})=>{
    
     return (
-        <TouchableOpacity style={{width:325,height:175,margin:15}} >
+        <TouchableOpacity style={{width:325,height:175,margin:15}} onPress={()=>{navigation.navigate("ProductDetails",{"id":link})}}>
             <ImageBackground source={{uri:image}} style={{flex:1,justifyContent:"center"}} imageStyle={{borderRadius:25,height:175,backgroundColor:"black",opacity:0.7}}>
                 <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",height:"100%",alignItems:"flex-end",paddingBottom:15}}>
                 <Text style={{textAlign:"center",color:"white",fontSize:20}}>{content}</Text>
@@ -54,10 +54,11 @@ const Home = ({navigation}) => {
     const TCJSON = [{
         "content": "Stop winding yarn by hand",
         "image": "https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner_1400x.progressive.png.jpg?v=1594881434",
-        "link":"Tutorials"
+        "link":35
     }, {
         "content": "Yarn Sets",
-        "image": "https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner2_1400x.progressive.png.jpg?v=1594881663"
+        "image": "https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner2_1400x.progressive.png.jpg?v=1594881663",
+        "link":48
     }]
     // const SFFJSON=[{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"}]
     const RRJSON = [{
@@ -128,7 +129,7 @@ const Home = ({navigation}) => {
            </View>
            <View style={{height:200}}>
                <ScrollView horizontal>
-                   {TCJSON.map((item,index)=>{return <TopComponent content={item.content} key={index} image={item.image} />})}
+                   {TCJSON.map((item,index)=>{return <TopComponent content={item.content} key={index} image={item.image} link={item.link} navigation={navigation}/>})}
                </ScrollView>
            </View>
            <View style={{display:"flex",flexDirection:"row",width:350,justifyContent:"space-evenly",marginBottom:20,marginTop:10}}>

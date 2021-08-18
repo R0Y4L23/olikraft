@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import {View,Text,TextInput,TouchableOpacity, StyleSheet} from "react-native"
 import { Ionicons,AntDesign } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
-export default function WriteAReview() {
+export default function WriteAReview({navigation}) {
     const [name, setName] = useState("")
     const [email,setEmail]=useState("")
     const [stars,setStars]=useState(0)
@@ -11,7 +11,7 @@ export default function WriteAReview() {
     return (
            <View style={styles.container}>
                <Appbar.Header style={styles.item}>
-                   <Ionicons style={styles.icon} name="arrow-back" size={24} color="white" />
+                   <Ionicons style={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
                    <Appbar.Content title="Write a Review" titleStyle={styles.title} />
                </Appbar.Header>
                <View style={styles.content}>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create ({
         flex:1
     },
     item: {
-       backgroundColor : 'rgb(5,23,41)'
+       backgroundColor : 'rgb(5,23,41)',height:35,paddingBottom:17
     },
     icon: {
         marginLeft: 20

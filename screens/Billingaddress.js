@@ -45,9 +45,9 @@ export default function Billingaddress({navigation}) {
             <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,fontWeight:"bold",marginLeft:16,marginTop:10,color:"black"}}>Billing Address</Text>
-                    {/* <View style={{marginTop:10,marginRight:15}}>
-                        <EvilIcons name="pencil" size={30} color="black" />
-                    </View> */}
+                    <View style={{marginTop:10,marginRight:15}}>
+                        <EvilIcons name="pencil" size={30} color="black" onPress={()=>{navigation.navigate("Address",{"name" :"Billing"})}}/>
+                    </View>
                 </View>
                 {ad&&<Card.Content style={{marginTop:10}}>
                     <Paragraph style={{fontSize:12,}}>{ad.first_name} {ad.last_name} </Paragraph>

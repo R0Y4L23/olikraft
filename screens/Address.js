@@ -1,10 +1,10 @@
 import React,{useState,useEffect} from 'react'
-import {View,Text,Image,TextInput,TouchableOpacity, StyleSheet,Picker} from "react-native"
+import {View,Text,Image,TextInput,TouchableOpacity, StyleSheet, ScrollView} from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-export default function Address({navigation}) {
+export default function Address({navigation,route}) {
     const [name,setName]=useState("")
     const [email,setEmail]=useState("")
     const [token,setToken]=useState("")
@@ -15,7 +15,6 @@ export default function Address({navigation}) {
     const [zip, setZip] = useState("")
     const [state,setState]=useState("")
     const [phone,setPhone]=useState("")
-
     const saveAddress=async ()=>{
         const response = await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/address/billing', {
             method: 'POST', 
@@ -59,8 +58,9 @@ export default function Address({navigation}) {
            <View style={styles.container}>
                 <Appbar.Header style = {styles.item}>
                         <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
-                        <Appbar.Content title="Add Address" titleStyle={styles.title}/>
+                        <Appbar.Content title={`Add ${route.params.name} Address`} titleStyle={styles.title}/>
                     </Appbar.Header>
+                    <ScrollView>
                  <View style={styles.content}>
                    <Text>Street name</Text>
                     <View style={styles.form}>    
@@ -92,6 +92,7 @@ export default function Address({navigation}) {
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setPhone} value={phone} placeholder="Enter here..." keyboardType="number-pad" />
                     </View>
                 </View> 
+                </ScrollView>
                 <View style={styles.buttoncontainer}>
                     <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("ManageAddress")}}>
@@ -102,6 +103,7 @@ export default function Address({navigation}) {
                         </TouchableOpacity>
                     </View>
                 </View>
+              
         </View>
     )
 }
