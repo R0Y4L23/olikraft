@@ -35,12 +35,13 @@ export default function Shippingaddress({navigation}) {
         .catch(error => console.log(error))
     
     }
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-         fetchshippingaddress()
-        });
-        return unsubscribe;
-      }, [navigation]);
+    // useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //      fetchshippingaddress()
+    //     });
+    //     return unsubscribe;
+    //   }, [navigation]);
+      useEffect(()=>{fetchshippingaddress()},[])
     return (
         <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
             <View style={{flexDirection:"row"}}>

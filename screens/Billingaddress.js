@@ -35,12 +35,13 @@ export default function Billingaddress({navigation}) {
             })
             .catch(error => console.log(error))
         }
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-          fetchbillingaddress()
-        });
-        return unsubscribe;
-      }, [navigation]);
+    // useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //       fetchbillingaddress()
+    //     });
+    //     return unsubscribe;
+    //   }, [navigation]);
+      useEffect(()=>{fetchbillingaddress()},[])
     return (
             <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>

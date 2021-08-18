@@ -45,10 +45,13 @@ const Products = ({navigation}) => {
             console.log(error);
          })
       }
-     useEffect(()=>{
-       fetchProducts()
-   },[])
-
+      // useEffect(() => {
+      //   const unsubscribe = navigation.addListener('focus', () => {
+      //     fetchProducts()
+      //   });
+      //   return unsubscribe;
+      // }, [navigation]);
+      useEffect(()=>{fetchProducts()},[])
    const [searchQuery, setSearchQuery] = React.useState('');
     const [focus,setFocus]=React.useState(false);
     const onChangeSearch = query => setSearchQuery(query);
