@@ -50,11 +50,11 @@ const More=({navigation})=>{
      {/* <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >My cart</Text>
      </TouchableOpacity>
-     <Divider/>
+     <Divider/>*/}
      <TouchableOpacity onPress={()=>{navigation.navigate("MyOrder")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >My Orders</Text>
      </TouchableOpacity>
-     <Divider/> */}
+     <Divider/> 
      <TouchableOpacity onPress={()=>{navigation.navigate("ManageAddress")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >Manage Address</Text>
      </TouchableOpacity>
