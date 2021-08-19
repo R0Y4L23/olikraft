@@ -7,6 +7,7 @@ export default function Contacts({navigation}) {
     const [name, setName] = useState("")
     const [email,setEmail]=useState("")
     const [message,setMessage]=useState("")
+    const [success,setSuccess]=useState("")
     function fetchvarchildren (id){
             
         // axios.get("https://olikraft.shubhchintak.co/api/wc/v3/products/" + id, {
@@ -49,14 +50,24 @@ export default function Contacts({navigation}) {
           .catch(function (error) {
             console.log(error);
           })
-
-        
+}
+const fetchContactUs=async ()=>{
+    await axios.get("https://olikraft.shubhchintak.co/api/jet-cct/contact_us")
+          .then(function (response){
+            console.log(response.data[0])
+            setName(response.data[0].name)
+            setEmail(response.data[0].email)
+            setMessage(response.data[0].message)
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
 }
 useEffect(()=>{
     // fetchrootitem()
     // fetchvaritem()
     fetchvarchildren(35)
-    
+    fetchContactUs()
     // filterattributes()
 },[])
     return (
@@ -64,32 +75,28 @@ useEffect(()=>{
                 <Appbar.Header style = {styles.item}>
                         <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}}/>
                         <Appbar.Content title="Contact Us" titleStyle={styles.title}/>
-                        
                     </Appbar.Header>
                  <View style={styles.content}>
                     <Text>FullName</Text>
                     <View style={styles.form}>
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setName} value={name} placeholder="Full Name"  />
                     </View>
-                    
                    <Text>Email</Text>
                     <View style={styles.form}>    
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setEmail} value={email} placeholder="Email" />
                     </View>
-                    
                     <Text>Message</Text>
                     <View style={styles.form}>
                         <TextInput style={{ height: "40%",padding: 10,backgroundColor:"white",textAlignVertical:"top"}} onChangeText={setMessage} value={message} placeholder="Enter here..." />
                     </View>
-                    
+                    <Text style={{textAlign:"center",color:"green"}}>{success}</Text>
                 </View> 
                 <View style={styles.buttoncontainer}>
                     <View style={styles.button}> 
-                        <TouchableOpacity style={styles.cancel}>
+                        <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.goBack()}}>
                             <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                         </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.send}>
+                        <TouchableOpacity style={styles.send} onPress={()=>{setSuccess("Message Sent Successfully")}}>
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Send</Text>
                         </TouchableOpacity>
                     </View>

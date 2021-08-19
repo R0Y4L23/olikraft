@@ -15,6 +15,7 @@ export default function Address({navigation,route}) {
     const [zip, setZip] = useState(route.params.data.postcode)
     const [state,setState]=useState(route.params.data.state)
     const [phone,setPhone]=useState(route.params.data.phone)
+    const [success,setSuccess]=useState("")
     const saveAddress=async ()=>{
         const response = await fetch(`https://olikraft.shubhchintak.co/api/letscms/v1/address/${route.params.name}`, {
             method: 'POST', 
@@ -60,7 +61,7 @@ export default function Address({navigation,route}) {
                         <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
                         <Appbar.Content title={`Add ${route.params.name} Address`} titleStyle={styles.title}/>
                     </Appbar.Header>
-                    <ScrollView>
+                <ScrollView>
                  <View style={styles.content}>
                    <Text>Street name</Text>
                     <View style={styles.form}>    
@@ -91,6 +92,7 @@ export default function Address({navigation,route}) {
                     <View style={styles.form}>
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setPhone} value={phone} placeholder="Enter here..." keyboardType="number-pad" />
                     </View>
+                    <Text style={{textAlign:"center",color:"green"}}>{success}</Text>
                 </View> 
                 </ScrollView>
                 <View style={styles.buttoncontainer}>
@@ -98,7 +100,7 @@ export default function Address({navigation,route}) {
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("ManageAddress")}}>
                             <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.send} onPress={()=>{saveAddress().then((data)=>{console.log(data.data)})}}>
+                        <TouchableOpacity style={styles.send} onPress={()=>{saveAddress().then((data)=>{console.log(data);setSuccess("Saved Successfully");})}}>
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
                         </TouchableOpacity>
                     </View>
@@ -122,7 +124,7 @@ const styles = StyleSheet.create ({
         fontSize:17
     },
     content:{
-       padding:20
+       padding:20,
     },
     form:{
         backgroundColor:"white",

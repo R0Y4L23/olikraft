@@ -14,6 +14,7 @@ export default function Editprofile({navigation}) {
     const [passVisible,setPassVisible]=useState(false)
     const [confirmPassVisible,setConfirmPassVisible]=useState(false)
     const [confirmPass,setConfirmPass]=useState("")
+    const [success,setSuccess]=useState("")
     const storeProfileData = async (value) => {
         try {
           const jsonValue = JSON.stringify(value)
@@ -93,14 +94,15 @@ export default function Editprofile({navigation}) {
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setConfirmPass} value={confirmPass} placeholder="Old Password" secureTextEntry={!confirmPassVisible}/>
                    <Feather name={`${confirmPassVisible?"eye-off":"eye"}`} size={35} color="black" style={{flex:1.5}} onPress={()=>{setConfirmPassVisible(!confirmPassVisible)}}/>
                </View>
-                <Text style={{textDecorationLine:"underline",color:"rgb(5,23,41)",textAlign:"right",marginTop:5}} onPress={()=>{navigation.navigate("Changepass")}}>Change Password</Text>
+                {/* <Text style={{textDecorationLine:"underline",color:"rgb(5,23,41)",textAlign:"right",marginTop:5}} onPress={()=>{navigation.navigate("Changepass")}}>Change Password</Text> */}
+                 <Text style={{textAlign:"center",color:"green"}}>{success}</Text>
             </View>
             <View style={styles.buttoncontainer}>
                 <View style={styles.button}> 
                     <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.goBack()}}>
                         <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.send} onPress={()=>{changeProfileData().then((data)=>{console.log(data.data);storeProfileData(data.data)})}}>
+                    <TouchableOpacity style={styles.send} onPress={()=>{changeProfileData().then((data)=>{console.log(data.data);storeProfileData(data.data);setSuccess("Updated Successfully")})}}>
                         <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
                     </TouchableOpacity>
                 </View>
