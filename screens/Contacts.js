@@ -49,10 +49,7 @@ useEffect(()=>{
                     </View>
                     <Text style={{textAlign:"center",color:"green"}}>{success}</Text>
                 </View> 
-                <View style={{flex:1}}>
-                            <Button title="red" color="rgb(5,23,41)" onPress={()=>addEntryClick()}/>
-                            <TouchableOpacity title="red" color="rgb(5,23,41)" onPress={()=>addEntryClick()}><Text>{theArray}</Text></TouchableOpacity>
-                        </View>
+               
                 <View style={styles.buttoncontainer}>
                     <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.goBack()}}>
