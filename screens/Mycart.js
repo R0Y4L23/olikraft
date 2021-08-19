@@ -12,7 +12,7 @@ export default function Mycart({navigation}) {
     const [Coupon,setCoupon] = useState("")
     const [cartitems,setCartitems]=useState([])
     const [carttotals,setCarttotals]=useState([])
-    
+    const [hasitemremoved,sethasitemremoved] = useState(false)
    
     const forceUpdate = useForceUpdate();
 
@@ -41,7 +41,9 @@ export default function Mycart({navigation}) {
               .then((response) =>{
                 if(response.status){
                     alert(response.message)
-                    navigation.navigate("Products")
+                    // navigation.navigate("Products")
+                    sethasitemremoved(true)
+                    // forceUpdate()
                 
                 }
               })
@@ -86,8 +88,13 @@ export default function Mycart({navigation}) {
       }
 
     useEffect(()=>{
-        fetchcart()}
-       ,[])
+        fetchcart()
+        if(hasitemremoved){
+            sethasitemremoved(false)
+            fetchcart()
+        }
+    }
+       ,[hasitemremoved])
     return (
         <View style={{flex:1,justifyContent:"space-between"}}>
             <View>

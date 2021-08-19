@@ -14,7 +14,7 @@ export default function Productimage({id}) {
         }
     }
     const fetchimage = async (ids) => {
-
+            
             let token = await getData()
             await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/product/'+ ids, {
                 
@@ -26,6 +26,7 @@ export default function Productimage({id}) {
             .then(function (response)
             {
                 setimagelink(response.data.image)
+                // console.log(response.data.image)
             }).catch((e)=>{
                 console.log(e)
             })

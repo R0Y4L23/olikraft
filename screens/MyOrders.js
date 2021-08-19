@@ -75,9 +75,9 @@ function All({navigation}) {
                                 {
                                 order.order_status === "processing"?
                                 <View style={styles.button}>
-                                    <TouchableOpacity style={styles.total}>
+                                    <View style={styles.total}>
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
-                                    </TouchableOpacity>
+                                    </View>
                                     
                                     <TouchableOpacity style={styles.send} onPress={()=>{navigation.goBack().navigate("Review")}}>
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Write a Review</Text>
@@ -85,9 +85,9 @@ function All({navigation}) {
                                 </View>
                                 :
                                 <View style={styles.button}>
-                                    <TouchableOpacity style={styles.total}>
+                                    <View style={styles.total}>
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
-                                    </TouchableOpacity>
+                                    </View>
                                 </View>
                                 }
                             </Card.Content>

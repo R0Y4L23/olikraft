@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import Buttons from './Buttons';
 const axios = require('axios');
-export default function Attributesarray({id,Images}) {
+export default function Attributesarray({id,Images,match,titles,opt}) {
     const [Attributes,setAttributes] = useState([])
     const [fa,setfa] = useState([])
     const fetchvarchildren = async (ids) =>{
@@ -68,11 +68,11 @@ useEffect(()=>{
                                     <Text style={{color:"black",fontWeight:"bold",fontSize:19}}>{att.name} :</Text>
                                 </View>
                                
-                                    <View style={{flexDirection:"row",backgroundColor:"white",marginVertical:5,marginHorizontal:15,borderWidth:0.5,borderColor:"grey"}}>
+                                    <View style={{flexDirection:"row",marginVertical:5,marginHorizontal:15}}>
                                 {
                                     att.options.map((option,index)=>{
                                         return(
-                                            <Buttons option={option} index={index} title={att.name} len={Attributes.length} fa={fa} key={index} images={Images}/>
+                                            <Buttons option={option} index={index} title={att.name} len={Attributes.length} fa={fa} key={index} images={Images} match={match} titles={titles} opt={opt} pid={id}/>
                                             
                                         )
                                     })

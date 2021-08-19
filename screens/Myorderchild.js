@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Productimage from './Productimage';
 export default function Myorderchild({id}) {
     const [singleorders, setsingleOrders] = useState([])
+ 
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('token')
@@ -14,6 +15,7 @@ export default function Myorderchild({id}) {
             console.log(e)
         }
     }
+  
     const fetchsingleOrders = async (ids) => {
 
             let token = await getData()
@@ -27,6 +29,9 @@ export default function Myorderchild({id}) {
             .then(function (response)
             {
                 setsingleOrders(response.data.items)
+                // console.log(response.data.items.map(item=>{
+                //     return item.variation_id
+                // }))
             }).catch((e)=>{
                 console.log(e)
             })
@@ -43,9 +48,13 @@ export default function Myorderchild({id}) {
             singleorders.map((item,idx)=>{
                 return(
                     <View style={{flexDirection:"row",margin:20}} key={idx}>
-                      
-                        <Productimage id={item.variation_id}/>
-                                                                   
+                        {
+                            item.variation_id === 0?
+                            <Productimage id={item.product_id}/>
+                            :
+                            <Productimage id={item.variation_id}/>
+                        }                                          
+                        {/* <Productimage id ={setproductid(item.variation_id,item.product_id)}/> */}
                         <View style={{flex:1 ,padding:5}}>
                             <Text style={{fontWeight:"bold",fontSize:13}}>
                                 {item.name}

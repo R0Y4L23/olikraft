@@ -1,66 +1,31 @@
 import React,{useEffect, useState} from 'react'
-import {View,Text,TextInput,TouchableOpacity, StyleSheet} from "react-native"
+import {View,Text,TextInput,TouchableOpacity, StyleSheet,Button} from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
+const useForceUpdate = () => useState()[1];
 const axios = require('axios');
 export default function Contacts({navigation}) {
     const [name, setName] = useState("")
     const [email,setEmail]=useState("")
     const [message,setMessage]=useState("")
-    function fetchvarchildren (id){
-            
-        // axios.get("https://olikraft.shubhchintak.co/api/wc/v3/products/" + id, {
-        //     auth: {
-        //         username: 'ck_e296377c8e66081c9321b68f176b42812ca4c40a',
-        //         password: 'cs_d3c061b568c0318c269f0b4c3ef6aa8a855e520e'
-        //       }
-        //   })
-        //   .then(function (response) {
-                
-        //        setAttributes(response.data.attributes)
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   })
-
-        axios.get("https://olikraft.shubhchintak.co/api/wc/v3/products/" + id + "/variations", {
-            auth: {
-                username: 'ck_e296377c8e66081c9321b68f176b42812ca4c40a',
-                password: 'cs_d3c061b568c0318c269f0b4c3ef6aa8a855e520e'
-              }
-          })
-          .then(function (response) {
-
-                let fa = (response.data.map(({id,attributes,...rest}) => ({id,attributes}))).map(function(row){  // For each row in data.
-                    // Set the static data in the result row
-                    var reference = { id: row.id};
-                    
-                    // Iterate over `row.references`, and add the current reference to the result.
-                    row.attributes.reduce(function(previous, current){
-                        previous[ current.name] = current.option;
-                        return previous;
-                    }, reference);
-                    
-                    return reference;
-                    });
-                
-                console.log(fa)
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-
-        
-}
-useEffect(()=>{
-    // fetchrootitem()
-    // fetchvaritem()
-    fetchvarchildren(35)
+    const [theArray, setTheArray] = useState([]);
     
-    // filterattributes()
-},[])
+    const forceUpdate = useForceUpdate();
+    const addEntryClick = () => {
+        setTheArray([...theArray, `Entry ${theArray.length}`]);
+        console.log("hell",theArray.length)
+        forceUpdate()
+        printconsole()
+    };
+    const printconsole = () =>{
+        console.log("hello",theArray.length)
+    }
+
     return (
            <View style={styles.container}>
+               {
+                   console.log("hellopoooooo",theArray.length)
+               }
                 <Appbar.Header style = {styles.item}>
                         <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}}/>
                         <Appbar.Content title="Contact Us" titleStyle={styles.title}/>
@@ -83,6 +48,10 @@ useEffect(()=>{
                     </View>
                     
                 </View> 
+                <View style={{flex:1}}>
+                            <Button title="red" color="rgb(5,23,41)" onPress={()=>addEntryClick()}/>
+                            <TouchableOpacity title="red" color="rgb(5,23,41)" onPress={()=>addEntryClick()}><Text>{theArray}</Text></TouchableOpacity>
+                        </View>
                 <View style={styles.buttoncontainer}>
                     <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel}>

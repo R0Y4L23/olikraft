@@ -5,19 +5,40 @@ import { Appbar, List } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SliderBox } from "react-native-image-slider-box";
 import Attributesarray from './Attributes';
+import NewAttributesarray from './NewAttributes';
+const useForceUpdate = () => useState()[1];
 const axios = require('axios');
 
 export default function NewProductsvariable({route,navigation}) {
+    const [titles, settitles] = useState([]);
+    const [opt, setopt] = useState([]);
     const [Counter,setCounter] = useState(1)
     const [name,setName] = useState()
- 
+    const [images,setimages] = useState(route.params.Images)
     const [price, setprice] = useState()
     const [saleprice , setsaleprice] = useState()
     const [rating,setrating] = useState()
     const [pro,setPro] = useState([])
-    
-    const [proid,setid] = useState(20)
- 
+    const forceUpdate = useForceUpdate();
+    const [proid,setid] = useState(route.params.pid)
+    const [varid,setvarid] = useState(route.params.id)
+    const [hasidchanged ,sethasidchanged] = useState(false)
+    function matchvardetails2(option,title){
+        settitles([...titles, title]);
+        setopt([...opt, option]);
+        
+        // console.log(theArray)
+    }
+
+    function updateid (id,images){
+        setvarid(id);
+        setimages(images)
+        settitles([])
+        setopt([])
+        sethasidchanged(true)
+        // forceUpdate()
+        // fetchrootitem()
+    }
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -41,7 +62,7 @@ export default function NewProductsvariable({route,navigation}) {
                     'Content-Type': 'application/json'
                 },
                 body:JSON.stringify({
-                product_id:route.params.id,
+                product_id:varid,
                 quantity:Counter,
                 }),
                 
@@ -74,7 +95,8 @@ export default function NewProductsvariable({route,navigation}) {
     
     const fetchrootitem = async () =>{
         let token=getData()
-        axios.get('https://olikraft.shubhchintak.co/api/letscms/v1/product/' + route.params.id, {
+        console.log("hello",varid)
+        axios.get('https://olikraft.shubhchintak.co/api/letscms/v1/product/' + varid, {
             Headers:{
                 letscms_token:token
             }
@@ -98,11 +120,14 @@ export default function NewProductsvariable({route,navigation}) {
     
     useEffect(()=>{
         fetchrootitem()
-        // fetchvaritem()
-        // fetchvarchildren(route.params.id)
-        
-        // filterattributes()
-    },[])
+        if(hasidchanged){
+         
+            sethasidchanged(false)
+            fetchrootitem()
+        }
+        // 
+        // console.log(route.params.pid)
+    },[hasidchanged])
     // let Image_Http_URL ={ uri: pro.image};
     let discount=( Math.abs(price - saleprice) ) / price 
     let discountPrice = Math.abs(price - saleprice)
@@ -160,7 +185,7 @@ export default function NewProductsvariable({route,navigation}) {
 
                 }
                 
-                <Attributesarray id = {proid}/>
+                <NewAttributesarray id = {proid} Images={route.params.Images} match={matchvardetails2} titles={titles} opt={opt} updateid={updateid} />
                 
                 <View style={{flex:1,padding:15,justifyContent:"flex-start"}}>
                     <Text style={{color:"black",fontSize:19}}>Quantity</Text>
