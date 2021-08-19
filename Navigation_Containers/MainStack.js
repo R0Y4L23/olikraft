@@ -29,8 +29,8 @@ import Products from '../screens/Products'
 import NewProductsvariable from '../screens/NewProductsvariable'
 import Tutorials from '../screens/Tutorials'
 import WriteAReview from "../screens/WriteAReview"
-import TermsOfUse from '../screens/TermsOfUse'
-import PrivacyPolicy from '../screens/PrivacyPolicy'
+import TermsOfUse from "../screens/TermsOfUse"
+import PrivacyPolicy from "../screens/PrivacyPolicy"
 const Stack = createNativeStackNavigator();
 
 const Loading = ({navigation}) => {

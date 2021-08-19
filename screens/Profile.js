@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react'
-import { View, Text , Image, StyleSheet, TextInput,TouchableOpacity} from 'react-native'
+import { View, Text , Image, StyleSheet, TextInput,TouchableOpacity,ImageBackground} from 'react-native'
 import { Appbar } from 'react-native-paper';
 import { Ionicons, MaterialIcons ,Feather} from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,6 +7,7 @@ export default function Profile({navigation}) {
     const [hidecountry, setHidecountry] = useState(true);
     const [name,setName]=useState("")
     const [email,setEmail]=useState("") 
+    let Image_Http_URL ={ uri: "https://m.media-amazon.com/images/I/71B1FM3ZR-L._SX679_.jpg"};
     // useEffect(() => {
     //     const unsubscribe = navigation.addListener('focus', () => {
     //         const getProfileData = async () => {
@@ -50,6 +51,10 @@ export default function Profile({navigation}) {
                 </TouchableOpacity>
             </Appbar.Header>
             {/* <Image source={require('../assets/profile.png')} style={{height:"30%",width:"100%",opacity:0.75}} /> */}
+            <View style={{width:"100%",height:300}}>
+                <ImageBackground source={Image_Http_URL} style={{flex:1,justifyContent:"center"}} imageStyle={{height:280,backgroundColor:"black"}} resizeMode="contain">
+                </ImageBackground>
+            </View>
             <View style={{flex:1,padding:15,marginLeft:20}}>
                 <Text style={styles.name}>Full Name</Text>
                 <TextInput style={{ height: 40}}  value={name} placeholder="Full Name"  />
