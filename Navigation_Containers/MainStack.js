@@ -29,6 +29,8 @@ import Products from '../screens/Products'
 import NewProductsvariable from '../screens/NewProductsvariable'
 import Tutorials from '../screens/Tutorials'
 import WriteAReview from "../screens/WriteAReview"
+import TermsOfUse from "../screens/TermsOfUse"
+import PrivacyPolicy from "../screens/PrivacyPolicy"
 const Stack = createNativeStackNavigator();
 
 const Loading = ({navigation}) => {
@@ -87,6 +89,8 @@ const MainStack = () => {
             <Stack.Screen name="NewProductsvariable" component={NewProductsvariable}/>
             <Stack.Screen name="Tutorials" component={Tutorials}/>
             <Stack.Screen name="Review" component={WriteAReview}/>
+            <Stack.Screen name="Termsofuse" component={TermsOfUse}/>
+            <Stack.Screen name="Privacypolicy" component={PrivacyPolicy}/>
         </Stack.Navigator>
     )
 }

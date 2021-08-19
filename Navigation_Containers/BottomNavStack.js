@@ -47,14 +47,14 @@ const More=({navigation})=>{
         borderTopLeftRadius:25
       }}
     >
-     <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}>
+     {/* <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >My cart</Text>
      </TouchableOpacity>
      <Divider/>
      <TouchableOpacity onPress={()=>{navigation.navigate("MyOrder")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >My Orders</Text>
      </TouchableOpacity>
-     <Divider/>
+     <Divider/> */}
      <TouchableOpacity onPress={()=>{navigation.navigate("ManageAddress")}}>
      <Text style={{fontSize:18,paddingBottom:11}} >Manage Address</Text>
      </TouchableOpacity>

@@ -18,7 +18,7 @@ export default function Shippingaddress({navigation}) {
       }
     const fetchshippingaddress= async ()=>{
         let token = await getData()
-        fetch(/*"https://olikraft.shubhchintak.co/api/letscms/v1/address/shipping"*/"https://olikraft.shubhchintak.co/api/letscms/v1/address/billing",{
+        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/billing",{
             headers:{
                 letscms_token:token
             }
@@ -47,7 +47,7 @@ export default function Shippingaddress({navigation}) {
             <View style={{flexDirection:"row"}}>
                 <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold",color:"black"}}>Shipping Address</Text>
                  <View style={{marginTop:10,marginRight:15}}>
-                    <EvilIcons name="pencil" size={30} color="black" onPress={()=>{navigation.navigate("Address",{"name" :"Shipping"})}}/>
+                    <EvilIcons name="pencil" size={30} color="black" onPress={()=>{navigation.navigate("Address",{"name" :"shipping","data":shad})}}/>
                 </View>
             </View>
             <Card.Content style={{marginTop:10}}>

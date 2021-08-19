@@ -5,18 +5,18 @@ import { Appbar } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Address({navigation,route}) {
-    const [name,setName]=useState("")
-    const [email,setEmail]=useState("")
+    const [name,setName]=useState(`${route.params.data.first_name} ${route.params.data.last_name}`)
+    const [email,setEmail]=useState(route.params.data.email)
     const [token,setToken]=useState("")
-    const [street,setStreet]=useState("")
-    const [building,setBuilding]=useState("")
-    const [city, setCity] = useState("")
-    const [country,setCountry]=useState("")
-    const [zip, setZip] = useState("")
-    const [state,setState]=useState("")
-    const [phone,setPhone]=useState("")
+    const [street,setStreet]=useState(route.params.data.address_1.split(", ")[0])
+    const [building,setBuilding]=useState(route.params.data.address_1.split(", ")[1])
+    const [city, setCity] = useState(route.params.data.city)
+    const [country,setCountry]=useState(route.params.data.country)
+    const [zip, setZip] = useState(route.params.data.postcode)
+    const [state,setState]=useState(route.params.data.state)
+    const [phone,setPhone]=useState(route.params.data.phone)
     const saveAddress=async ()=>{
-        const response = await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/address/billing', {
+        const response = await fetch(`https://olikraft.shubhchintak.co/api/letscms/v1/address/${route.params.name}`, {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',
@@ -103,7 +103,6 @@ export default function Address({navigation,route}) {
                         </TouchableOpacity>
                     </View>
                 </View>
-              
         </View>
     )
 }
