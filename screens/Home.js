@@ -11,7 +11,7 @@ const axios=require("axios");
 const TopComponent=({content,image,link,navigation})=>{
    
     return (
-        <TouchableOpacity style={{width:325,height:175,margin:15}} onPress={()=>{navigation.navigate("ProductDetails",{"id":link})}}>
+        <TouchableOpacity style={{width:325,height:175,margin:15}} onPress={()=>{navigation.navigate("Productsvariable",{"id":link})}}>
             <ImageBackground source={{uri:image}} style={{flex:1,justifyContent:"center"}} imageStyle={{borderRadius:25,height:175,backgroundColor:"black",opacity:0.7}}>
                 <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",height:"100%",alignItems:"flex-end",paddingBottom:15}}>
                 <Text style={{textAlign:"center",color:"white",fontSize:20}}>{content}</Text>
@@ -23,7 +23,7 @@ const TopComponent=({content,image,link,navigation})=>{
 }
 const ShopFromFavouriteComponent=({product,nprice,pprice,id,navigation,image,featured})=>{
     return(
-        <TouchableOpacity onPress={()=>{navigation.navigate("ProductDetails",{"id":id})}}>
+        <TouchableOpacity onPress={()=>{navigation.navigate("Productsvariable",{"id":id})}}>
             {featured&&<View
                 style={{width:325,height:100,margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
                 <Image source={{uri:image}} style={{height:75,width:75}} />
@@ -54,11 +54,11 @@ const Home = ({navigation}) => {
     const TCJSON = [{
         "content": "Stop winding yarn by hand",
         "image": "https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner_1400x.progressive.png.jpg?v=1594881434",
-        "link":35
+        "link":48
     }, {
         "content": "Yarn Sets",
         "image": "https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner2_1400x.progressive.png.jpg?v=1594881663",
-        "link":48
+        "link":35
     }]
     // const SFFJSON=[{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"}]
     const RRJSON = [{
@@ -124,8 +124,8 @@ const Home = ({navigation}) => {
                <Text style={{fontSize:20}}>Hi, {name}</Text>
                <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
                   <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}} style={{marginRight:15}}><SimpleLineIcons name="bag" size={26} color="black"  /></TouchableOpacity>
-                  {focus&&<Searchbar onChangeText={onChangeSearch} value={searchQuery} style={{height:30,width:150}} onBlur={()=>{setFocus(!focus)}}/>}
-                   {!focus&&<Ionicons name="search" size={26} color="black" onPress={()=>{setFocus(!focus)}}/> }
+                  {/* {focus&&<Searchbar onChangeText={onChangeSearch} value={searchQuery} style={{height:30,width:150}} onBlur={()=>{setFocus(!focus)}}/>}
+                   {!focus&&<Ionicons name="search" size={26} color="black" onPress={()=>{setFocus(!focus)}}/> } */}
                </View>
            </View>
            <View style={{height:200}}>

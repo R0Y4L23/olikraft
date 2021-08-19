@@ -5,3 +5,7 @@ const paymentIntent = await stripe.paymentIntents.create({
   currency: 'usd',
 });
 const clientSecret = paymentIntent.client_secret
+
+
+
+// whsec_gVJ1Gfs9N9pdUPE2tcPkRWeAARmQPC56

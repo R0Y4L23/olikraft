@@ -5,12 +5,15 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function TermsOfUse({navigation}) {
     return (
-        <ScrollView style={styles.container}>
-              <Appbar.Header style = {styles.item}>
-                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}} />
-                <Appbar.Content title="Terms of Use" titleStyle={styles.title}/>
-                
-            </Appbar.Header>
+        <View>
+            <View>
+                <Appbar.Header style = {styles.item}>
+                    <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}} />
+                    <Appbar.Content title="Terms of Use" titleStyle={styles.title}/>
+                    
+                </Appbar.Header>
+            </View>
+            <ScrollView style={styles.container}>
             <View style={styles.contain}>
             <Text style={{ fontSize: 36 }}>Terms of Service</Text>
 
@@ -157,6 +160,7 @@ export default function TermsOfUse({navigation}) {
             </View>
             </View>
         </ScrollView>
+        </View>
     )
 };
 

@@ -130,9 +130,12 @@ export default function Checkout({route,navigation}) {
     //       }),
     //     });
     //     const {clientSecret} = await response.json();
-    
+    //     console.log(clientSecret)
     //     return clientSecret;
-    //   };
+      
+    
+    
+    // };
     
     //   const handlePayPress = async () => {
             
@@ -190,8 +193,8 @@ export default function Checkout({route,navigation}) {
                 <TextInput style={{ height: 20}}  value={email} placeholder="Email" />
                
                 
-                <Text style={styles.name}>Contact No#</Text>
-                <TextInput style={{ height: 20}}  value="+65 5685 5685" placeholder="Enter here..." />
+                {/* <Text style={styles.name}>Contact No#</Text>
+                <TextInput style={{ height: 20}}  value="+65 5685 5685" placeholder="Enter here..." /> */}
                 </View>
                 </Card.Content>
                 
@@ -311,8 +314,8 @@ export default function Checkout({route,navigation}) {
                     />
                     <Button onPress={handlePayPress} title="Pay" disabled={loading} />
                 </View>
-             */}
-           
+            
+            */}
             </ScrollView>
             
             <View>
