@@ -1,11 +1,18 @@
 import React,{useState,useEffect} from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, SliderBase } from 'react-native'
 import { EvilIcons} from '@expo/vector-icons';
 import { Card, Paragraph } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Showcountrystate from './Showcountrystate';
 
-export default function Billingaddress({navigation}) {
+export default function Billingaddress({navigation,updateba}) {
     const [ad,setAddress]=useState([])
+    const [countrylist,setCountrylist] = useState([])
+    const [Statelist,setStatelist] = useState([])
+    const [country,setCountry] = useState([])
+    const [State,setState] = useState([])
+    const [isaddressfetched,  setisaddressfetched] = useState(false)
+   
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -17,6 +24,11 @@ export default function Billingaddress({navigation}) {
           console.log(e)
         }
       }
+
+      const updateaddressfetched = () =>{
+        setisaddressfetched(false)
+      }
+      
     const fetchbillingaddress = async () =>{
             let token = await getData()
             await fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/billing",{
@@ -26,23 +38,28 @@ export default function Billingaddress({navigation}) {
             })
             .then(response => response.json())
             .then((res) => {
-                // console.log(res.data.countries)
+                
                 setAddress(res.data.address)
-                // setCountrylist(res.data.countries)
-                // setStatelist(res.data.states)
-                // setState(res.data.address.state)
-                // setCountry(res.data.address.country)
+                setCountrylist(res.data.countries)
+                setStatelist(res.data.states)
+                setState(res.data.address.state)
+                setCountry(res.data.address.country)
+                setisaddressfetched(true)
+                updateba()
             })
             .catch(error => console.log(error))
         }
-    // useEffect(() => {
-    //     const unsubscribe = navigation.addListener('focus', () => {
-    //       fetchbillingaddress()
-    //     });
-    //     return unsubscribe;
-    //   }, [navigation]);
-      useEffect(()=>{fetchbillingaddress()},[])
+  
+      useEffect(()=>{
+          
+          fetchbillingaddress()
+          
+        },[isaddressfetched])
     return (
+        <View>
+        {   ad.length === 0 ?
+            <View></View>
+            :
             <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,fontWeight:"bold",marginLeft:16,marginTop:10,color:"black"}}>Billing Address</Text>
@@ -50,13 +67,16 @@ export default function Billingaddress({navigation}) {
                         <EvilIcons name="pencil" size={30} color="black" onPress={()=>{navigation.navigate("Address",{"name" :"billing","data":ad})}}/>
                     </View>
                 </View>
-                {ad&&<Card.Content style={{marginTop:10}}>
+                
+                <Card.Content style={{marginTop:10}}>
                     <Paragraph style={{fontSize:12,}}>{ad.first_name} {ad.last_name} </Paragraph>
                     <Paragraph style={{fontSize:12,}}>{ad.address_1} </Paragraph>
                     <Paragraph style={{fontSize:12,}}>{ad.address_2} </Paragraph>
                     <Paragraph style={{fontSize:12,}}>{ad.city} {ad.postcode}</Paragraph>
-                    {/* <Paragraph style={{fontSize:12}}>{Statelist[country][State]},{countrylist[country]}. </Paragraph> */}
-                </Card.Content>}
+                    <Showcountrystate country={country} state={State} countrylist={countrylist} statelist={Statelist} updateaddressfetched={updateaddressfetched} isaddressfetched={isaddressfetched} />
+                </Card.Content>
             </Card>
+        }
+            </View>
     )
 }
