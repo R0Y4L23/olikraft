@@ -13,19 +13,30 @@ export default function Checkout({route,navigation}) {
     const [checked, setChecked] = React.useState(false);
     const [name,setName]=useState("")
     const [email,setEmail]=useState("")
-    
+    const [contact,setcontact]=useState("")
     const [firstname,setfirstname] = useState("")
     const [lastname,setlastname] = useState("")
     const [country,setcountry] = useState("")
     const [city,setcity] = useState("")
     const [State,setState] = useState("")
     const [postcode,setpostcode] = useState("")
-    const [phone,setphone] = useState("")
+    const [cartitems,setCartitems]=useState([])
+    const [carttotals,setCarttotals]=useState([])
     const {confirmPayment, loading} = useConfirmPayment();
     const [paymentmethod,setpaymentmethod] = useState("")
     const [paymentmethodtitle,setpaymentmethodtitle] = useState("")
     const [address1,setaddress1] = useState("")
     const [address2,setaddress2] = useState("")
+    const [bafetched, setbafetched] = useState(false)
+    const [safetched, setsafetched] = useState(false)
+    const updateba = () => {
+        setbafetched(true)
+    }
+
+    const updatesa = () => {
+        setsafetched(true)
+    }
+
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -39,38 +50,30 @@ export default function Checkout({route,navigation}) {
       }
     
       
-      const getProfileData = async () => {
-        try {
-          const jsonValue = await AsyncStorage.getItem('profileData')
-          if(jsonValue)
-          {
-              let data=JSON.parse(jsonValue)
-              setName(`${data.first_name} ${data.last_name}`)
-              setEmail(data.user_email)
-          }
-        } catch(e) {
-         console.log(e)
-        }
-    }
-
-    const fetchshippingaddress= async ()=>{
+     
+    const fetchcheckout= async ()=>{
         let token = await getData()
     
-        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/shipping",{
+        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/checkout?coupons[]=" + route.params.coupon,{
             headers:{
                 letscms_token:token
             }
         })
         .then(response => response.json())
         .then((res) => {
-            setaddress1(res.data.address.address_1)
-            setaddress2(res.data.address.address_2)
-            setcity(res.data.address.city)
-            setcountry(res.data.address.country)
-            setfirstname(res.data.address.first_name)
-            setlastname(res.data.address.last_name)
-            setState(res.data.address.state)
-            setpostcode(res.data.address.postcode)
+            // console.log("hello",res.data.customer.address_1)
+            setaddress1(res.data.customer.address_1)
+            setaddress2(res.data.customer.address_2)
+            setcity(res.data.customer.city)
+            setcountry(res.data.customer.country)
+            setfirstname(res.data.customer.first_name)
+            setlastname(res.data.customer.last_name)
+            setState(res.data.customer.state)
+            setpostcode(res.data.customer.postcode)
+            setcontact(res.data.customer.phone)
+            setEmail(res.data.customer.email)
+            setCartitems(res.data.cart_items)
+            setCarttotals(res.data.cart_totals)
             setpaymentmethod("COD")
             setpaymentmethodtitle("Cash on Delivery")
 
@@ -95,7 +98,7 @@ export default function Checkout({route,navigation}) {
                 city:city,
                 state:State,
                 postcode:postcode,
-                phone:phone,
+                phone:contact,
                 email:email,
                 payment_method:paymentmethod,
                 payment_method_title:paymentmethodtitle,
@@ -159,9 +162,7 @@ export default function Checkout({route,navigation}) {
     //       }
     //   };
     useEffect(()=>{
-        
-        getProfileData()
-        fetchshippingaddress()
+        fetchcheckout()
     },[])
 
     return (
@@ -185,7 +186,7 @@ export default function Checkout({route,navigation}) {
          
                 <View>   
                 <Text style={styles.name}>Name</Text>
-                <TextInput style={{ height: 20}}  value={name} placeholder="Full Name"  />
+                <TextInput style={{ height: 20}}  value={`${firstname} ${lastname}`} placeholder="Full Name"  />
                
                     
                 
@@ -193,8 +194,8 @@ export default function Checkout({route,navigation}) {
                 <TextInput style={{ height: 20}}  value={email} placeholder="Email" />
                
                 
-                {/* <Text style={styles.name}>Contact No#</Text>
-                <TextInput style={{ height: 20}}  value="+65 5685 5685" placeholder="Enter here..." /> */}
+                <Text style={styles.name}>Contact No#</Text>
+                <TextInput style={{ height: 20}}  value={contact} placeholder="Enter here..." />
                 </View>
                 </Card.Content>
                 
@@ -202,8 +203,8 @@ export default function Checkout({route,navigation}) {
             </Card>
             {
                 checked 
-                ?   <Billingaddress/>
-                :   <Shippingaddress/>
+                ?   <Billingaddress navigation={navigation} updateba={updateba}/>
+                :   <Shippingaddress navigation={navigation} updatesa={updatesa} />
             }
            <View style={{flexDirection:"row"}}>
                 <Checkbox
@@ -236,7 +237,7 @@ export default function Checkout({route,navigation}) {
                                     ${item.product_price} x {item.quantity}
                                 </Text>
                                 <Text style={{flex:1,fontWeight:"bold",fontSize:14,marginRight:"5%",textAlign:"right"}}>
-                                    ${item.line_total}
+                                    ${+Number(item.line_total).toFixed(2)}
                                 </Text>
                             </View>
                         </View>
@@ -250,7 +251,7 @@ export default function Checkout({route,navigation}) {
                                 Item Total
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
-                                ${route.params.carttotals.cart_contents_total}
+                                ${+Number(route.params.carttotals.cart_contents_total).toFixed(2)}
                             </Text>
                         </View>
                         <View style={{flexDirection:'row',paddingBottom:10}}>
@@ -258,7 +259,7 @@ export default function Checkout({route,navigation}) {
                                 Shipping
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
-                                ${route.params.carttotals.shipping_total}
+                                ${+Number(route.params.carttotals.shipping_total).toFixed(2)}
                             </Text>
                         </View>
                         <View style={{flexDirection:'row',paddingBottom:10}}>
@@ -266,7 +267,7 @@ export default function Checkout({route,navigation}) {
                                 Coupon Discounts
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
-                                ${Number(route.params.carttotals.discount_total).toPrecision(5)}
+                                ${+Number(route.params.carttotals.discount_total).toFixed(2)}
                             </Text>
                         </View>
                     </View>
@@ -276,15 +277,15 @@ export default function Checkout({route,navigation}) {
                             Grand Total
                         </Text>
                         <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
-                            ${route.params.carttotals.total}
+                            ${+Number(route.params.carttotals.total).toFixed(2)}
                         </Text>
                     </View>
                 </View>
             </View>
-            <View style={{flex:1,margin:15}}>
+            {/* <View style={{flex:1,margin:15}}>
                     <Text style={{fontWeight:"bold",paddingVertical:10}}>Enter Mobile number:</Text>
                     <TextInput placeholder="Enter mobile number" style={{borderWidth:1, height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setphone} value={phone}/>
-                </View>
+                </View> */}
                 </Card.Content>
                 
                

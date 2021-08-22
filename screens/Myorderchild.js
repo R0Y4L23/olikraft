@@ -29,7 +29,8 @@ export default function Myorderchild({id}) {
             .then(function (response)
             {
                 setsingleOrders(response.data.items)
-                // console.log(response.data.items.map(item=>{
+                console.log(response.data.items)
+                // .map(item=>{
                 //     return item.variation_id
                 // }))
             }).catch((e)=>{

@@ -118,7 +118,7 @@ export default function Mycart({navigation}) {
                                 ${item.product_price} x {item.quantity}
                             </Text>
                             <Text style={{flex:1,fontWeight:"bold",fontSize:14,marginRight:"5%",textAlign:"right"}}>
-                                ${item.line_total}
+                                ${+Number(item.line_total).toFixed(2)}
                             </Text>
                         </View>
                     </View>
@@ -151,7 +151,7 @@ export default function Mycart({navigation}) {
                                 Item Total
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:15}}>
-                                ${Number(carttotals.cart_contents_total).toPrecision(5)}
+                                ${+Number(carttotals.cart_contents_total).toFixed(2)}
                             </Text>
                         </View>
                         <View style={{flexDirection:'row',paddingBottom:10}}>
@@ -159,7 +159,7 @@ export default function Mycart({navigation}) {
                                 Shipping
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:15}}>
-                                ${carttotals.shipping_total}
+                                ${+Number(carttotals.shipping_total).toFixed(2)}
                             </Text>
                         </View>
                         <View style={{flexDirection:'row',paddingBottom:10}}>
@@ -167,7 +167,7 @@ export default function Mycart({navigation}) {
                                 Coupon Discounts
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:15}}>
-                                ${Number(carttotals.discount_total).toPrecision(5)}
+                                ${+Number(carttotals.discount_total).toFixed(2)}
                             </Text>
                         </View>
                     </View>
@@ -177,7 +177,7 @@ export default function Mycart({navigation}) {
                             Grand Total
                         </Text>
                         <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:15}}>
-                            ${Number(carttotals.total).toPrecision(5)}
+                            ${+Number(carttotals.total).toFixed(2)}
                         </Text>
                     </View>
                 </View>

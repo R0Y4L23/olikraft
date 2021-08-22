@@ -50,7 +50,12 @@ export default function Shippingaddress({navigation,updatesa}) {
     
     }
     useEffect(()=>{
-        fetchshippingaddress()
+      let mounted = true
+
+      if(mounted){
+          fetchshippingaddress()
+      }
+      return () => mounted = false
         
       },[isaddressfetched])
     return (

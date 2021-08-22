@@ -51,8 +51,12 @@ export default function Billingaddress({navigation,updateba}) {
         }
   
       useEffect(()=>{
-          
-          fetchbillingaddress()
+          let mounted = true
+
+            if(mounted){
+                fetchbillingaddress()
+            }
+            return () => mounted = false
           
         },[isaddressfetched])
     return (
