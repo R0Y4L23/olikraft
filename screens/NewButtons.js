@@ -1,13 +1,14 @@
 import React, { useState,useEffect } from 'react'
 import { View, Text,TouchableHighlight,Button } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import {Picker} from '@react-native-picker/picker';
 const useForceUpdate = () => useState()[1];
-export default function NewButtons({index,pid,title,len,fa,option,images,match,titles,opt,uid}) {
+export default function NewButtons({att,len,fa,images,match,titles,opt,uid}) {
    
     const forceUpdate = useForceUpdate();
 
     let objectfinal = []
-   
+    const [optiontype,setoptiontype] = useState("Choose an option to change")
     const navigation = useNavigation(); 
     const item=(t,o)=>{
         if((t.length === len) & (o.length === len)){
@@ -16,16 +17,16 @@ export default function NewButtons({index,pid,title,len,fa,option,images,match,t
             for(let i=0;i<len;i++){
                 object[t[i]] = o[i]
             }
-            console.log(object)
+            // console.log(object)
             objectfinal = (fa.filter(fas => {
                 return Object.keys(object).every(e => fas[e] === object[e])
             }))
 
-            console.log(objectfinal)
-            console.log(objectfinal[0].id)
+            // console.log(objectfinal)
+            // console.log(objectfinal[0].id)
             // navigation.navigate("NewProductsvariable",{"id":objectfinal[0].id , "Images":images, pid:pid})
             uid(objectfinal[0].id,images)
-            console.log("final")
+            // console.log("final")
             forceUpdate()
 
         }
@@ -37,7 +38,7 @@ export default function NewButtons({index,pid,title,len,fa,option,images,match,t
       
     }
     useEffect(()=>{
-        console.log(opt,titles)
+        // console.log(opt,titles)
         if(titles.length === len & opt.length === len)
         {
             item(titles,opt)
@@ -48,10 +49,25 @@ export default function NewButtons({index,pid,title,len,fa,option,images,match,t
     return (
         
           
-        <TouchableHighlight style={{flex:1,backgroundColor:"rgb(5,23,41)",margin:5}} key={index} onPress={()=>matchvardetails(option,title)} underlayColor="grey">
-            <View>
-                <Text style={{color:"white",padding:8}}>{option}</Text>
-            </View>
-        </TouchableHighlight>
+        <View style={{flex:1,borderWidth:1,borderColor:"rgb(5,23,41)",backgroundColor:"white"}}>
+            <Picker
+                style={{ height: 35,padding:5, width:"100%" }}
+                selectedValue={optiontype}
+                onValueChange={(option, index) =>
+                    // matchvardetails(option,title)
+                    matchvardetails(option,att.name)
+                }
+            >
+                <Picker.Item label={optiontype} value={optiontype}/>
+            {
+                att.options.map((option,index)=>{
+                    return(
+                        <Picker.Item label={option} value={option} key={index}/>
+                        
+                    )
+                })
+            }
+            </Picker>
+        </View>
     )
 }

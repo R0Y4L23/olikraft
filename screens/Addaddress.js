@@ -114,16 +114,7 @@ export default function Addaddress({navigation,route}) {
                     <Text style={{textAlign:"center",color:"green"}}>{success}</Text>
                 </View> 
                 </ScrollView>
-                {/* <View style={styles.buttoncontainer}>
-                    <View style={styles.button}> 
-                        <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("ManageAddress")}}>
-                            <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.send} onPress={()=>{saveAddress().then((data)=>{console.log(data);setSuccess("Saved Successfully");})}}>
-                            <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View> */}
+              
                 <View style={styles.button}> 
                 <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("ManageAddress")}}>
                             <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>

@@ -24,8 +24,9 @@ export default function ManageAddress({navigation}) {
 
     useEffect(()=>{
         let mounted = true
-        if(mounted){
+        
             if(safetched & bafetched){
+                if(mounted){
                 setshowaddicon(false)
             }
     }

@@ -68,17 +68,10 @@ useEffect(()=>{
                                     <Text style={{color:"black",fontWeight:"bold",fontSize:19}}>{att.name} :</Text>
                                 </View>
                                
-                                    <View style={{flexDirection:"row",marginVertical:5,marginHorizontal:15}}>
-                                {
-                                    att.options.map((option,index)=>{
-                                        return(
-                                            <Buttons option={option} index={index} title={att.name} len={Attributes.length} fa={fa} key={index} images={Images} match={match} titles={titles} opt={opt} pid={id}/>
-                                            
-                                        )
-                                    })
-                                    
-                                }
-                                    </View>
+                                <View style={{flexDirection:"row",marginVertical:5,marginHorizontal:15}}>
+                            
+                                    <Buttons att= {att} len={Attributes.length} fa={fa} images={Images} match={match} titles={titles} opt={opt} pid={id}/>
+                                </View>
                                        
                             </View>
                         )

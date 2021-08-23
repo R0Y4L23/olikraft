@@ -1,10 +1,13 @@
 import React, { useState,useEffect } from 'react'
 import { View, Text,TouchableOpacity,Button, TouchableHighlight } from 'react-native'
+import {Picker} from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
-export default function Buttons({index,pid,title,len,fa,option,images,match,titles,opt}) {
+export default function Buttons({att,pid,len,fa,images,match,titles,opt}) {
    
     let objectfinal = []
-   
+    const [optiontype,setoptiontype] = useState("Choose an option")
+    const [optionvalue,setoptionvalue] = useState("")
+    
     const navigation = useNavigation(); 
     const item=(t,o)=>{
         if((t.length === len) & (o.length === len)){
@@ -13,7 +16,7 @@ export default function Buttons({index,pid,title,len,fa,option,images,match,titl
             for(let i=0;i<len;i++){
                 object[t[i]] = o[i]
             }
-            console.log(object)
+            // console.log(object)
             objectfinal = (fa.filter(fas => {
                 return Object.keys(object).every(e => fas[e] === object[e])
             }))
@@ -30,7 +33,7 @@ export default function Buttons({index,pid,title,len,fa,option,images,match,titl
       
     }
     useEffect(()=>{
-        console.log(opt,titles)
+        // console.log(opt,titles)
         if(titles.length === len & opt.length === len)
         {
             item(titles,opt)
@@ -40,10 +43,30 @@ export default function Buttons({index,pid,title,len,fa,option,images,match,titl
     return (
         
           
-            <TouchableHighlight style={{flex:1,backgroundColor:"rgb(5,23,41)",margin:5}} key={index} onPress={()=>matchvardetails(option,title)} underlayColor="grey">
-                <View>
-                <Text style={{color:"white",padding:8}}>{option}</Text>
-                </View>
-            </TouchableHighlight>
+          
+            <View style={{flex:1,borderWidth:1,borderColor:"rgb(5,23,41)",backgroundColor:"white"}}>
+            <Picker
+                style={{ height: 35,padding:5, width:"100%" }}
+                selectedValue={optiontype}
+                onValueChange={(option, index) =>{
+                    // matchvardetails(option,title)
+                    setoptionvalue(option)
+                    matchvardetails(option,att.name)
+                }
+                }
+            >
+                <Picker.Item label={optiontype} value={optiontype}/>
+            {
+                att.options.map((option,index)=>{
+                    return(
+                        <Picker.Item label={option} value={option} key={index}/>
+                        
+                    )
+                })
+            }
+            </Picker>
+            </View>
+                                
+  
     )
 }

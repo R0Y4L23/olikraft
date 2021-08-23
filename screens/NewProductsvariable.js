@@ -185,7 +185,7 @@ export default function NewProductsvariable({route,navigation}) {
 
                 }
                 
-                <NewAttributesarray id = {proid} Images={route.params.Images} match={matchvardetails2} titles={titles} opt={opt} updateid={updateid} />
+                <NewAttributesarray id = {proid} Images={route.params.Images} match={matchvardetails2} titles={titles} opt={opt} updateid={updateid}/>
                 
                 <View style={{flex:1,padding:15,justifyContent:"flex-start"}}>
                     <Text style={{color:"black",fontSize:19}}>Quantity</Text>
