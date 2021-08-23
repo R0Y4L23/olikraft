@@ -67,7 +67,7 @@ export default function Allorders({navigation}) {
                                             <Text style={{fontSize:14,color:"grey"}}>Order no# :{order.order_id}</Text>
                                         </View>
                                     </View>
-                                    {/* <Myorderchild id={order.order_id}/> */}
+                                    <Myorderchild id={order.order_id}/>
                                 </View>
                                 {
                                 order.order_status === "processing"?
@@ -76,7 +76,7 @@ export default function Allorders({navigation}) {
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
                                     </View>
                                     
-                                    <TouchableOpacity style={styles.send} onPress={()=>{navigation.goBack().navigate("Review")}}>
+                                    <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Review")}}>
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Write a Review</Text>
                                     </TouchableOpacity>
                                 </View>

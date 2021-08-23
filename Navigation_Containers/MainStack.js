@@ -41,7 +41,7 @@ const Loading = ({navigation}) => {
                 const value = await AsyncStorage.getItem('token')
                 if(value)
                 {
-                    navigation.navigate("BNS")
+                    navigation.navigate("BNS",{screen:"Home"})
                 }
                 else{
                     navigation.navigate("Login")

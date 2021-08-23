@@ -81,7 +81,7 @@ export default function Address({navigation,route}) {
                <Appbar.Header style={styles.item}>
                    <Ionicons style={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>
                        {navigation.goBack()}}/>
-                       <Appbar.Content title={`Add ${route.params.name} Address`} titleStyle={styles.title} />
+                       <Appbar.Content title={`Edit ${route.params.name} Address`} titleStyle={styles.title} />
                </Appbar.Header>
                <ScrollView>
                    <View style={styles.content}>

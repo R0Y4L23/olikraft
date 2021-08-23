@@ -41,7 +41,7 @@ const Login = ({navigation}) => {
                     setLoading(false)
                     await storeToken(response.data.letscms_token)
                     await storeProfileData(response.data.user)
-                    navigation.navigate("BNS")
+                    navigation.navigate("BNS",{screen:"Home"})
                 }
                 else{
                   setLoading(false)

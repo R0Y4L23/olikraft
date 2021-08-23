@@ -8,7 +8,7 @@ const Confirmation = ({navigation}) => {
             <Text style={{fontSize:30,marginTop:90,marginBottom:30}}>Congratulations!</Text>
             <Text style={{color:"grey"}}>Your account has been created successfully.</Text>
             <Text style={{color:"grey",marginBottom:90}}>We'll keep you posted on latest offers</Text>
-            <TouchableOpacity style={{backgroundColor:"#21b861",height:40,width:300,display:"flex",justifyContent:"center",alignItems:"center",flexDirection:'row'}} onPress={()=>{navigation.navigate("BNS")}}>
+            <TouchableOpacity style={{backgroundColor:"#21b861",height:40,width:300,display:"flex",justifyContent:"center",alignItems:"center",flexDirection:'row'}} onPress={()=>{navigation.navigate("BNS",{screen:"Home"})}}>
                    <Text style={{color:"white",fontSize:16}}>Let's Get Started</Text><AntDesign name="arrowright" size={24} color="white" />
             </TouchableOpacity>
         </View>
