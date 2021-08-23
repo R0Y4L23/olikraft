@@ -323,7 +323,7 @@ export default function Checkout({route,navigation}) {
                     <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel}>
                             <Text style={{fontSize:14,fontWeight:"bold"}}>Payable Amount</Text>
-                            <Text style={{fontSize:14,fontWeight:"bold"}}>${route.params.carttotals.total}</Text>
+                            <Text style={{fontSize:14,fontWeight:"bold"}}>${+Number(route.params.carttotals.total).toFixed(2)}</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.send} onPress={placeorder}>

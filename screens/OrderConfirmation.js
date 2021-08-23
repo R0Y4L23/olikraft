@@ -3,7 +3,7 @@ import {View,Text,Image, StyleSheet, TouchableOpacity,ScrollView} from "react-na
 import { Card, Paragraph } from 'react-native-paper';
 import { Ionicons, Feather} from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function OrderConfirmation({route,navigation}) {
     const [cartitems,setCartitems]=useState([])
     const [carttotals,setCarttotals]=useState([])
@@ -14,7 +14,7 @@ export default function OrderConfirmation({route,navigation}) {
     }
       useEffect(()=>{
         fetchdetails()
-        // getProfileData()
+    
     },[])
     return (
         <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(249,249,249)",height:"100%",width:"100%"}}>
@@ -54,7 +54,7 @@ export default function OrderConfirmation({route,navigation}) {
                                         ${item.product_price} x {item.quantity}
                                     </Text>
                                     <Text style={{flex:1,fontWeight:"bold",fontSize:14,marginRight:"5%",textAlign:"right"}}>
-                                        ${item.line_total}
+                                        ${+Number(item.line_total).toFixed(2)}
                                     </Text>
                                 </View>
                             </View>
@@ -68,7 +68,7 @@ export default function OrderConfirmation({route,navigation}) {
                                     Item Total
                                 </Text>
                                 <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
-                                    ${carttotals.cart_contents_total}
+                                    ${+Number(carttotals.cart_contents_total).toFixed(2)}
                                 </Text>
                             </View>
                             <View style={{flexDirection:'row',paddingBottom:10}}>
@@ -76,7 +76,7 @@ export default function OrderConfirmation({route,navigation}) {
                                     Shipping
                                 </Text>
                                 <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
-                                    ${carttotals.shipping_total}
+                                    ${+Number(carttotals.shipping_total).toFixed(2)}
                                 </Text>
                             </View>
                             <View style={{flexDirection:'row',paddingBottom:10}}>
@@ -84,7 +84,7 @@ export default function OrderConfirmation({route,navigation}) {
                                 Coupon Discounts
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
-                                ${Number(carttotals.discount_total).toPrecision(5)}
+                                ${+Number(carttotals.discount_total).toFixed(2)}
                             </Text>
                         </View>
                         </View>
@@ -94,19 +94,20 @@ export default function OrderConfirmation({route,navigation}) {
                                 Total Amount Paid
                             </Text>
                             <Text style={{flex:1,textAlign:"right",fontSize:13,fontWeight:"bold",marginRight:25}}>
-                                ${carttotals.total}
+                                ${+Number(carttotals.total).toFixed(2)}
                             </Text>
                         </View>
                     </View>
                 </View>
                 </View>
             </View>
-            <View style={{alignItems:"center",marginTop:20}}>
+            </ScrollView>
+            <View style={{alignItems:"center",marginTop:20,padding:15}}>
                 <TouchableOpacity style={{backgroundColor:'rgb(5,23,41)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}} onPress={()=>{navigation.navigate("BNS")}}>
                     <Text style={{color:"white",fontSize:16}}>Continue Shopping</Text>
                 </TouchableOpacity>
                 </View>
-                </ScrollView>
+               
         </View>
         
     )

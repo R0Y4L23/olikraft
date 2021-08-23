@@ -231,7 +231,7 @@ export default function Productsvariable({route,navigation}) {
             </ScrollView>
             {
             producttype === "simple"&&
-            <View style={{alignItems:"center",padding:15,paddingBottom:0}}>
+            <View style={{alignItems:"center",padding:15}}>
                 <TouchableOpacity
                     style={{backgroundColor:'rgb(33,184,97)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}}
                     onPress={addtocart}>
@@ -239,7 +239,7 @@ export default function Productsvariable({route,navigation}) {
                 </TouchableOpacity>
             </View>
             }
-            {(producttype !== "simple")&& <View style={{alignItems:"center",padding:15,paddingBottom:0}}>
+            {(producttype !== "simple")&& <View style={{alignItems:"center",padding:15}}>
                 <TouchableOpacity
                     style={{backgroundColor:'grey',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}}
                     onPress={addtocart} disabled={true}>

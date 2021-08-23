@@ -29,10 +29,8 @@ export default function Myorderchild({id}) {
             .then(function (response)
             {
                 setsingleOrders(response.data.items)
-                console.log(response.data.items)
-                // .map(item=>{
-                //     return item.variation_id
-                // }))
+                // console.log(response.data.items)
+             
             }).catch((e)=>{
                 console.log(e)
             })
@@ -61,7 +59,7 @@ export default function Myorderchild({id}) {
                                 {item.name}
                             </Text>            
                             <Text style={{color:"grey",marginTop:5}}>
-                                {item.quantity}  x  ${Number(item.total)/(item.quantity)}  =  ${item.total}
+                                {item.quantity}  x  ${+Number((item.total)/(item.quantity)).toFixed(2)}  =  ${item.total}
                             </Text>
                         </View>
                     

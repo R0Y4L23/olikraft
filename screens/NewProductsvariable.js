@@ -242,7 +242,7 @@ export default function NewProductsvariable({route,navigation}) {
                 </TouchableOpacity>                       
             </View>
             </ScrollView>
-            <View style={{alignItems:"center",paddingBottom:0,padding:20}}>
+            <View style={{alignItems:"center",padding:20}}>
                     <TouchableOpacity style={{backgroundColor:'rgb(33,184,97)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}} onPress={addtocart}>
                         <Text style={{color:"white",fontSize:16}}>Buy Now</Text>
                     </TouchableOpacity>

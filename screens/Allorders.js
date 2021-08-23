@@ -52,9 +52,11 @@ export default function Allorders({navigation}) {
     
     }, [])
     return (
+        <View style={{flex:1}}>
         <ScrollView >
             {
-                orders.map((order,idx)=>{
+                
+                orders.length > 0 && orders.map((order,idx)=>{
                     return(
                         <Card style={{elevation:10,marginTop:15,borderRadius:10}} key={idx}>
                             <Card.Content>
@@ -83,7 +85,7 @@ export default function Allorders({navigation}) {
                                 :
                                 <View style={styles.button}>
                                     <View style={styles.total}>
-                                        <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
+                                        <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${+Number(order.total).toFixed(2)}</Text>
                                     </View>
                                 </View>
                                 }
@@ -91,10 +93,20 @@ export default function Allorders({navigation}) {
                         </Card>
                     )
                 })
+
+            
            
              }
             
+            
         </ScrollView>
+        
+            {
+                    orders.length === 0 && <View style={{flex:1,justifyContent:"flex-start",alignItems:"center"}}>
+                        <Text style={{fontWeight:"bold",fontSize:18}}>Loading Orders Please Wait......</Text></View>
+                }
+                
+    </View>
     );
   }
 
