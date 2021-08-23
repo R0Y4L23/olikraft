@@ -38,7 +38,6 @@ export default function Billingaddress({navigation,updateba}) {
             })
             .then(response => response.json())
             .then((res) => {
-                
                 setAddress(res.data.address)
                 setCountrylist(res.data.countries)
                 setStatelist(res.data.states)
@@ -57,21 +56,17 @@ export default function Billingaddress({navigation,updateba}) {
                 fetchbillingaddress()
             }
             return () => mounted = false
-          
         },[isaddressfetched])
     return (
         <View>
-        {   ad.length === 0 ?
-            <View></View>
-            :
-            <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+           {!ad&&<Text>Loading...</Text>}
+           {ad&&<Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,fontWeight:"bold",marginLeft:16,marginTop:10,color:"black"}}>Billing Address</Text>
                     <View style={{marginTop:10,marginRight:15}}>
-                        <EvilIcons name="pencil" size={30} color="black" onPress={()=>{navigation.navigate("Address",{"name" :"billing","data":ad})}}/>
+                        <EvilIcons name="pencil" size={30} color="black" onPress={()=>{navigation.navigate("Address",{"name" :"billing","data":ad,"clist":countrylist,"slist":Statelist})}}/>
                     </View>
                 </View>
-                
                 <Card.Content style={{marginTop:10}}>
                     <Paragraph style={{fontSize:12,}}>{ad.first_name} {ad.last_name} </Paragraph>
                     <Paragraph style={{fontSize:12,}}>{ad.address_1} </Paragraph>
@@ -79,8 +74,7 @@ export default function Billingaddress({navigation,updateba}) {
                     <Paragraph style={{fontSize:12,}}>{ad.city} {ad.postcode}</Paragraph>
                     <Showcountrystate country={country} state={State} countrylist={countrylist} statelist={Statelist} updateaddressfetched={updateaddressfetched} isaddressfetched={isaddressfetched} />
                 </Card.Content>
-            </Card>
-        }
-            </View>
+            </Card>}
+        </View>
     )
 }

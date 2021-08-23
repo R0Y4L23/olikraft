@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Picker } from '@react-native-picker/picker';
 export default function Address({navigation,route}) {
     const [name,setName]=useState(`${route.params.data.first_name} ${route.params.data.last_name}`)
     const [email,setEmail]=useState(route.params.data.email)
@@ -16,6 +17,9 @@ export default function Address({navigation,route}) {
     const [state,setState]=useState(route.params.data.state)
     const [phone,setPhone]=useState(route.params.data.phone)
     const [success,setSuccess]=useState("")
+    const [countryList,setCountryList]=useState([])
+    const [countryKeyList,setCountryKeyList]=useState([])
+    const [stateList,setStateList]=useState([])
     const saveAddress=async ()=>{
         const response = await fetch(`https://olikraft.shubhchintak.co/api/letscms/v1/address/${route.params.name}`, {
             method: 'POST', 
@@ -37,7 +41,23 @@ export default function Address({navigation,route}) {
           })
           return response.json()
       }
+      const getStates=(index)=>{
+          if(!Array.isArray(route.params.slist[countryKeyList[index]])&&route.params.slist[countryKeyList[index]]!=undefined)
+          {
+            const stateValues=Object.keys(route.params.slist[countryKeyList[index]]).map(function (key) { return route.params.slist[countryKeyList[index]][key]; })
+            setStateList(stateValues)
+          }
+          else{
+            setStateList([])
+          }
+      }
       useEffect(()=>{
+          const getCountries=()=>{
+          var values = Object.keys(route.params.clist).map(function (key) { return route.params.clist[key]; });
+          const keys=Object.keys(route.params.clist)
+          setCountryKeyList(keys)
+          setCountryList(values)
+          }
         const getProfileData = async () => {
             try {
               const jsonValue = await AsyncStorage.getItem('profileData')
@@ -54,58 +74,69 @@ export default function Address({navigation,route}) {
             }
         }
         getProfileData()
+        getCountries()
     },[])
     return (
            <View style={styles.container}>
-                <Appbar.Header style = {styles.item}>
-                        <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
-                        <Appbar.Content title={`Add ${route.params.name} Address`} titleStyle={styles.title}/>
-                    </Appbar.Header>
-                <ScrollView>
-                 <View style={styles.content}>
-                   <Text>Street name</Text>
-                    <View style={styles.form}>    
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setStreet} value={street} placeholder="Enter here..." />
-                    </View>
-                    <Text>Building</Text>
-                    <View style={styles.form}>
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",textAlignVertical:"top"}} onChangeText={setBuilding} value={building} placeholder="Enter here..." />
-                    </View>
-                    <Text>City</Text>
-                    <View style={styles.form}>
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setCity} value={city} placeholder="Enter here..."  />
-                    </View>
-                    <Text>State</Text>
-                    <View style={styles.form}>
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setState} value={state} placeholder="Enter here..."  />
-                    </View>
-                    <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                        <Text style={{flex:1}}>Country</Text>
-                        <Text style={{flex:1}}>Postal/Zip code</Text>
-                    </View>
-                    <View style={styles.country}>    
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",flex:1,borderColor:"grey",}} onChangeText={setCountry} value={country} placeholder="Enter here..."/>
-                        <Entypo name="triangle-down" size={24} color="black" />
-                        <TextInput style={{ height: 40,padding: 10,marginLeft:5,backgroundColor:"white",flex:1}} onChangeText={setZip} value={zip} placeholder="Enter here..." />
-                    </View> 
-                    <Text>Phone</Text>
-                    <View style={styles.form}>
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setPhone} value={phone} placeholder="Enter here..." keyboardType="number-pad" />
-                    </View>
-                    <Text style={{textAlign:"center",color:"green"}}>{success}</Text>
-                </View> 
-                </ScrollView>
-                <View style={styles.buttoncontainer}>
-                    <View style={styles.button}> 
-                        <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("ManageAddress")}}>
-                            <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.send} onPress={()=>{saveAddress().then((data)=>{alert("Address Saved Successfully");navigation.navigate("ManageAddress")})}}>
-                            <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-        </View>
+               <Appbar.Header style={styles.item}>
+                   <Ionicons style={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>
+                       {navigation.goBack()}}/>
+                       <Appbar.Content title={`Add ${route.params.name} Address`} titleStyle={styles.title} />
+               </Appbar.Header>
+               <ScrollView>
+                   <View style={styles.content}>
+                       <Text>Street name</Text>
+                       <View style={styles.form}>
+                           <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setStreet}
+                               value={street} placeholder="Enter here..." />
+                       </View>
+                       <Text>Building</Text>
+                       <View style={styles.form}>
+                           <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",textAlignVertical:"top"}}
+                               onChangeText={setBuilding} value={building} placeholder="Enter here..." />
+                       </View>
+                       <Text>City</Text>
+                       <View style={styles.form}>
+                           <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setCity}
+                               value={city} placeholder="Enter here..." />
+                       </View>
+                       <Text>State</Text>
+                       <View style={styles.form,{backgroundColor:"rgb(249,249,249)"}}>
+                           <Picker selectedValue={state} onValueChange={(itemValue, itemIndex)=>{setState(itemValue)}} style={{height:60,flex:1}}>
+                               {stateList.length>0&&stateList.map((i,idx)=>{return  <Picker.Item label={i} value={i} key={idx}/>})}
+                               {stateList.length==0&&<Picker.Item label={"No States Available"} value={""}/>}
+                           </Picker>
+                       </View>
+                       <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                           <Text style={{flex:1}}>Country</Text>
+                           <Text style={{flex:1}}>Postal/Zip code</Text>
+                       </View>
+                       <View style={styles.country}>
+                           <Picker selectedValue={country} onValueChange={(itemValue, itemIndex)=>{setCountry(itemValue);getStates(itemIndex)}} style={{height:40,flex:1}}>
+                               {countryList.length>0&&countryList.map((i,idx)=>{return  <Picker.Item label={i} value={i} key={idx}/>})}
+                           </Picker>
+                           <TextInput style={{ height: 40,padding: 10,marginLeft:5,backgroundColor:"white",flex:1}}
+                               onChangeText={setZip} value={zip} placeholder="Enter here..." />
+                       </View>
+                       <Text>Phone</Text>
+                       <View style={styles.form}>
+                           <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setPhone}
+                               value={phone} placeholder="Enter here..." keyboardType="number-pad" />
+                       </View>
+                       <Text style={{textAlign:"center",color:"green"}}>{success}</Text>
+                   </View>
+               </ScrollView>
+               <View style={styles.buttoncontainer}>
+                   <View style={styles.button}>
+                       <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("ManageAddress")}}>
+                           <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
+                       </TouchableOpacity>
+                       <TouchableOpacity style={styles.send} onPress={()=>{saveAddress().then((data)=>{alert("Address Saved Successfully");navigation.navigate("ManageAddress")})}}>
+                           <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
+                       </TouchableOpacity>
+                   </View>
+               </View>
+           </View>
     )
 }
 const styles = StyleSheet.create ({
@@ -137,12 +168,12 @@ const styles = StyleSheet.create ({
     country:{
         flexDirection:"row",
         justifyContent:"space-between",
-        backgroundColor:"white",
-        borderRadius:8,
-        borderWidth:0.5,
+       // backgroundColor:"white",
+       // borderRadius:8,
+      //  borderWidth:0.5,
         // padding:10,
         marginVertical:10,
-        borderColor:"grey",
+       // borderColor:"grey",
     },
     buttoncontainer:{
         backgroundColor:"rgb(249,249,249)",

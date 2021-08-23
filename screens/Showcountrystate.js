@@ -30,20 +30,17 @@ export default function Showcountrystate({isaddressfetched,updateaddressfetched,
         }, {}));
         
         // console.log("hello",filteredstate)
-        
       }
     useEffect(()=>{
-
         if(isaddressfetched){
             updateaddressfetched()
             fetchcountrystate(country,state)
-        
         }
         // console.log(country,state)
       },[isaddressfetched])
     return (
         <View>
-            <Paragraph style={{fontSize:12}}>{filteredstate} <Text> , </Text>{filteredcountry}. </Paragraph>
+           {/* <Text>{(filteredstate&&filteredcountry)&&<Paragraph style={{fontSize:12}}>{filteredstate}<Text>,</Text>{filteredcountry}.</Paragraph>}</Text> */}
         </View>
     )
 }
