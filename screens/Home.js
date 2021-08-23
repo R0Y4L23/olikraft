@@ -94,7 +94,7 @@ const Home = ({navigation}) => {
     }
     const fetchProducts = async () => {
         let token = await getData()
-        await axios.get('https://olikraft.shubhchintak.co/api/letscms/v1/products?page=1', {
+        await axios.get(`https://olikraft.shubhchintak.co/api/letscms/v1/products?page=1&search=${searchQuery}`, {
                 Headers: {
                     letscms_token: token
                 }
@@ -124,8 +124,8 @@ const Home = ({navigation}) => {
                <Text style={{fontSize:20}}>Hi, {name}</Text>
                <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
                   <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}} style={{marginRight:15}}><SimpleLineIcons name="bag" size={26} color="black"  /></TouchableOpacity>
-                  {/* {focus&&<Searchbar onChangeText={onChangeSearch} value={searchQuery} style={{height:30,width:150}} onBlur={()=>{setFocus(!focus)}}/>}
-                   {!focus&&<Ionicons name="search" size={26} color="black" onPress={()=>{setFocus(!focus)}}/> } */}
+                   {focus&&<Searchbar onChangeText={onChangeSearch} onChange={fetchProducts} value={searchQuery} style={{height:30,width:150}} onBlur={()=>{setFocus(!focus);setSearchQuery("");fetchProducts()}}/>}
+                   {!focus&&<Ionicons name="search" size={26} color="black" onPress={()=>{setFocus(!focus)}}/> }
                </View>
            </View>
            <View style={{height:200}}>

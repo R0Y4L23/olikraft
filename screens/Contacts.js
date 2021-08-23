@@ -55,7 +55,7 @@ useEffect(()=>{
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.goBack()}}>
                             <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.send} onPress={()=>{setSuccess("Message Sent Successfully")}}>
+                        <TouchableOpacity style={styles.send} onPress={()=>{setSuccess("Message Sent Successfully");alert("Message Sent Successfully");navigation.navigate("BNS",{screen:"Home"})}}>
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Send</Text>
                         </TouchableOpacity>
                     </View>

@@ -102,7 +102,7 @@ export default function Editprofile({navigation}) {
                     <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.goBack()}}>
                         <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.send} onPress={()=>{changeProfileData().then((data)=>{console.log(data.data);storeProfileData(data.data);setSuccess("Updated Successfully")})}}>
+                    <TouchableOpacity style={styles.send} onPress={()=>{changeProfileData().then((data)=>{console.log(data.data);storeProfileData(data.data);setSuccess("Updated Successfully");alert("Profile Edited Successfully");navigation.navigate("BNS",{screen:"Home"})})}}>
                         <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
                     </TouchableOpacity>
                 </View>

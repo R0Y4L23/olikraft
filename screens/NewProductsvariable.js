@@ -160,10 +160,7 @@ export default function NewProductsvariable({route,navigation}) {
                     <Text style={{color:"white",fontSize:16}}>{rating}</Text>
                     <EvilIcons style={{marginTop:4}}name="star" size={20} color="white" />
                 </View>
-                {
-
-                    (saleprice != 0)
-                        ?   <View>
+                {(saleprice != 0)&&<View>
                                 <View style={{flexDirection:"row",width:"50%",padding:10,marginLeft:5,}}>
                                     <Text style={{color:"rgb(5,23,41)",fontSize:15,flex:0.5}}>
                                         ${saleprice}
@@ -175,15 +172,12 @@ export default function NewProductsvariable({route,navigation}) {
                                 <View style={{marginLeft:10,padding:5}}>
                                     <Text style={{color:"rgb(144,222,174)",fontSize:14,fontWeight:"bold"}}>You Save {(discount*100).toPrecision(4)}% (${discountPrice})</Text>
                                 </View>
-                            </View>
-                            
-                        :   <View style={{flexDirection:"row",width:"50%",padding:10,marginLeft:5,}}>
+                            </View>}
+                   {!(saleprice != 0)&&<View style={{flexDirection:"row",width:"50%",padding:10,marginLeft:5,}}>
                                 <Text style={{color:"rgb(5,23,41)",fontSize:15,flex:0.5,fontWeight:"bold"}}>
                                     ${price}
                                 </Text>
-                            </View>
-
-                }
+                            </View> }
                 
                 <NewAttributesarray id = {proid} Images={route.params.Images} match={matchvardetails2} titles={titles} opt={opt} updateid={updateid}/>
                 
@@ -248,7 +242,7 @@ export default function NewProductsvariable({route,navigation}) {
                 </TouchableOpacity>                       
             </View>
             </ScrollView>
-            <View style={{alignItems:"center",padding:20}}>
+            <View style={{alignItems:"center",paddingBottom:0,padding:20}}>
                     <TouchableOpacity style={{backgroundColor:'rgb(33,184,97)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}} onPress={addtocart}>
                         <Text style={{color:"white",fontSize:16}}>Buy Now</Text>
                     </TouchableOpacity>

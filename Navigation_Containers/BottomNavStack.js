@@ -31,7 +31,10 @@ const More=({navigation})=>{
   const handleLogout=async ()=>{
     await removeToken()
     await removeProfileData()
-    navigation.navigate("Login")
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Login'}],
+    });
   }
 
     return(
