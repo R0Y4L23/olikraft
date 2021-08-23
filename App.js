@@ -4,6 +4,8 @@ import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import MainStack from './Navigation_Containers/MainStack';
+import { Provider as PaperProvider } from 'react-native-paper';
+
 import {decode, encode} from 'base-64'
 
 if (!global.btoa) {  global.btoa = encode }
@@ -13,6 +15,7 @@ if (!global.atob) { global.atob = decode }
 import { StripeProvider } from '@stripe/stripe-react-native';
 export default function App() {
   return (
+    <PaperProvider>
     <StripeProvider
       publishableKey="pk_test_51JKywdEyBNY91bY3zLmqaya4imvi1coc9AlCCmQZQhKHBSmBTYAQsq61rz8a2HpHF5lHl54Tlp7OIXSq1EyH0haP00g9TnJ7Sj"
       // urlScheme="stripe-example" // required for 3D Secure and bank redirects
@@ -26,6 +29,7 @@ export default function App() {
         </View>
       </NavigationContainer>  
     </StripeProvider>
+    </PaperProvider>
   );
 }
 const styles = StyleSheet.create({

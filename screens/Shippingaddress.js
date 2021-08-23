@@ -60,15 +60,12 @@ export default function Shippingaddress({navigation,updatesa}) {
       },[isaddressfetched])
     return (
         <View>
-        {
-            shad.length === 0?
-            <View></View>
-            :
-            <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+          {!shad&&<Text>Loading...</Text>}
+         {shad&&<Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
             <View style={{flexDirection:"row"}}>
                 <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold",color:"black"}}>Shipping Address</Text>
                  <View style={{marginTop:10,marginRight:15}}>
-                    <EvilIcons name="pencil" size={30} color="black" onPress={()=>{navigation.navigate("Address",{"name" :"shipping","data":shad})}}/>
+                    <EvilIcons name="pencil" size={30} color="black" onPress={()=>{navigation.navigate("Address",{"name" :"shipping","data":shad,"clist":countrylist,"slist":Statelist})}}/>
                 </View>
             </View>
             <Card.Content style={{marginTop:10}}>
@@ -77,9 +74,8 @@ export default function Shippingaddress({navigation,updatesa}) {
                 <Paragraph style={{fontSize:12,}}>{shad.address_2}</Paragraph>
                 <Paragraph style={{fontSize:12,}}>{shad.city} {shad.postcode}</Paragraph>
                 <Showcountrystate country={country} state={State} countrylist={countrylist} statelist={Statelist} updateaddressfetched={updateaddressfetched} isaddressfetched={isaddressfetched} />
-                
                 </Card.Content>
-        </Card>}
+         </Card>}
         </View>
     )
 }

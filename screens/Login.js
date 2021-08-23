@@ -37,7 +37,7 @@ const Login = ({navigation}) => {
               .then(async function (response) {
                 if(response.data.status)
                 {
-                    console.log(response.data)
+                   // console.log(response.data)
                     setLoading(false)
                     await storeToken(response.data.letscms_token)
                     await storeProfileData(response.data.user)
