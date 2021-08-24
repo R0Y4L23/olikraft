@@ -53,16 +53,17 @@ export default function NewButtons({att,len,fa,images,match,titles,opt,uid}) {
             <Picker
                 style={{ height: 35,padding:5, width:"100%" }}
                 selectedValue={optiontype}
-                onValueChange={(option, index) =>
+                onValueChange={(option, index) =>{
                     // matchvardetails(option,title)
+                    setoptiontype(option)
                     matchvardetails(option,att.name)
-                }
+                }}
             >
                 <Picker.Item label={optiontype} value={optiontype}/>
             {
                 att.options.map((option,index)=>{
                     return(
-                        <Picker.Item label={option} value={option} key={index}/>
+                        (option != optiontype) && <Picker.Item label={option} value={option} key={index}/>
                         
                     )
                 })

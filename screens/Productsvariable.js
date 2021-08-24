@@ -94,6 +94,7 @@ export default function Productsvariable({route,navigation}) {
           .then(function (response) {
                 setPro(response.data.data)
                 setImages(response.data.data.gallery_images)
+                // console.log(response.data.data.gallery_images)
                 setName(response.data.data.name)
                 setprice(Number(response.data.data.regular_price))
                 setnprice(Number(response.data.data.price))

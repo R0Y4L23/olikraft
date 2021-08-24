@@ -50,6 +50,7 @@ export default function Buttons({att,pid,len,fa,images,match,titles,opt}) {
                 selectedValue={optiontype}
                 onValueChange={(option, index) =>{
                     // matchvardetails(option,title)
+                    setoptiontype(option)
                     setoptionvalue(option)
                     matchvardetails(option,att.name)
                 }
