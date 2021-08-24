@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {View,Text,TextInput,TouchableOpacity, StyleSheet} from "react-native"
+import {View,Text,TextInput,TouchableOpacity, StyleSheet,ScrollView} from "react-native"
 import { Ionicons,AntDesign } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 export default function WriteAReview({navigation}) {
@@ -10,10 +10,11 @@ export default function WriteAReview({navigation}) {
     const [message,setMessage]=useState("")
     return (
            <View style={styles.container}>
-               <Appbar.Header style={styles.item}>
+               <ScrollView>
+               {/* <Appbar.Header style={styles.item}>
                    <Ionicons style={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
                    <Appbar.Content title="Write a Review" titleStyle={styles.title} />
-               </Appbar.Header>
+               </Appbar.Header> */}
                <View style={styles.content}>
                    <Text>Name</Text>
                    <View style={styles.form}>
@@ -61,15 +62,15 @@ export default function WriteAReview({navigation}) {
                        </TouchableOpacity>
                    </View>
                </View>
+               </ScrollView>
            </View>
     )
 }
 
 const styles = StyleSheet.create ({
     container:{
-        backgroundColor:"rgb(249,249,249)",
-        height:"100%",
-        flex:1
+        flex:1,
+        backgroundColor:"rgb(249,249,249)"
     },
     item: {
        backgroundColor : 'rgb(5,23,41)',height:35,paddingBottom:17

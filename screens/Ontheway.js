@@ -3,8 +3,11 @@ import { View, Text,TouchableOpacity, ScrollView , StyleSheet} from 'react-nativ
 import { Card, Paragraph } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Myorderchild from './Myorderchild';
+import WriteAReview from './WriteAReview';
 export default function Ontheway({navigation}) {
     const [orders, setOrders] = useState([])
+    const [review,setReview]=useState(false)
+    const [orderIdSelectedForReview,setOrderIdSelectedForReview]=useState("")
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('token')
@@ -42,7 +45,8 @@ export default function Ontheway({navigation}) {
     }, [])
 
     return (
-        <ScrollView >
+        <View style={{flex:1}}>
+        {!review?(<ScrollView >
         {   orders.length != 0 ?
             orders.map((order,idx)=>{
                 
@@ -65,7 +69,7 @@ export default function Ontheway({navigation}) {
                                     <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
                                 </TouchableOpacity>
                                 
-                                <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Review")}}>
+                                <TouchableOpacity style={styles.send} onPress={()=>{setOrderIdSelectedForReview(order.order_id);setReview(true)}}>
                                     <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Write a Review</Text>
                                 </TouchableOpacity>
                             </View>
@@ -79,7 +83,8 @@ export default function Ontheway({navigation}) {
        
          }
         
-    </ScrollView>
+    </ScrollView>):(<WriteAReview/>)}
+    </View>
     );
   }
 
