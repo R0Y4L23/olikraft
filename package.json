@@ -27,6 +27,7 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-elements": "^3.4.2",
+    "react-native-image-gallery": "^2.1.5",
     "react-native-image-slider-box": "^1.0.12",
     "react-native-pager-view": "5.0.12",
     "react-native-paper": "^4.9.2",
