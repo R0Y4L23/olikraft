@@ -49,7 +49,11 @@ const Signup = ({navigation}) => {
                     setLoading(false)
                     await storeToken(response.data.letscms_token)
                     await storeProfileData(response.data.user)
-                    navigation.navigate("Confirmation")
+                   // navigation.navigate("Confirmation")
+                   navigation.reset({
+                    index: 0,
+                    routes: [{name: 'Confirmation'}],
+                  });
                 }
                 else
                 {

@@ -254,7 +254,7 @@ export default function Productsvariable({route,navigation}) {
 const styles = StyleSheet.create ({
   
     item: {
-       backgroundColor : 'white'
+       backgroundColor : 'white',height:35,paddingBottom:17
     },
     icon: {
         marginLeft: 20
