@@ -41,10 +41,17 @@ const Loading = ({navigation}) => {
                 const value = await AsyncStorage.getItem('token')
                 if(value)
                 {
-                    navigation.navigate("BNS",{screen:"Home"})
+                   // navigation.navigate("BNS",{screen:"Home"})
+                   navigation.reset({
+                    index: 0,
+                    routes: [{name: 'BNS'}],
+                  });
                 }
                 else{
-                    navigation.navigate("Login")
+                    navigation.reset({
+                        index: 0,
+                        routes: [{name: 'Login'}],
+                      });
                 }
                 return value
             } catch (e) {
