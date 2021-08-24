@@ -4,8 +4,11 @@ import { View, Text,TouchableOpacity, ScrollView, StyleSheet } from 'react-nativ
 import { Card, Paragraph } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Myorderchild from './Myorderchild';
+import WriteAReview from "./WriteAReview"
 export default function Allorders({navigation}) {
     const [orders, setOrders] = useState([])
+    const [review,setReview]=useState(false)
+    const [orderIdSelectedForReview,setOrderIdSelectedForReview]=useState("")
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('token')
@@ -52,10 +55,10 @@ export default function Allorders({navigation}) {
     
     }, [])
     return (
+
         <View style={{flex:1}}>
-        <ScrollView >
+          {!review?(<ScrollView >
             {
-                
                 orders.length > 0 && orders.map((order,idx)=>{
                     return(
                         <Card style={{elevation:10,marginTop:15,borderRadius:10}} key={idx}>
@@ -78,7 +81,7 @@ export default function Allorders({navigation}) {
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
                                     </View>
                                     
-                                    <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Review")}}>
+                                    <TouchableOpacity style={styles.send} onPress={()=>{setOrderIdSelectedForReview(order.order_id);setReview(true)}}>
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Write a Review</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -93,19 +96,12 @@ export default function Allorders({navigation}) {
                         </Card>
                     )
                 })
-
-            
-           
              }
-            
-            
-        </ScrollView>
-        
+        </ScrollView>):(<WriteAReview/>)}
             {
                     orders.length === 0 && <View style={{flex:1,justifyContent:"flex-start",alignItems:"center"}}>
                         <Text style={{fontWeight:"bold",fontSize:18}}>Loading Orders Please Wait......</Text></View>
-                }
-                
+                }   
     </View>
     );
   }

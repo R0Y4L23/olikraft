@@ -43,7 +43,7 @@ export default function Myorderchild({id}) {
     }, [])
     return (
         <View style={{flex:1}}>
-        {
+        {singleorders&&
             singleorders.map((item,idx)=>{
                 return(
                     <View style={{flexDirection:"row",margin:20}} key={idx}>
