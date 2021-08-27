@@ -123,12 +123,13 @@ export default function Checkout({route,navigation}) {
         
     }
     // const fetchPaymentIntentClientSecret = async () => {
-    //     const response = await fetch("https://olikraft.shubhchintak.co/create-payment-intent", {
+    //     const response = await fetch("https://olikraft.shubhchintak.co/api/letscms/v1/stripe/createPaymentIntent", {
     //       method: 'POST',
     //       headers: {
     //         'Content-Type': 'application/json',
     //       },
     //       body: JSON.stringify({
+            
     //         currency: 'usd',
     //       }),
     //     });
@@ -315,8 +316,8 @@ export default function Checkout({route,navigation}) {
                     />
                     <Button onPress={handlePayPress} title="Pay" disabled={loading} />
                 </View>
-            
-            */}
+             */}
+           
             </ScrollView>
             
             <View>

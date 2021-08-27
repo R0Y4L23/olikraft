@@ -35,17 +35,22 @@ const ShopFromFavouriteComponent=({product,nprice,pprice,id,navigation,image,fea
         </TouchableOpacity>
     )
 }
-const RecentReviewsComponent=({name,stars,comment})=>{
+const RecentReviewsComponent=({name,stars,comment,url})=>{
+    let Image_Http_URL ={ uri: url};
+    
     return (
-        <View style={{width:325,height:100,margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
-            <Image source={require("../assets/celebrity.jpg")} style={{height:75,width:75,borderRadius:37}}/>
-            <View>
+        <View style={{width:400,height:150,margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
+            <View >
+            <Image source={Image_Http_URL} style={{height:75,width:75,borderRadius:50,margin:10}}/>
+            {/* {console.log(url)} */}
+            </View>
+            <View style={{flex:1}}> 
                 <Text style={{fontSize:20,fontWeight:"800"}}>{name}</Text>
                 <View style={{display:"flex",flexDirection:"row"}}>
                     {[...Array(stars)].map((item,index)=>{return  <AntDesign name="star" size={24} color="orange" key={index}/>})}
                     {[...Array(5-stars)].map((item,index)=>{return  <AntDesign name="staro" size={24} color="orange" key={index}/>})}
                 </View>
-                <Text style={{fontSize:15,color:"grey"}}>{comment}</Text>
+                <Text style={{fontSize:14,color:"grey"}}>{comment}</Text>
             </View>
         </View>
     )
@@ -60,20 +65,8 @@ const Home = ({navigation}) => {
         "image": "https://cdn.shopify.com/s/files/1/0434/1347/1386/files/Banner2_1400x.progressive.png.jpg?v=1594881663",
         "link":35
     }]
-    // const SFFJSON=[{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"},{"product":"Premium Cotton Yarn Collection","PPrice":"29.99","NPrice":"19.99"}]
-    const RRJSON = [{
-        "name": "Jack Owens",
-        "stars": 4,
-        "comment": "lorem ipsum lorem ipsum"
-    }, {
-        "name": "Jack Owens",
-        "stars": 4,
-        "comment": "lorem ipsum lorem ipsum"
-    }, {
-        "name": "Jack Owens",
-        "stars": 4,
-        "comment": "lorem ipsum lorem ipsum"
-    }]
+    
+    const [RRJSON, setRRJSON] = useState([])
     const [name, setName] = useState("")
     const [pro, setPro] = useState([])
     const getData = async () => {
@@ -106,13 +99,30 @@ const Home = ({navigation}) => {
                 console.log(error);
             })
     }
+    const fetchRatings = async () => {
+        let token = await getData()
+        await axios.get(`https://olikraft.shubhchintak.co/api/jet-cct/dashboard_reviews`, {
+                Headers: {
+                    letscms_token: token
+                }
+            })
+            .then(function (response) {
+                setRRJSON(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
     // useEffect(() => {
     //     const unsubscribe = navigation.addListener('focus', () => {
     //       fetchProducts()
     //     });
     //     return unsubscribe;
     //   }, [navigation]);
-      useEffect(()=>{fetchProducts()},[])
+      useEffect(()=>{
+          fetchProducts()
+          fetchRatings()
+        },[])
     const [searchQuery, setSearchQuery] = React.useState('');
     const [focus,setFocus]=React.useState(false);
     const onChangeSearch = query => setSearchQuery(query);
@@ -152,7 +162,7 @@ const Home = ({navigation}) => {
            <TouchableOpacity onPress={()=>{navigation.navigate("Products")}}>
            <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:"100%"}}>
                <Text style={{fontSize:22}}>Shop from Favourites</Text>
-               <AntDesign name="arrowright" size={24} color="black" />
+               <AntDesign name="arrowright" size={24} color="black"  style={{marginTop:4}}/>
            </View>
            </TouchableOpacity>
            {/* <View style={{height:125}}>
@@ -166,15 +176,15 @@ const Home = ({navigation}) => {
                </ScrollView>
            </View>
           
-           {/* <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:"80%"}}>
+           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:"100%"}}>
                <Text style={{fontSize:22}}>Recent Reviews</Text>
-               <AntDesign name="arrowright" size={24} color="black" />
+               <AntDesign name="arrowright" size={24} color="black" style={{marginTop:4}} onPress={()=>navigation.navigate("Customerreview")}/>
            </View>
-           <View style={{height:125}}>
+           <View style={{height:300}}>
                <ScrollView horizontal>
-                   {RRJSON.map((item,index)=>{return <RecentReviewsComponent name={item.name} stars={item.stars} comment={item.comment} key={index}/>})}
+                   {RRJSON.map((item,index)=>{return <RecentReviewsComponent name={item.name} stars={Number(item.rating_stars)} comment={item.review} key={index} url={item.customer_pic}/>})}
                </ScrollView>
-           </View> */}
+           </View>
            </View>
            </ScrollView>
        </View>
