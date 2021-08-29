@@ -9,6 +9,7 @@ import Shippingaddress from './Shippingaddress';
 import Billingaddress from './Billingaddress';
 import { CardField, useStripe } from '@stripe/stripe-react-native';
 import { useConfirmPayment } from '@stripe/stripe-react-native';
+import Stripe from 'react-native-stripe-api';
 export default function Checkout({route,navigation}) {
     const [checked, setChecked] = React.useState(false);
     const [name,setName]=useState("")
@@ -29,6 +30,10 @@ export default function Checkout({route,navigation}) {
     const [address2,setaddress2] = useState("")
     const [bafetched, setbafetched] = useState(false)
     const [safetched, setsafetched] = useState(false)
+    const [cardnumber, setcardnumber] = useState("")
+    const [cvc, setcvc] = useState("")
+    const [ expmonth, setexpmonth] = useState("")
+    const [ expyear, setexpyear] = useState("")
     const updateba = () => {
         setbafetched(true)
     }
@@ -74,8 +79,8 @@ export default function Checkout({route,navigation}) {
             setEmail(res.data.customer.email)
             setCartitems(res.data.cart_items)
             setCarttotals(res.data.cart_totals)
-            setpaymentmethod("COD")
-            setpaymentmethodtitle("Cash on Delivery")
+            setpaymentmethod("stripe")
+            setpaymentmethodtitle("Stripe")
 
         })
         .catch(error => console.log(error))
@@ -84,7 +89,8 @@ export default function Checkout({route,navigation}) {
     
     const placeorder=async ()=>{
         let token = await getData()
-            
+        let stripetoken = await handlePayPress()
+        console.log("hello",stripetoken)
             fetch('https://olikraft.shubhchintak.co/api/letscms/v1/order/create', {
                 method:"POST",
                 headers:{
@@ -104,14 +110,14 @@ export default function Checkout({route,navigation}) {
                 payment_method_title:paymentmethodtitle,
                 address_1:address1,
                 address_2:address2,
-                coupons:route.params.coupon
-
+                coupons:route.params.coupon,
+                stripe_card_token: "tok_visa"
                 }),
                 
               },)
               .then(response => response.json())
               .then((response) =>{
-                
+                console.log(response)
                 alert("Order Successfully Placed.Thanks for ordering!!")
                 navigation.navigate("Orderconfirmation",{orderid:response.data.order_id,cartitems:route.params.cartitems,carttotals:route.params.carttotals})
                 
@@ -122,46 +128,93 @@ export default function Checkout({route,navigation}) {
               });
         
     }
+    
     // const fetchPaymentIntentClientSecret = async () => {
+    //     let token = await getData()
     //     const response = await fetch("https://olikraft.shubhchintak.co/api/letscms/v1/stripe/createPaymentIntent", {
     //       method: 'POST',
     //       headers: {
+    //         letscms_token:token,
     //         'Content-Type': 'application/json',
     //       },
     //       body: JSON.stringify({
-            
-    //         currency: 'usd',
+    //         // paymentmethod:"card",
+    //         // amount: 1099,
+    //         "amount": "5000",
+    //         "currency": "usd",
+    //         "description": "Olikraft new",
+    //         // "customer":"pi_3JTjXiEyBNY91bY31xsafO67_secret_FbC3Nkel7fnyB4gV4WS6MWs5C",
+    //         "metadata": {
+    //             "customer_name": "Dinesh Chandak",
+    //             "customer_email": "shubhchintak.co@gmail.com",
+    //             // "order_id": "9819",
+    //             "site_url": "https://olikraft.shubhchintak.co"
+    //         },
+    //         "capture_method": "automatic",
+    //         "payment_method_types": {
+    //             "0": "card"
+    //         }
     //       }),
     //     });
-    //     const {clientSecret} = await response.json();
-    //     console.log(clientSecret)
-    //     return clientSecret;
+    //     const {cs} = await response.json();
+    //     // const clientSecret = 111111
+    //     // const abc  = await response.json()
+    //     // console.log("hello",await response.json())
+    //     console.log(cs)
+    //     return cs;
       
     
     
     // };
     
-    //   const handlePayPress = async () => {
+      const handlePayPress = async () => {
             
-    //     const billingDetails = {
-    //         email: 'jenny.rosen@example.com',
-    //       };
+        // const billingDetails = {
+        //     "amount": "4999",
+        //     "currency": "usd",
+        //     "description": "Olikraft new",
+        //     // "customer":"pi_3JTjXiEyBNY91bY31xsafO67_secret_FbC3Nkel7fnyB4gV4WS6MWs5C",
+        //     "metadata": {
+        //         "customer_name": "Dinesh Chandak",
+        //         "customer_email": "shubhchintak.co@gmail.com",
+        //         // "order_id": "9819",
+        //         "site_url": "https://olikraft.shubhchintak.co"
+        //     },
+        //     "capture_method": "automatic",
+        //     "payment_method_types": {
+        //         "0": "card"
+        //     }
+        //   };
+        // //   console.log("hellooooooo")
+        //   // Fetch the intent client secret from the backend
+        //   const clientSecret = await fetchPaymentIntentClientSecret();
+        //   console.log(clientSecret)
+        //   // Confirm the payment with the card details
+        //   const {paymentIntent, error} = await confirmPayment(clientSecret, {
+        //     type: 'Card',
+        //     billingDetails,
+        //   });
       
-    //       // Fetch the intent client secret from the backend
-    //       const clientSecret = await fetchPaymentIntentClientSecret();
-      
-    //       // Confirm the payment with the card details
-    //       const {paymentIntent, error} = await confirmPayment(clientSecret, {
-    //         type: 'Card',
-    //         billingDetails,
-    //       });
-      
-    //       if (error) {
-    //         console.log('Payment confirmation error', error);
-    //       } else if (paymentIntent) {
-    //         console.log('Success from promise', paymentIntent);
-    //       }
-    //   };
+        //   if (error) {
+        //     console.log('Payment confirmation error', error);
+        //   } else if (paymentIntent) {
+        //     console.log('Success from promise', paymentIntent);
+        //   }
+        const apiKey = 'sk_test_51JKywdEyBNY91bY3i5dOGGsiGLmiXtMRi0UkAC3LtJBfUje4XJ6rkwsjQ6fotkiB90ge12gZ4OG9DJMg2caC6CK000r8k4hZlL';
+        const client = new Stripe(apiKey);
+        
+        // Create a Stripe token with new card infos
+        const token = await client.createToken({
+            number: cardnumber ,
+            exp_month: expmonth, 
+            exp_year: expyear, 
+            cvc: cvc,
+            
+         });
+        let stripe_token = token.id
+        console.log(token.id)
+        return stripe_token
+      };
     useEffect(()=>{
         fetchcheckout()
     },[])
@@ -291,9 +344,12 @@ export default function Checkout({route,navigation}) {
                 
                
             </Card>
-                {/* <View style={{elevation:10}}>
+            <Card style={{marginTop:20,borderRadius:10,elevation:10}}>
+                <View>
                     <Text style={{fontWeight:"bold",marginHorizontal:15,marginTop:10}}>Enter your card details here</Text>
-                    <CardField
+
+                </View>
+                    {/* <CardField
                         postalCodeEnabled={true}
                         placeholder={{
                         number: '4242 4242 4242 4242',
@@ -313,10 +369,39 @@ export default function Checkout({route,navigation}) {
                         // onFocus={(focusedField) => {
                         // console.log('focusField', focusedField);
                         // }}
-                    />
-                    <Button onPress={handlePayPress} title="Pay" disabled={loading} />
-                </View>
-             */}
+                    /> */}
+                <Card.Content >
+                    <ScrollView>
+                    <View style={styles.content}>
+                        <Text>Card Number</Text>
+                        <View style={styles.form}>
+                            <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",borderRadius:8,borderWidth:0.5}} onChangeText={setcardnumber} value={cardnumber} placeholder="4242424242424242"  />
+                        </View>
+                        <View style={{flexDirection:"row"}}>
+                            <View style={{flex:1,margin:5}}>
+                                <Text>Expiry Month</Text>
+                                <View style={styles.form}>    
+                                    <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",borderRadius:8,borderWidth:0.5}} onChangeText={setexpmonth} value={expmonth} placeholder="01 to 12" />
+                                </View>
+                            </View>
+                            <View style={{flex:1,margin:5}}>
+                                <Text>Expiry Year</Text>
+                                <View style={styles.form}>
+                                    <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",textAlignVertical:"top",borderRadius:8,borderWidth:0.5}} onChangeText={setexpyear} value={expyear} placeholder="year" />
+                                </View>
+                            </View>
+                        </View>
+                        <Text>CVC</Text>
+                        <View style={styles.form}>
+                            <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",borderRadius:8,borderWidth:0.5}} onChangeText={setcvc} value={cvc} placeholder="123"  />
+                        </View>
+                        
+                    </View> 
+                    </ScrollView>
+                </Card.Content>
+                    {/* <Button onPress={handlePayPress} title="Pay" /> */}
+                </Card>
+            
            
             </ScrollView>
             
@@ -354,6 +439,19 @@ const styles = StyleSheet.create ({
     title:{
         fontSize:17
     },
+    content:{
+        
+        padding:20
+     },
+     form:{
+         backgroundColor:"white",
+        //  borderRadius:8,
+        //  borderWidth:0.5,
+         // padding:10,
+         marginVertical:10,
+         borderColor:"grey",
+         
+     },
     name:{
         fontSize:12,
         color:"grey",
