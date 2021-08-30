@@ -83,7 +83,7 @@ export default function Ontheway({navigation}) {
        
          }
         
-    </ScrollView>):(<WriteAReview/>)}
+    </ScrollView>):(<><Text style={{marginVertical:20,fontWeight:"bold",marginLeft:20}} onPress={()=>{setReview(false);setOrderIdSelectedForReview("")}}><AntDesign name="back" size={20} color="black" /> Back</Text><WriteAReview orderID={orderIdSelectedForReview}/></>)}
     </View>
     );
   }
