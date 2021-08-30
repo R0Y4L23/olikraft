@@ -83,9 +83,9 @@ export default function Allorders({navigation}) {
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Total  :  ${order.total}</Text>
                                     </View>
                                     
-                                    <TouchableOpacity style={styles.send} onPress={()=>{setOrderIdSelectedForReview(order.order_id);setReview(true)}}>
+                                    {/* <TouchableOpacity style={styles.send} onPress={()=>{setOrderIdSelectedForReview(order.order_id);setReview(true)}}>
                                         <Text style={{color:"black",fontSize:14,fontWeight:"bold"}}>Write a Review</Text>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
                                 </View>
                                 :
                                 <View style={styles.button}>

@@ -3,7 +3,7 @@ import {View,Text,TextInput,TouchableOpacity, StyleSheet,ScrollView} from "react
 import { Ionicons,AntDesign } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-export default function WriteAReview({navigation,orderID}) {
+export default function WriteAReview({route,navigation}) {
     const [name, setName] = useState("")
     const [email,setEmail]=useState("")
     const [stars,setStars]=useState(0)
@@ -12,6 +12,7 @@ export default function WriteAReview({navigation,orderID}) {
     const [letcmsToken,setLetcmsToken]=useState("")
 
     useEffect(()=>{
+        console.log("id ===>>",route.params.id)
        const getProfileData = async () => {
         try {
           const token=await AsyncStorage.getItem('token')
@@ -34,7 +35,7 @@ export default function WriteAReview({navigation,orderID}) {
             },
             body: JSON.stringify({ 
                 rating:`${stars}`,
-                product_id:orderID,
+                product_id:route.params.id,
                 review:`${reviewTitle}\n${message}`
             })
           })
@@ -44,10 +45,10 @@ export default function WriteAReview({navigation,orderID}) {
     return (
            <View style={styles.container}>
                <ScrollView>
-               {/* <Appbar.Header style={styles.item}>
+                <Appbar.Header style={styles.item}>
                    <Ionicons style={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
                    <Appbar.Content title="Write a Review" titleStyle={styles.title} />
-               </Appbar.Header> */}
+               </Appbar.Header> 
                <View style={styles.content}>
                    <Text>Name</Text>
                    <View style={styles.form}>
@@ -90,7 +91,7 @@ export default function WriteAReview({navigation,orderID}) {
                </View>
                <View style={styles.buttoncontainer}>
                    <View style={styles.button}>
-                       <TouchableOpacity style={styles.send} onPress={()=>{sendReview().then((res)=>{console.log("Response from Created Review",res);})}}>
+                       <TouchableOpacity style={styles.send} onPress={()=>{sendReview().then((res)=>{console.log("Response from Created Review",res); navigation.goBack();})}}>
                            <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Send Review</Text>
                        </TouchableOpacity>
                    </View>

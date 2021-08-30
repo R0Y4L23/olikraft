@@ -29,11 +29,11 @@ class Rating extends React.Component {
                 <Text style={{fontWeight:'bold'}}>Overall Rating</Text>
                 <Text style={{fontSize: 35, fontWeight: 'bold', marginTop: 2 }}>4.0</Text>
                 <View style={{flexDirection: 'row', marginTop: 6}} >
-                    <EvilIcons style={{marginTop:4, fontWeight:'bold'}}name="star" size={30} color="yellow" />
-                    <EvilIcons style={{marginTop:4, fontWeight:'bold'}}name="star" size={30} color="yellow" />
-                    <EvilIcons style={{marginTop:4, fontWeight:'bold'}}name="star" size={30} color="yellow" />
-                    <EvilIcons style={{marginTop:4, fontWeight:'bold'}}name="star" size={30} color="yellow" />
-                    <EvilIcons style={{marginTop:4, fontWeight:'bold'}}name="star" size={30} color="yellow" />
+                    <EvilIcons style={{marginTop:4, fontWeight:'bold'}} name="star" size={30} color="yellow" />
+                    <EvilIcons style={{marginTop:4, fontWeight:'bold'}} name="star" size={30} color="yellow" />
+                    <EvilIcons style={{marginTop:4, fontWeight:'bold'}} name="star" size={30} color="yellow" />
+                    <EvilIcons style={{marginTop:4, fontWeight:'bold'}} name="star" size={30} color="yellow" />
+                    <EvilIcons style={{marginTop:4, fontWeight:'bold'}} name="star" size={30} color="yellow" />
                     </View>
                 <Text style={{color: 'grey', marginTop: 6}}>based on 54 Review</Text>
             </View>
