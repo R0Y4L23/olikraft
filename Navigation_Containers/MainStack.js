@@ -33,6 +33,7 @@ import TermsOfUse from "../screens/TermsOfUse"
 import PrivacyPolicy from "../screens/PrivacyPolicy"
 import Addaddress from '../screens/Addaddress'
 import Customerreview from '../screens/Customerreview'
+import Productreview from '../screens/Productreview'
 const Stack = createNativeStackNavigator();
 
 const Loading = ({navigation}) => {
@@ -102,6 +103,7 @@ const MainStack = () => {
             <Stack.Screen name="Privacypolicy" component={PrivacyPolicy}/>
             <Stack.Screen name="Addaddress" component={Addaddress}/>
             <Stack.Screen name="Customerreview" component={Customerreview}/>
+            <Stack.Screen name="Productreview" component={Productreview}/>
             
         </Stack.Navigator>
     )

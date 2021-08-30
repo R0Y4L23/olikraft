@@ -57,8 +57,8 @@ export default function ProductDetails({route,navigation}) {
                 contentWidth={width}
                 source={source}
                 />
-                <View style={{flex:1}}>
-                    <Text>The end</Text>
+                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                    <Text style={{fontSize:17,fontWeight:"bold"}}>Loading.....</Text>
                 </View>
         </ScrollView>
       </View>

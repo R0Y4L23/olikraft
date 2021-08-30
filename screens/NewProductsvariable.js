@@ -214,7 +214,7 @@ export default function NewProductsvariable({route,navigation}) {
                     <Image source={require("../assets/mcafee.png")} style={{height:50,width:50,resizeMode:"stretch"}}/>
                 </View>
 
-                <TouchableOpacity style={{backgroundColor:"white",elevation:5,height:40,borderRadius:15,justifyContent:"center"}} onPress={()=>{navigation.navigate("ProductDetails",{"id":20})}} >
+                <TouchableOpacity style={{backgroundColor:"white",elevation:5,height:40,borderRadius:15,justifyContent:"center"}} onPress={()=>{navigation.navigate("ProductDetails",{"id":proid})}} >
                     <View style={{flexDirection:"row"}}>
                         <View style={{flex:1,alignItems:"flex-start",marginLeft:15}}>
                             <Octicons name="info" size={24} color="black"  />
