@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { View, Text, SliderBase } from 'react-native'
 import { EvilIcons} from '@expo/vector-icons';
-import { Card, Paragraph } from 'react-native-paper';
+import { Card, Paragraph, ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Showcountrystate from './Showcountrystate';
 
@@ -12,7 +12,7 @@ export default function Billingaddress({navigation,updateba}) {
     const [country,setCountry] = useState([])
     const [State,setState] = useState([])
     const [isaddressfetched,  setisaddressfetched] = useState(false)
-   
+    const [rendercomplete, setrendercomplete] = useState(false)
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -44,23 +44,23 @@ export default function Billingaddress({navigation,updateba}) {
                 setState(res.data.address.state)
                 setCountry(res.data.address.country)
                 setisaddressfetched(true)
+                setrendercomplete(true)
                 updateba()
+                
             })
             .catch(error => console.log(error))
         }
   
       useEffect(()=>{
-          let mounted = true
 
-            if(mounted){
                 fetchbillingaddress()
-            }
-            return () => mounted = false
-        },[isaddressfetched])
+            
+            
+        },[])
     return (
         <View>
-           {!ad&&<Text>Loading...</Text>}
-           {ad&&<Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+           {/* {!ad&& rendercomplete&& <Text>No Address</Text>} */}
+           {ad&& rendercomplete && <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,fontWeight:"bold",marginLeft:16,marginTop:10,color:"black"}}>Billing Address</Text>
                     <View style={{marginTop:10,marginRight:15}}>
@@ -75,6 +75,11 @@ export default function Billingaddress({navigation,updateba}) {
                     <Showcountrystate country={country} state={State} countrylist={countrylist} statelist={Statelist} updateaddressfetched={updateaddressfetched} isaddressfetched={isaddressfetched} />
                 </Card.Content>
             </Card>}
+            {
+                rendercomplete === false && <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+                <ActivityIndicator animating={true} color={"blue"} size="small"/>
+                </Card>
+            }
         </View>
     )
 }

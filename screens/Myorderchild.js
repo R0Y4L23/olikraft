@@ -2,9 +2,10 @@ import React , {useState,useEffect}from 'react'
 import { View, Text, Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Productimage from './Productimage';
+import { ActivityIndicator } from 'react-native-paper';
 export default function Myorderchild({id}) {
     const [singleorders, setsingleOrders] = useState([])
- 
+    const [rendercomplete, setrendercomplete] = useState(false)
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('token')
@@ -29,6 +30,7 @@ export default function Myorderchild({id}) {
             .then(function (response)
             {
                 setsingleOrders(response.data.items)
+                setrendercomplete(true)
                 // console.log(response.data.items)
              
             }).catch((e)=>{
@@ -43,15 +45,16 @@ export default function Myorderchild({id}) {
     }, [])
     return (
         <View style={{flex:1}}>
-        {singleorders&&
+        {singleorders&&rendercomplete&&
             singleorders.map((item,idx)=>{
                 return(
                     <View style={{flexDirection:"row",margin:20}} key={idx}>
                         {
-                            item.variation_id === 0?
+                            item.variation_id === 0 &&
                             <Productimage id={item.product_id}/>
-                            :
-                            <Productimage id={item.variation_id}/>
+            }
+            {
+                           item.variation_id != 0 && <Productimage id={item.variation_id}/>
                         }                                          
                         {/* <Productimage id ={setproductid(item.variation_id,item.product_id)}/> */}
                         <View style={{flex:1 ,padding:5}}>
@@ -67,6 +70,11 @@ export default function Myorderchild({id}) {
                 )
             })
         }
+         {
+                rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                <ActivityIndicator animating={true} color={"blue"} size="small"/>
+                </View>
+            }
         </View>
     )
 }

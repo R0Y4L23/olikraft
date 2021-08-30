@@ -2,13 +2,13 @@ import React, {useState,useEffect} from 'react'
 import { View, Text,TouchableOpacity, ScrollView, StyleSheet } from 'react-native'
 
 
-import { Card, Paragraph } from 'react-native-paper';
+import { Card, Paragraph,ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Myorderchild from './Myorderchild';
 
 export default function Allorders({navigation}) {
     const [orders, setOrders] = useState([])
-
+    const [rendercomplete, setrendercomplete] = useState(false)
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('token')
@@ -44,6 +44,7 @@ export default function Allorders({navigation}) {
          {
             //  console.log("All Orders",response.data.orders)
             setOrders(response.data.orders);
+            setrendercomplete(true)
             
         }).catch((e)=>{
             console.log(e)
@@ -58,7 +59,7 @@ export default function Allorders({navigation}) {
     return (
 
         <View style={{flex:1}}>
-          <ScrollView >
+          {rendercomplete && <ScrollView >
             {
                 orders.length > 0 && orders.map((order,idx)=>{
                     return(
@@ -98,11 +99,16 @@ export default function Allorders({navigation}) {
                     )
                 })
              }
-        </ScrollView>
+        </ScrollView>}
             {
-                    orders.length === 0 && <View style={{flex:1,justifyContent:"flex-start",alignItems:"center"}}>
-                        <Text style={{fontWeight:"bold",fontSize:18}}>Loading Orders Please Wait......</Text></View>
-                }   
+                    orders.length === 0 && rendercomplete && <View style={{flex:1,justifyContent:"flex-start",alignItems:"center"}}>
+                        <Text style={{fontWeight:"bold",fontSize:18}}>No Orders Made......</Text></View>
+                } 
+                 {
+                rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                </View>
+            }  
     </View>
     );
   }

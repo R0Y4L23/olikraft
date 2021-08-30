@@ -1,13 +1,14 @@
 import React, {useState,useEffect} from 'react'
 import { View, Text,TouchableOpacity, ScrollView , StyleSheet} from 'react-native'
-import { Card, Paragraph } from 'react-native-paper';
+import { Card, Paragraph, ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Myorderchild from './Myorderchild';
-import WriteAReview from './WriteAReview';
+
 export default function Ontheway({navigation}) {
     const [orders, setOrders] = useState([])
     const [review,setReview]=useState(false)
     const [orderIdSelectedForReview,setOrderIdSelectedForReview]=useState("")
+    const [rendercomplete, setrendercomplete] = useState(false)
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('token')
@@ -33,6 +34,8 @@ export default function Ontheway({navigation}) {
             setOrders(response.data.orders.filter(order=>{
                 return order.order_status === "processing"
             }))
+            setrendercomplete(true)
+
         }).catch((e)=>{
             console.log(e)
         })
@@ -46,8 +49,8 @@ export default function Ontheway({navigation}) {
 
     return (
         <View style={{flex:1}}>
-        {!review?(<ScrollView >
-        {   orders.length != 0 ?
+        {<ScrollView >
+        {   orders.length != 0 &&
             orders.map((order,idx)=>{
                 
                 return(
@@ -77,13 +80,20 @@ export default function Ontheway({navigation}) {
                     </Card>
                 )
             })
-            :<View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"red",height:"100%"}}>
-                <Text style={{fontWeight:"bold",fontSize:15}}>No Orders delievered yet</Text>
-            </View>
+           
        
          }
         
-    </ScrollView>):(<><Text style={{marginVertical:20,fontWeight:"bold",marginLeft:20}} onPress={()=>{setReview(false);setOrderIdSelectedForReview("")}}><AntDesign name="back" size={20} color="black" /> Back</Text><WriteAReview orderID={orderIdSelectedForReview}/></>)}
+    </ScrollView>}
+    {
+                    orders.length === 0 && rendercomplete && <View style={{flex:1,justifyContent:"flex-start",alignItems:"center"}}>
+                        <Text style={{fontWeight:"bold",fontSize:18}}>No orders made......</Text></View>
+                } 
+                 {
+                rendercomplete === false && <View style={{flex:1,justifyContent:"flex-start",alignItems:"center"}}>
+                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                </View>
+            }  
     </View>
     );
   }

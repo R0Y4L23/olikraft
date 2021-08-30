@@ -446,7 +446,9 @@ const styles = StyleSheet.create ({
         fontSize:17
     },
     content:{
-        
+
+        // borderWidth:1,
+        // marginTop:10,
         padding:20
      },
      form:{
@@ -468,7 +470,7 @@ const styles = StyleSheet.create ({
     button:{
         backgroundColor:"white",
         elevation:5,
-        marginTop:10,
+        // marginTop:10,
         borderColor:"grey",
         flexDirection:"row",
         padding:15

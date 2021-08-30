@@ -1,6 +1,6 @@
 import React , {useState,useEffect} from 'react'
 import { View, Text } from 'react-native'
-import { Card, Paragraph } from 'react-native-paper';
+import { Card, Paragraph, ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons, AntDesign, EvilIcons} from '@expo/vector-icons';
 import Showcountrystate from './Showcountrystate';
@@ -11,7 +11,7 @@ export default function Shippingaddress({navigation,updatesa}) {
     const [country,setCountry] = useState([])
     const [State,setState] = useState([])
     const [isaddressfetched,  setisaddressfetched] = useState(false)
-   
+    const [rendercomplete, setrendercomplete] = useState(false)
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -43,6 +43,7 @@ export default function Shippingaddress({navigation,updatesa}) {
             setState(res.data.address.state)
             setCountry(res.data.address.country)
             setisaddressfetched(true)
+            setrendercomplete(true)
             updatesa()
 
         })
@@ -50,18 +51,15 @@ export default function Shippingaddress({navigation,updatesa}) {
     
     }
     useEffect(()=>{
-      let mounted = true
-
-      if(mounted){
           fetchshippingaddress()
-      }
-      return () => mounted = false
+     
+      
         
-      },[isaddressfetched])
+      },[])
     return (
         <View>
-          {!shad&&<Text>Loading...</Text>}
-         {shad&&<Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+          {/* {!shad&&<Text>Loading...</Text>} */}
+         {shad && rendercomplete&& <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
             <View style={{flexDirection:"row"}}>
                 <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold",color:"black"}}>Shipping Address</Text>
                  <View style={{marginTop:10,marginRight:15}}>
@@ -76,6 +74,11 @@ export default function Shippingaddress({navigation,updatesa}) {
                 <Showcountrystate country={country} state={State} countrylist={countrylist} statelist={Statelist} updateaddressfetched={updateaddressfetched} isaddressfetched={isaddressfetched} />
                 </Card.Content>
          </Card>}
+         {
+                rendercomplete === false && <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+                <ActivityIndicator animating={true} color={"blue"} size="small"/>
+                </Card>
+            }
         </View>
     )
 }
