@@ -147,7 +147,7 @@ useEffect(()=>{
                     <View>
                     <View style={styles.button}> 
                         
-                        <TouchableOpacity style={styles.send}>
+                        <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Review",{id:route.params.id})}}>
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Write a Review</Text>
                         </TouchableOpacity>
                     </View>
