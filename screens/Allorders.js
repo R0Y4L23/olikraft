@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import { View, Text,TouchableOpacity, ScrollView, StyleSheet } from 'react-native'
+import { Ionicons,AntDesign } from '@expo/vector-icons';
 
 import { Card, Paragraph } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -42,6 +43,7 @@ export default function Allorders({navigation}) {
         .then(response => response.json())
         .then(function (response)
          {
+             console.log("All Orders",response.data.orders)
             setOrders(response.data.orders);
             
         }).catch((e)=>{
@@ -97,7 +99,7 @@ export default function Allorders({navigation}) {
                     )
                 })
              }
-        </ScrollView>):(<WriteAReview/>)}
+        </ScrollView>):(<><Text style={{marginVertical:20,fontWeight:"bold",marginLeft:20}} onPress={()=>{setReview(false);setOrderIdSelectedForReview("")}}><AntDesign name="back" size={20} color="black" /> Back</Text><WriteAReview orderID={orderIdSelectedForReview}/></>)}
             {
                     orders.length === 0 && <View style={{flex:1,justifyContent:"flex-start",alignItems:"center"}}>
                         <Text style={{fontWeight:"bold",fontSize:18}}>Loading Orders Please Wait......</Text></View>

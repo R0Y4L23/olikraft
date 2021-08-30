@@ -1,13 +1,46 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {View,Text,TextInput,TouchableOpacity, StyleSheet,ScrollView} from "react-native"
 import { Ionicons,AntDesign } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
-export default function WriteAReview({navigation}) {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+export default function WriteAReview({navigation,orderID}) {
     const [name, setName] = useState("")
     const [email,setEmail]=useState("")
     const [stars,setStars]=useState(0)
     const [reviewTitle,setReviewTitle]=useState("")
     const [message,setMessage]=useState("")
+    const [letcmsToken,setLetcmsToken]=useState("")
+
+    useEffect(()=>{
+       const getProfileData = async () => {
+        try {
+          const token=await AsyncStorage.getItem('token')
+          setLetcmsToken(token)
+        } catch(e) {
+         console.log(e)
+        }
+    }
+    getProfileData()
+    },[])
+
+    
+
+    const sendReview = async ()=>{
+        const response = await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/review/create', {
+            method: 'POST', 
+            headers: {
+              'Content-Type': 'application/json',
+              'letscms_token':letcmsToken
+            },
+            body: JSON.stringify({ 
+                rating:`${stars}`,
+                product_id:orderID,
+                review:`${reviewTitle}\n${message}`
+            })
+          })
+          return response.json()
+    }
+    
     return (
            <View style={styles.container}>
                <ScrollView>
@@ -50,14 +83,14 @@ export default function WriteAReview({navigation}) {
                            placeholder="Give a Title for your review..." />
                    </View>
                    <Text>Review (1500 Characters)</Text>
-                   <View style={styles.form}>
-                       <TextInput style={{ height:"26%",padding: 10,backgroundColor:"white",textAlignVertical:"top"}}
+                   <View style={styles.form2}>
+                       <TextInput style={{ height:"100%",padding: 10,backgroundColor:"white",textAlignVertical:"top"}}
                            onChangeText={setMessage} value={message} placeholder="Enter your review" />
                    </View>
                </View>
                <View style={styles.buttoncontainer}>
                    <View style={styles.button}>
-                       <TouchableOpacity style={styles.send}>
+                       <TouchableOpacity style={styles.send} onPress={()=>{sendReview().then((res)=>{console.log("Response from Created Review",res);})}}>
                            <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Send Review</Text>
                        </TouchableOpacity>
                    </View>
@@ -96,10 +129,19 @@ const styles = StyleSheet.create ({
         borderColor:"grey",
         
     },
+    
+    form2:{
+        backgroundColor:"white",
+        borderRadius:8,
+        borderWidth:0.5,
+        marginVertical:10,
+        borderColor:"grey",
+        height:300
+        
+    },
     buttoncontainer:{
         backgroundColor:"rgb(249,249,249)",
         flex:1,
-        justifyContent:"flex-end"
     },
 
     button:{
