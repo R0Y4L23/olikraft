@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import {View,Text,Image, StyleSheet, TextInput ,TouchableOpacity,ScrollView,Button} from "react-native"
 import { Card, Paragraph } from 'react-native-paper';
 import { Ionicons, Feather,EvilIcons } from '@expo/vector-icons';
-import { Appbar } from 'react-native-paper';
+import { Appbar, ActivityIndicator } from 'react-native-paper';
 import { Checkbox } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Shippingaddress from './Shippingaddress';
@@ -34,6 +34,7 @@ export default function Checkout({route,navigation}) {
     const [cvc, setcvc] = useState("")
     const [ expmonth, setexpmonth] = useState("")
     const [ expyear, setexpyear] = useState("")
+    const [rendercomplete, setrendercomplete] = useState(false)
     const updateba = () => {
         setbafetched(true)
     }
@@ -81,7 +82,7 @@ export default function Checkout({route,navigation}) {
             setCarttotals(res.data.cart_totals)
             setpaymentmethod("stripe")
             setpaymentmethodtitle("Stripe")
-
+            setrendercomplete(true)
         })
         .catch(error => console.log(error))
     
@@ -221,14 +222,14 @@ export default function Checkout({route,navigation}) {
 
     return (
         <View style={{flex:1,width:"100%",justifyContent:'center'}}>
-            <View>
+            {rendercomplete && <View>
              <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}} />
                 <Appbar.Content title="Checkout" titleStyle={styles.title}/>
                 
             </Appbar.Header>
-            </View>
-            <ScrollView style={{marginBottom:15}}>
+            </View>}
+            {rendercomplete && <ScrollView style={{marginBottom:15}}>
             <Card style={{marginTop:20,borderRadius:10,elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold"}}>General Information</Text>
@@ -404,8 +405,8 @@ export default function Checkout({route,navigation}) {
             
            
             </ScrollView>
-            
-            <View>
+            } 
+            {rendercomplete && <View>
                     <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel}>
                             <Text style={{fontSize:14,fontWeight:"bold"}}>Payable Amount</Text>
@@ -416,7 +417,12 @@ export default function Checkout({route,navigation}) {
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Place Order</Text>
                         </TouchableOpacity>
                     </View>
+                </View>}
+                {
+                rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                <ActivityIndicator animating={true} color={"blue"} size="large"/>
                 </View>
+            }
         </View>
     )
 }

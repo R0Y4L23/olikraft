@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import { StyleSheet,View, Text, Button, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import { Ionicons,Entypo} from '@expo/vector-icons';
-import { Appbar } from 'react-native-paper';
+import { Appbar,ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { QuantityInput } from './QuantityInput';
 
@@ -13,7 +13,7 @@ export default function Mycart({navigation}) {
     const [cartitems,setCartitems]=useState([])
     const [carttotals,setCarttotals]=useState([])
     const [hasitemremoved,sethasitemremoved] = useState(false)
-   
+    const [rendercomplete, setrendercomplete] = useState(false)
     const forceUpdate = useForceUpdate();
 
     const getData = async () => {
@@ -40,7 +40,7 @@ export default function Mycart({navigation}) {
               .then(response => response.json())
               .then((response) =>{
                 if(response.status){
-                    alert(response.message)
+                    // alert(response.message)
                     // navigation.navigate("Products")
                     sethasitemremoved(true)
                     // forceUpdate()
@@ -83,6 +83,7 @@ export default function Mycart({navigation}) {
             // console.log(res)
             setCartitems(res.data.cart_items)
             setCarttotals(res.data.cart_totals)
+            setrendercomplete(true)
         })
         .catch(error => console.log(error))
       }
@@ -91,19 +92,20 @@ export default function Mycart({navigation}) {
         fetchcart()
         if(hasitemremoved){
             sethasitemremoved(false)
+            setrendercomplete(false)
             fetchcart()
         }
     }
        ,[hasitemremoved])
     return (
         <View style={{flex:1,justifyContent:"space-between"}}>
-            <View>
+            { rendercomplete && <View>
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
                 <Appbar.Content title="My Cart" titleStyle={styles.title}/>
             </Appbar.Header>
-            </View>
-            { cartitems!=0 ?
+            </View>}
+            { cartitems.length > 0 && rendercomplete &&
             <ScrollView>
                 
             {cartitems.map((item,idx)=>{return(
@@ -184,15 +186,16 @@ export default function Mycart({navigation}) {
                 
                     
             </View>
-            </ScrollView>
-            :<View style={{flex:1,justifyContent:"center",alignItems:'center'}}>
+            </ScrollView>}
+            {cartitems.length == 0 && rendercomplete &&
+            <View style={{flex:1,justifyContent:"center",alignItems:'center'}}>
                     <Text>
                         No Prodcuts added to cart
                     </Text>
                 </View>
             }
             {
-                cartitems!=0?
+                cartitems!=0 && rendercomplete &&
             <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("BNS")}}>
                             <Text style={{fontSize:15,fontWeight:"bold"}}>Continue Shopping </Text>
@@ -201,9 +204,13 @@ export default function Mycart({navigation}) {
                             <Text style={{color:"white",fontSize:15,fontWeight:"bold"}}>Proceed to Checkout</Text>
                         </TouchableOpacity>
                     </View>
-                    :<View>
-                        </View>
-}
+                    
+            }
+             {
+                rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                </View>
+            }
         </View>
     )
 }

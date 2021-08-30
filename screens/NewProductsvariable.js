@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, } from 'react-native'
 import { Ionicons,Entypo,FontAwesome5,EvilIcons,Octicons,FontAwesome} from '@expo/vector-icons';
-import { Appbar, List } from 'react-native-paper';
+import { Appbar, List, ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SliderBox } from "react-native-image-slider-box";
 import Attributesarray from './Attributes';
@@ -23,6 +23,7 @@ export default function NewProductsvariable({route,navigation}) {
     const [proid,setid] = useState(route.params.pid)
     const [varid,setvarid] = useState(route.params.id)
     const [hasidchanged ,sethasidchanged] = useState(false)
+    const [rendercomplete, setrendercomplete] = useState(false)
     function matchvardetails2(option,title){
         settitles([...titles, title]);
         setopt([...opt, option]);
@@ -107,7 +108,7 @@ export default function NewProductsvariable({route,navigation}) {
                 setprice(Number(response.data.data.regular_price))
                 setsaleprice(Number(response.data.data.sale_price))
                 setrating(response.data.data.average_rating)
-                
+                setrendercomplete(true)
           })
           .catch(function (error) {
             console.log(error);
@@ -135,15 +136,15 @@ export default function NewProductsvariable({route,navigation}) {
   
     return (
         <View style={{flex:1}}>
-            <View >
+            {rendercomplete && <View >
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="rgb(5,23,41)" onPress={()=>{navigation.navigate("BNS")}}/>
                 <Appbar.Content title="" titleStyle={styles.title}/>
 
             </Appbar.Header>
-            </View>
+            </View>}
            
-            <ScrollView style={{flex:1}}>
+            { rendercomplete && <ScrollView style={{flex:1}}>
            
                 <View  style={{elevation:15,padding:5,borderRadius:10,backgroundColor:"white"}}>
                     <SliderBox images={route.params.Images} sliderBoxHeight={270} resizeMode="contain"/>
@@ -242,11 +243,19 @@ export default function NewProductsvariable({route,navigation}) {
                 </TouchableOpacity>                       
             </View>
             </ScrollView>
-            <View style={{alignItems:"center",padding:20}}>
+            }
+            {
+            rendercomplete && <View style={{alignItems:"center",padding:20}}>
                     <TouchableOpacity style={{backgroundColor:'rgb(33,184,97)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}} onPress={addtocart}>
                         <Text style={{color:"white",fontSize:16}}>Buy Now</Text>
                     </TouchableOpacity>
                 </View>
+            }
+            {
+                rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                </View>
+            }
         </View>
     )
 }

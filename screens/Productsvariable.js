@@ -9,18 +9,19 @@ import Attributesarray from './Attributes';
 const axios = require('axios');
 export default function Productsvariable({route,navigation}) {
     const [Counter,setCounter] = useState(1)
-    const [name,setName] = useState()
+    const [name,setName] = useState(null)
     const [images,setImages]=useState([])
-    const [price, setprice] = useState(0)
-    const [saleprice , setsaleprice] = useState(0)
-    const [nprice , setnprice] = useState(0)
-    const [rating,setrating] = useState()
+    const [price, setprice] = useState("")
+    const [saleprice , setsaleprice] = useState("")
+    const [nprice , setnprice] = useState("")
+    const [rating,setrating] = useState(null)
     const [pro,setPro] = useState([])
     const [varid,setvarid] = useState(route.params.id)
     const [producttype,setproducttype] = useState("")
     const [proid,setid] = useState(route.params.id)
     const [titles, settitles] = useState([]);
     const [opt, setopt] = useState([]);
+    const [rendercomplete, setrendercomplete] = useState(false)
     var fa = []
     const matchvardetails2=(option,title)=>{
         settitles([...titles, title]);
@@ -101,7 +102,7 @@ export default function Productsvariable({route,navigation}) {
                 setproducttype(response.data.data.type)
                 setsaleprice(Number(response.data.data.sale_price))
                 setrating(response.data.data.average_rating)
-                
+                setrendercomplete(true)
           })
           .catch(function (error) {
             console.log(error);
@@ -111,11 +112,13 @@ export default function Productsvariable({route,navigation}) {
 
     
     useEffect(()=>{
+        
         fetchrootitem()
         // fetchvaritem()
         // fetchvarchildren(route.params.id)
         
         // filterattributes()
+        
     },[])
     // let Image_Http_URL ={ uri: pro.image};
     let discount=( Math.abs(price - saleprice) ) / price 
@@ -124,18 +127,21 @@ export default function Productsvariable({route,navigation}) {
   
     return (
         <View style={{flex:1}}>
-            <View>
+            {rendercomplete && <View>
                 <Appbar.Header style={styles.item}>
                     <Ionicons style={styles.icon} name="arrow-back" size={24} color="rgb(5,23,41)" onPress={()=>
                         {navigation.goBack()}}/>
                         <Appbar.Content title="" titleStyle={styles.title} />
                 </Appbar.Header>
-            </View>
+            </View>}
+
             <ScrollView style={{flex:1}}>
-                <View style={{elevation:15,padding:5,borderRadius:10,backgroundColor:"white"}}>
-                    <SliderBox images={images} sliderBoxHeight={270} resizeMode="contain" />
-                </View>
-                <View style={{flexDirection:"row",padding:10}}>
+                {
+                    images.length > 0  && <View style={{elevation:15,padding:5,borderRadius:10,backgroundColor:"white"}}>
+                        <SliderBox images={images} sliderBoxHeight={270} resizeMode="contain" />
+                    </View>
+                }
+                {name != null && <View style={{flexDirection:"row",padding:10}}>
                     <Text style={{marginLeft:5,fontSize:16,flex:1,fontWeight:"bold"}}>{name}</Text>
                     <View style={{flex:0.5,alignItems:"flex-end",marginRight:16,justifyContent:"center"}}>
                         <TouchableOpacity
@@ -144,28 +150,31 @@ export default function Productsvariable({route,navigation}) {
                             <FontAwesome5 name="shopping-bag" size={16} color="black" />
                         </TouchableOpacity>
                     </View>
-                </View>
-                <View
+                </View>}
+                {rating !=  null && <View
                     style={{backgroundColor:"rgb(33,184,97)",borderRadius:5,marginLeft:15,width:"15%",flexDirection:"row",justifyContent:"space-evenly"}}>
                     <Text style={{color:"white",fontSize:16}}>{rating}</Text>
                     <EvilIcons style={{marginTop:4}}name="star" size={20} color="white" />
                 </View>
-                {(saleprice!=0)&&<View>
+                }
+                {(saleprice!="")&&<View>
                     <View style={{flexDirection:"row",width:"50%",padding:10,marginLeft:5,}}>
-                        <Text style={{color:"rgb(5,23,41)",fontSize:15,flex:0.5}}>
+                        {saleprice != "" && <Text style={{color:"rgb(5,23,41)",fontSize:15,flex:0.5}}>
                             ${saleprice}
-                        </Text>
-                        <Text style={{color:"grey",fontSize:15,flex:1,textDecorationLine:"line-through"}}>
+                        </Text>}
+                        {price != "" && <Text style={{color:"grey",fontSize:15,flex:1,textDecorationLine:"line-through"}}>
                             ${price}
-                        </Text>
+                        </Text>}
                     </View>
-                    <View style={{marginLeft:10,padding:5}}>
-                        {price&&<Text style={{color:"rgb(144,222,174)",fontSize:14,fontWeight:"bold"}}>You Save {(discount*100).toPrecision(4)}% (${discountPrice})</Text>}
-                    </View>
+                    {price!="" && <View style={{marginLeft:10,padding:5}}>
+                        <Text style={{color:"rgb(144,222,174)",fontSize:14,fontWeight:"bold"}}>You Save {(discount*100).toPrecision(4)}% (${discountPrice})</Text>
+                    </View>}
                 </View>}
-                <View style={{flexDirection:"row",width:"50%",padding:10,marginLeft:5,}}>{saleprice==0&&<Text style={{color:"rgb(5,23,41)",fontSize:15,flex:0.5,fontWeight:"bold"}}>${nprice}</Text>}</View>
-                <Attributesarray id={route.params.id} Images={images} match={matchvardetails2} titles={titles}opt={opt} />
-                <View style={{flex:1,padding:15,justifyContent:"flex-start"}}>
+                {saleprice ==0 && rendercomplete && <View style={{flexDirection:"row",width:"50%",padding:10,marginLeft:5,}}>
+                    <Text style={{color:"rgb(5,23,41)",fontSize:15,flex:0.5,fontWeight:"bold"}}>${nprice}</Text>
+                </View>}
+                {rendercomplete && <Attributesarray id={route.params.id} Images={images} match={matchvardetails2} titles={titles}opt={opt} />}
+                {rendercomplete && <View style={{flex:1,padding:15,justifyContent:"flex-start"}}>
                     <Text style={{color:"black",fontSize:19}}>Quantity</Text>
                     <View
                         style={{flexDirection:"row",backgroundColor:"white",padding:5,marginVertical:5,borderWidth:0.5,borderColor:"grey"}}>
@@ -229,10 +238,10 @@ export default function Productsvariable({route,navigation}) {
                             </View>
                         </View>
                     </TouchableOpacity>
-                </View>
+                </View>}
             </ScrollView>
             {
-            producttype === "simple"&&
+            producttype === "simple"&& rendercomplete&&
             <View style={{alignItems:"center",padding:15}}>
                 <TouchableOpacity
                     style={{backgroundColor:'rgb(33,184,97)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}}
@@ -241,13 +250,18 @@ export default function Productsvariable({route,navigation}) {
                 </TouchableOpacity>
             </View>
             }
-            {(producttype !== "simple")&& <View style={{alignItems:"center",padding:15}}>
+            {(producttype !== "simple")&&rendercomplete && <View style={{alignItems:"center",padding:15}}>
                 <TouchableOpacity
                     style={{backgroundColor:'grey',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}}
                     onPress={addtocart} disabled={true}>
                     <Text style={{color:"white",fontSize:16}}>Buy Now</Text>
                 </TouchableOpacity>
             </View>
+            }
+            {
+                rendercomplete === false && <View style={{flex:1,justifyContent:"flex-start",alignItems:"center"}}>
+                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                </View>
             }
         </View>
     )

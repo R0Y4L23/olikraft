@@ -1,15 +1,14 @@
 import React, {useState,useEffect} from 'react'
 import { View, Text,TouchableOpacity, ScrollView, StyleSheet } from 'react-native'
-import { Ionicons,AntDesign } from '@expo/vector-icons';
+
 
 import { Card, Paragraph } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Myorderchild from './Myorderchild';
-import WriteAReview from "./WriteAReview"
+
 export default function Allorders({navigation}) {
     const [orders, setOrders] = useState([])
-    const [review,setReview]=useState(false)
-    const [orderIdSelectedForReview,setOrderIdSelectedForReview]=useState("")
+
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('token')
@@ -43,7 +42,7 @@ export default function Allorders({navigation}) {
         .then(response => response.json())
         .then(function (response)
          {
-             console.log("All Orders",response.data.orders)
+            //  console.log("All Orders",response.data.orders)
             setOrders(response.data.orders);
             
         }).catch((e)=>{
@@ -59,7 +58,7 @@ export default function Allorders({navigation}) {
     return (
 
         <View style={{flex:1}}>
-          {!review?(<ScrollView >
+          <ScrollView >
             {
                 orders.length > 0 && orders.map((order,idx)=>{
                     return(
@@ -99,7 +98,7 @@ export default function Allorders({navigation}) {
                     )
                 })
              }
-        </ScrollView>):(<><Text style={{marginVertical:20,fontWeight:"bold",marginLeft:20}} onPress={()=>{setReview(false);setOrderIdSelectedForReview("")}}><AntDesign name="back" size={20} color="black" /> Back</Text><WriteAReview orderID={orderIdSelectedForReview}/></>)}
+        </ScrollView>
             {
                     orders.length === 0 && <View style={{flex:1,justifyContent:"flex-start",alignItems:"center"}}>
                         <Text style={{fontWeight:"bold",fontSize:18}}>Loading Orders Please Wait......</Text></View>

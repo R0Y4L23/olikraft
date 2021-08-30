@@ -3,12 +3,12 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Appbar } from 'react-native-paper';
+import { Appbar, ActivityIndicator } from 'react-native-paper';
 import { Ionicons} from '@expo/vector-icons';
 const axios = require('axios');
 export default function ProductDetails({route,navigation}) {
     const [pro,setPro] = React.useState("")
-    
+    const [rendercomplete, setrendercomplete] = useState(false)
     const source = {
         html: `${pro}`
     };
@@ -33,7 +33,7 @@ export default function ProductDetails({route,navigation}) {
           })
           .then(function (response) {
                 setPro(response.data.data.description)
-                
+                setrendercomplete(true)
           })
           .catch(function (error) {
             console.log(error);
@@ -45,22 +45,25 @@ export default function ProductDetails({route,navigation}) {
     const { width } = useWindowDimensions();
     return (
       <View style={{flex:1}}>
-        <View>
+       {rendercomplete&& <View>
           <Appbar.Header style = {styles.item}>
                   <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}} />
                   <Appbar.Content title="Product All Details" titleStyle={styles.title}/>
 
               </Appbar.Header>
-        </View>
-        <ScrollView style={{flex:1,padding:20,backgroundColor:"white"}}>
+        </View>}
+        {rendercomplete && <ScrollView style={{flex:1,padding:20,backgroundColor:"white"}}>
              <RenderHtml
                 contentWidth={width}
                 source={source}
                 />
-                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                    <Text style={{fontSize:17,fontWeight:"bold"}}>Loading.....</Text>
+                
+        </ScrollView>}
+        {
+                rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                <ActivityIndicator animating={true} color={"blue"} size="large"/>
                 </View>
-        </ScrollView>
+            }
       </View>
     )
 }

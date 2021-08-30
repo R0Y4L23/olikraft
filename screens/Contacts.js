@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import {View,Text,TextInput,TouchableOpacity, StyleSheet,Button} from "react-native"
 import { Ionicons } from '@expo/vector-icons';
-import { Appbar } from 'react-native-paper';
+import { Appbar,ActivityIndicator } from 'react-native-paper';
 
 const axios = require('axios');
 export default function Contacts({navigation}) {
@@ -9,7 +9,7 @@ export default function Contacts({navigation}) {
     const [email,setEmail]=useState("")
     const [message,setMessage]=useState("")
     const [success,setSuccess]=useState("")
-    
+    const [rendercomplete, setrendercomplete] = useState(false)
 const fetchContactUs=async ()=>{
     await axios.get("https://olikraft.shubhchintak.co/api/jet-cct/contact_us")
           .then(function (response){
@@ -17,6 +17,7 @@ const fetchContactUs=async ()=>{
             setName(response.data[0].name)
             setEmail(response.data[0].email)
             setMessage(response.data[0].message)
+            setrendercomplete(true)
           })
           .catch(function (error) {
             console.log(error);
@@ -29,12 +30,12 @@ useEffect(()=>{
 },[])
     return (
            <View style={styles.container}>
-               
-                <Appbar.Header style = {styles.item}>
+                
+                {rendercomplete && <Appbar.Header style = {styles.item}>
                         <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}}/>
                         <Appbar.Content title="Contact Us" titleStyle={styles.title}/>
-                    </Appbar.Header>
-                 <View style={styles.content}>
+                    </Appbar.Header>}
+                 {rendercomplete && <View style={styles.content}>
                     <Text>FullName</Text>
                     <View style={styles.form}>
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setName} value={name} placeholder="Full Name"  />
@@ -48,9 +49,9 @@ useEffect(()=>{
                         <TextInput style={{ height: "40%",padding: 10,backgroundColor:"white",textAlignVertical:"top"}} onChangeText={setMessage} value={message} placeholder="Enter here..." />
                     </View>
                     <Text style={{textAlign:"center",color:"green"}}>{success}</Text>
-                </View> 
+                </View> }
                
-                <View style={styles.buttoncontainer}>
+                {rendercomplete && <View style={styles.buttoncontainer}>
                     <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.goBack()}}>
                             <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
@@ -59,7 +60,12 @@ useEffect(()=>{
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Send</Text>
                         </TouchableOpacity>
                     </View>
+                </View>}
+                {
+                rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                <ActivityIndicator animating={true} color={"blue"} size="large"/>
                 </View>
+            }
         </View>
     )
 }

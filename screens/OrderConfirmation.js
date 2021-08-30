@@ -2,15 +2,16 @@ import React,{useState,useEffect} from 'react'
 import {View,Text,Image, StyleSheet, TouchableOpacity,ScrollView} from "react-native"
 import { Card, Paragraph } from 'react-native-paper';
 import { Ionicons, Feather} from '@expo/vector-icons';
-import { Appbar } from 'react-native-paper';
+import { Appbar, ActivityIndicator } from 'react-native-paper';
 
 export default function OrderConfirmation({route,navigation}) {
     const [cartitems,setCartitems]=useState([])
     const [carttotals,setCarttotals]=useState([])
-
+    const [rendercomplete, setrendercomplete] = useState(false)
     function fetchdetails(){
         setCartitems(route.params.cartitems)
         setCarttotals(route.params.carttotals)
+        setrendercomplete(true)
     }
       useEffect(()=>{
         fetchdetails()
@@ -18,10 +19,12 @@ export default function OrderConfirmation({route,navigation}) {
     },[])
     return (
         <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(249,249,249)",height:"100%",width:"100%"}}>
-           <Appbar.Header style = {styles.item} >
-                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="black"  onPress={()=>{navigation.navigate("Home")}}/>
-            </Appbar.Header>
-            <ScrollView>
+            {rendercomplete && <View>
+                <Appbar.Header style = {styles.item} >
+                    <Ionicons style ={styles.icon} name="arrow-back" size={24} color="black"  onPress={()=>{navigation.navigate("Home")}}/>
+                </Appbar.Header>
+            </View>}
+            {rendercomplete && <ScrollView>
             <View style={{flex:1,alignItems:"center",height:160,justifyContent:"center"}}>
                 <View style={{borderWidth:1,borderColor:"rgb(225,248,235)",backgroundColor:"rgb(225,248,235)",height:70,width:70,borderRadius:50,justifyContent:"center",alignItems:"center"}}>
                     <Feather name="shopping-bag" size={30} color="green" />
@@ -101,12 +104,17 @@ export default function OrderConfirmation({route,navigation}) {
                 </View>
                 </View>
             </View>
-            </ScrollView>
-            <View style={{alignItems:"center",marginTop:20,padding:15}}>
+            </ScrollView>}
+            {rendercomplete && <View style={{alignItems:"center",marginTop:20,padding:15}}>
                 <TouchableOpacity style={{backgroundColor:'rgb(5,23,41)',borderRadius:10,height:50,width:380,display:"flex",justifyContent:"center",alignItems:"center"}} onPress={()=>{navigation.navigate("BNS")}}>
                     <Text style={{color:"white",fontSize:16}}>Continue Shopping</Text>
                 </TouchableOpacity>
+            </View>}
+            {
+                rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                <ActivityIndicator animating={true} color={"blue"} size="large"/>
                 </View>
+            }
                
         </View>
         

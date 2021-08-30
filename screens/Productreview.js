@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProgressBar from 'react-native-progress/Bar';
 
 const axios = require('axios');
-const RecentReviewsComponent=({name,stars,comment,email})=>{
+const RecentReviewsComponent=({name,stars,comment})=>{
    
     
     return (
@@ -17,7 +17,7 @@ const RecentReviewsComponent=({name,stars,comment,email})=>{
             </View>
             <View style={{flex:1,marginVertical:10,justifyContent:"space-around"}}> 
                 <Text style={{fontSize:16,fontWeight:"800",margin:5}}>{name}</Text>
-                <Text style={{fontSize:14,fontWeight:"800",margin:5}}>{email}</Text>
+                
                 <View style={{display:"flex",flexDirection:"row",margin:5}}>
                     {[...Array(stars)].map((item,index)=>{return  <FontAwesome style={{marginRight:2}} name="star" size={15} color="orange" key={index}/>})}
                     {[...Array(5-stars)].map((item,index)=>{return  <FontAwesome name="star-o" size={15} color="orange" key={index}/>})}
@@ -88,7 +88,7 @@ useEffect(()=>{
                 </View>
                 
              
-                    <ScrollView >
+                    {totalreview && <ScrollView >
                         <View style={{flex:1,alignItems:"center",margin:5}}>
                             <Text style={{fontSize:15,fontWeight:"bold"}}>Overall Rating</Text>
                             <Text style={{fontSize:45,fontWeight:"bold"}}>{overallrating}</Text>
@@ -141,8 +141,9 @@ useEffect(()=>{
                             </View>
                         </Card>
                          
-                        {RRJSON.map((item,index)=>{return <RecentReviewsComponent name={item.author} stars={Number(item.rating)} comment={item.content} email={item.email} key={index} />})}
+                        {RRJSON.map((item,index)=>{return <RecentReviewsComponent name={item.author} stars={Number(item.rating)} comment={item.content}  key={index} />})}
                     </ScrollView>
+                    }
                     <View>
                     <View style={styles.button}> 
                         

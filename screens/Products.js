@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import { Appbar,Searchbar } from 'react-native-paper';
+import { Appbar,Searchbar,ActivityIndicator } from 'react-native-paper';
 import { ScrollView, View,Text,Image,TouchableOpacity } from 'react-native'
 import { SimpleLineIcons,Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,6 +20,7 @@ const ProductsComponent=({product,nprice,pprice,discount,discountPrice,image,id,
 }
 const Products = ({navigation}) => {
     const [pro,setPro]=useState([])
+    const [rendercomplete, setrendercomplete] = useState(false)
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -40,6 +41,7 @@ const Products = ({navigation}) => {
          })
          .then(function (response) {
            setPro(response.data.data.products)
+           setrendercomplete(true)
          })
          .catch(function (error) {
             console.log(error);
@@ -57,15 +59,15 @@ const Products = ({navigation}) => {
     const onChangeSearch = query => setSearchQuery(query);
     return (
        <View style={{flex:1,backgroundColor:"#f9f9f9"}}>
-         <View>
+         {rendercomplete && <View>
            <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)",height:35,paddingBottom:17}}>
                 <Appbar.Content title="Products" titleStyle={{fontSize:20}}/>
                 <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:15}}/></TouchableOpacity>
                  {focus&&<Searchbar onChangeText={onChangeSearch} onChange={fetchProducts} value={searchQuery} style={{height:30,width:150,marginRight:10}} onBlur={()=>{setFocus(!focus);setSearchQuery("");fetchProducts()}}/>}
                    {!focus&&<Ionicons name="search" size={25} color="white" onPress={()=>{setFocus(!focus)}} style={{marginRight:15}}/> }
             </Appbar.Header>
-            </View>
-            <View style={{flex:1,height:"87%",width:"100%"}}>
+            </View>}
+            {rendercomplete && <View style={{flex:1,height:"87%",width:"100%"}}>
              <ScrollView>
                <View style={{marginLeft:'auto',marginRight:"auto"}}>
                 {pro.length>0&&pro.map((item,index)=>{return <ProductsComponent key={index} product={item.name} nprice={item.price} pprice={item.regular_price} discount={(Number(item.regular_price===""?item.price:item.regular_price)-Number(item.price))/Number(item.regular_price===""?item.price:item.regular_price)} discountPrice={Number(item.regular_price===""?item.price:item.regular_price)-Number(item.price)} image={item.image} id={item.id} navigation={navigation}/>})}
@@ -75,7 +77,12 @@ const Products = ({navigation}) => {
                   </View>}
                 </View>
             </ScrollView> 
-            </View>
+            </View>}
+            {
+                rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                </View>
+            }
        </View>
     )
 }
