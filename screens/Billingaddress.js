@@ -49,25 +49,26 @@ export default function Billingaddress({navigation,updateba}) {
                     updateba()
                 }
                 else{
-             
                     setrendercomplete(true)
-
                 }
 
             })
             .catch(error => console.log(error))
         }
   
-      useEffect(()=>{
-
-                fetchbillingaddress()
-            
-            
-        },[])
+    //   useEffect(()=>{
+    //             fetchbillingaddress()
+    //     },[])
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+         fetchbillingaddress()
+        });
+        return unsubscribe;
+      }, [navigation]);
     return (
         <View>
   
-           {(country.length>0 && State.length>0 )&& rendercomplete && <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+           {((country.length>0 && State.length>0 )&& rendercomplete) ?( <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,fontWeight:"bold",marginLeft:16,marginTop:10,color:"black"}}>Billing Address</Text>
                     <View style={{marginTop:10,marginRight:15}}>
@@ -79,14 +80,14 @@ export default function Billingaddress({navigation,updateba}) {
                     <Paragraph style={{fontSize:12,}}>{ad.address_1} </Paragraph>
                     <Paragraph style={{fontSize:12,}}>{ad.address_2} </Paragraph>
                     <Paragraph style={{fontSize:12,}}>{ad.city} {ad.postcode}</Paragraph>
-                    <Showcountrystate country={country} state={State} countrylist={countrylist} statelist={Statelist} updateaddressfetched={updateaddressfetched} isaddressfetched={isaddressfetched} />
+                    {/* <Showcountrystate country={country} state={State} countrylist={countrylist} statelist={Statelist} updateaddressfetched={updateaddressfetched} isaddressfetched={isaddressfetched} /> */}
                 </Card.Content>
-            </Card>}
-            {
-                rendercomplete === false && <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+            </Card>):(<></>)}
+             {
+               ( rendercomplete === false ) ? (<Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <ActivityIndicator animating={true} color={"blue"} size="small"/>
-                </Card>
-            }
+                </Card>):(<></>)
+            } 
         </View>
     )
 }
