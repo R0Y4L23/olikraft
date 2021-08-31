@@ -91,7 +91,7 @@ export default function WriteAReview({route,navigation}) {
                </View>
                <View style={styles.buttoncontainer}>
                    <View style={styles.button}>
-                       <TouchableOpacity style={styles.send} onPress={()=>{sendReview().then((res)=>{console.log("Response from Created Review",res); navigation.goBack();})}}>
+                       <TouchableOpacity style={styles.send} onPress={()=>{sendReview().then((res)=>{alert("Review Submitted Successfully.Kindly wait for approval of review"); navigation.goBack();})}}>
                            <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Send Review</Text>
                        </TouchableOpacity>
                    </View>

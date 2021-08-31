@@ -8,7 +8,7 @@ const ProductsComponent=({product,nprice,pprice,discount,discountPrice,image,id,
     return (
       <TouchableOpacity onPress={()=>{navigation.navigate("Productsvariable",{"id":id})}}>
         <View style={{width:325,height:"auto",margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
-        <Image source={{uri:image}} style={{height:75,width:75}}/>
+        {image != false && <Image source={{uri:image}} style={{height:75,width:75}}/>}
         <View>
             <Text style={{fontSize:18,width:150}}>{product}</Text>
             <Text style={{fontSize:15,fontWeight:"800",marginTop:10}}>${nprice} {discountPrice!=0&&<Text style={{color:"red",textDecorationLine:"line-through"}}>${pprice}</Text>}</Text>

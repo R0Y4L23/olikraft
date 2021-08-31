@@ -38,15 +38,22 @@ export default function Billingaddress({navigation,updateba}) {
             })
             .then(response => response.json())
             .then((res) => {
-                setAddress(res.data.address)
-                setCountrylist(res.data.countries)
-                setStatelist(res.data.states)
-                setState(res.data.address.state)
-                setCountry(res.data.address.country)
-                setisaddressfetched(true)
-                setrendercomplete(true)
-                updateba()
-                
+                if(typeof res.data.address.country != "undefined"){
+                    setAddress(res.data.address)
+                    setCountrylist(res.data.countries)
+                    setStatelist(res.data.states)
+                    setState(res.data.address.state)
+                    setCountry(res.data.address.country)
+                    setisaddressfetched(true)
+                    setrendercomplete(true)
+                    updateba()
+                }
+                else{
+             
+                    setrendercomplete(true)
+
+                }
+
             })
             .catch(error => console.log(error))
         }
@@ -59,8 +66,8 @@ export default function Billingaddress({navigation,updateba}) {
         },[])
     return (
         <View>
-           {/* {!ad&& rendercomplete&& <Text>No Address</Text>} */}
-           {(typeof ad != "undefined"  && typeof country != "undefined" && typeof State != "undefined")&& rendercomplete && <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+  
+           {(country.length>0 && State.length>0 )&& rendercomplete && <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,fontWeight:"bold",marginLeft:16,marginTop:10,color:"black"}}>Billing Address</Text>
                     <View style={{marginTop:10,marginRight:15}}>

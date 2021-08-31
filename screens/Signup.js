@@ -43,7 +43,7 @@ const Signup = ({navigation}) => {
                 email : email
               })
               .then(async function (response) {
-                  console.log(response.data)
+                console.log(response.data.errors)
                 if(response.data.status)
                 {
                     setLoading(false)
@@ -79,7 +79,7 @@ const Signup = ({navigation}) => {
        <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9"}}>
                <Text style={{fontSize:25,marginBottom:50}}>Signup</Text>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,borderColor:"grey",marginVertical:12}}>
-                   <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setName} value={name} placeholder="Full Name"/>
+                   <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setName} value={name} placeholder="Firstname + Lastname"/>
                    <FontAwesome name="user" size={35} color="black" style={{flex:1.5}}/>
                </View>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,borderColor:"grey",marginVertical:12}}>

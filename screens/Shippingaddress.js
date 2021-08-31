@@ -36,7 +36,7 @@ export default function Shippingaddress({navigation,updatesa}) {
         .then(response => response.json())
         .then((res) => {
             // console.log(res.data.address)
-            
+            if(typeof res.data.address.country != "undefined"){
             setshippingAddress(res.data.address)
             setCountrylist(res.data.countries)
             setStatelist(res.data.states)
@@ -45,7 +45,10 @@ export default function Shippingaddress({navigation,updatesa}) {
             setisaddressfetched(true)
             setrendercomplete(true)
             updatesa()
-
+          }
+          else{
+            setrendercomplete(true)
+          }
         })
         .catch(error => console.log(error))
     
@@ -58,9 +61,8 @@ export default function Shippingaddress({navigation,updatesa}) {
       },[])
     return (
         <View>
-          {/* {!shad&&<Text>Loading...</Text>} */}
-          
-         {(typeof shad != "undefined" && typeof country != "undefined" && typeof State != "undefined") && rendercomplete&& <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+                
+         {(country.length>0 && State.length>0 ) && rendercomplete&& <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
             <View style={{flexDirection:"row"}}>
                 <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold",color:"black"}}>Shipping Address</Text>
                  <View style={{marginTop:10,marginRight:15}}>

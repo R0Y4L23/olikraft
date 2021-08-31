@@ -63,11 +63,12 @@ export default function Productreview({route,navigation}) {
                 setRRJSON(response.data.data.reviews)
                 setoverallrating(response.data.data.average_rating)
                 settotalreview(response.data.data.review_count)
-                setrating1(response.data.data.rating_counts[1]/response.data.data.review_count)
-                setrating2(response.data.data.rating_counts[2]/response.data.data.review_count)
-                setrating3(response.data.data.rating_counts[3]/response.data.data.review_count)
-                setrating4(response.data.data.rating_counts[4]/response.data.data.review_count)
-                setrating5(response.data.data.rating_counts[5]/response.data.data.review_count)
+                
+                if(typeof response.data.data.rating_counts[1] != "undefined") setrating1(response.data.data.rating_counts[1]/response.data.data.review_count)
+                if(typeof response.data.data.rating_counts[2] != "undefined") setrating2(response.data.data.rating_counts[2]/response.data.data.review_count)
+                if(typeof response.data.data.rating_counts[3] != "undefined") setrating3(response.data.data.rating_counts[3]/response.data.data.review_count)
+                if(typeof response.data.data.rating_counts[4] != "undefined") setrating4(response.data.data.rating_counts[4]/response.data.data.review_count)
+                if(typeof response.data.data.rating_counts[5] != "undefined") setrating5(response.data.data.rating_counts[5]/response.data.data.review_count)
                 setrendercomplete(true)
             })
             .catch(function (error) {
@@ -100,6 +101,7 @@ useEffect(()=>{
                             </View>
                             <Text style={{fontSize:15,fontWeight:"bold",color:"grey"}}>Based on {totalreview} reviews</Text>
                         </View>
+                        
                           <Card style={{marginVertical:20,backgroundColor:"rgb(249,249,249)"}}>
                            <View style={{flexDirection:"row"}}>
                                <View style={{flex:1,margin:10,marginVertical:5}}>

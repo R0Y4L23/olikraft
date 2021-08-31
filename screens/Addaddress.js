@@ -119,7 +119,7 @@ export default function Addaddress({navigation,route}) {
                 <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("ManageAddress")}}>
                             <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.send} onPress={()=>{saveAddress().then((data)=>{console.log(data);setSuccess("Saved Successfully");})}}>
+                        <TouchableOpacity style={styles.send} onPress={()=>{saveAddress().then((data)=>{alert("Address Added Successfully");navigation.navigate("Home")})}}>
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
                         </TouchableOpacity>
                     </View>

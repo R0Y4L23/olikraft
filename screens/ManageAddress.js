@@ -7,13 +7,11 @@ import { AntDesign } from '@expo/vector-icons';
 import Shippingaddress from './Shippingaddress';
 
 export default function ManageAddress({navigation}) {
-    // const [countrylist,setCountrylist] = useState([])
-    // const [Statelist,setStatelist] = useState([])
-    // const [country,setCountry] = useState()
-    // const [State,setState] = useState()
+
     const [safetched, setsafetched] = useState(false)
     const [bafetched, setbafetched] = useState(false)
     const [showaddicon, setshowaddicon] = useState(true)
+ 
     const updateba = () => {
         setbafetched(true)
     }
@@ -23,13 +21,11 @@ export default function ManageAddress({navigation}) {
     }
 
     useEffect(()=>{
-        
-        
-            if(safetched && bafetched){
-                
-                setshowaddicon(false)
-            
-    }
+
+        if(safetched && bafetched){
+            setshowaddicon(false)
+        }
+
    
     },[safetched,bafetched])
     return (
