@@ -17,7 +17,7 @@ export default function App() {
   return (
     <PaperProvider>
     <StripeProvider
-      publishableKey="pk_test_51JKywdEyBNY91bY3zLmqaya4imvi1coc9AlCCmQZQhKHBSmBTYAQsq61rz8a2HpHF5lHl54Tlp7OIXSq1EyH0haP00g9TnJ7Sj"
+      publishableKey="pk_live_51JKywdEyBNY91bY3whkMiTcRaKtRzonxluKbDwI8OtqpzhqPcXO0Zg5GzKTRdztihWcfxSti1nCm99btvFOWRLca00Na5VXg5i"
       // urlScheme="stripe-example" // required for 3D Secure and bank redirects
       merchantIdentifier="merchant.com.{{olikraft}}" // required for Apple Pay
     >

@@ -112,7 +112,7 @@ export default function Checkout({route,navigation}) {
                 address_1:address1,
                 address_2:address2,
                 coupons:route.params.coupon,
-                stripe_card_token: "tok_visa"
+                stripe_card_token: stripetoken
                 }),
                 
               },)
@@ -201,7 +201,7 @@ export default function Checkout({route,navigation}) {
         //   } else if (paymentIntent) {
         //     console.log('Success from promise', paymentIntent);
         //   }
-        const apiKey = 'sk_test_51JKywdEyBNY91bY3i5dOGGsiGLmiXtMRi0UkAC3LtJBfUje4XJ6rkwsjQ6fotkiB90ge12gZ4OG9DJMg2caC6CK000r8k4hZlL';
+        const apiKey = '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';
         const client = new Stripe(apiKey);
         
         // Create a Stripe token with new card infos
@@ -213,7 +213,7 @@ export default function Checkout({route,navigation}) {
             
          });
         let stripe_token = token.id
-        console.log(token.id)
+        // console.log(token.id)
         return stripe_token
       };
     useEffect(()=>{
