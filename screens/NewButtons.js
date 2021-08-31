@@ -3,12 +3,13 @@ import { View, Text,TouchableHighlight,Button } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import {Picker} from '@react-native-picker/picker';
 const useForceUpdate = () => useState()[1];
-export default function NewButtons({att,len,fa,images,match,titles,opt,uid}) {
+export default function NewButtons({att,len,fa,images,match,titles,opt,uid,copt,index}) {
    
     const forceUpdate = useForceUpdate();
 
     let objectfinal = []
-    const [optiontype,setoptiontype] = useState("Choose an option to change")
+    // const [optiontype,setoptiontype] = useState("Choose an option to change")
+    // const [optionvalue,setoptionvalue] = useState("")
     const navigation = useNavigation(); 
     const item=(t,o)=>{
         if((t.length === len) & (o.length === len)){
@@ -52,18 +53,19 @@ export default function NewButtons({att,len,fa,images,match,titles,opt,uid}) {
         <View style={{flex:1,borderWidth:1,borderColor:"rgb(5,23,41)",backgroundColor:"white"}}>
             <Picker
                 style={{ height: 35,padding:5, width:"100%" }}
-                selectedValue={optiontype}
+                selectedValue={copt[index]}
                 onValueChange={(option, index) =>{
                     // matchvardetails(option,title)
-                    setoptiontype(option)
+                    // setoptiontype(option)
+                    // setoptionvalue(option)
                     matchvardetails(option,att.name)
                 }}
             >
-                <Picker.Item label={optiontype} value={optiontype}/>
+                {/* <Picker.Item label={optiontype} value={optiontype}/> */}
             {
                 att.options.map((option,index)=>{
                     return(
-                        (option != optiontype) && <Picker.Item label={option} value={option} key={index}/>
+                        <Picker.Item label={option} value={option} key={index}/>
                         
                     )
                 })

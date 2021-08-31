@@ -22,7 +22,7 @@ export default function Buttons({att,pid,len,fa,images,match,titles,opt}) {
             }))
 
             // console.log(objectfinal)
-            navigation.navigate("NewProductsvariable",{"id":objectfinal[0].id , "Images":images, pid:pid})
+            navigation.navigate("NewProductsvariable",{"id":objectfinal[0].id , "Images":images, pid:pid, opt:opt})
 
         }
         // {console.log("hello",titlessss,variations)}

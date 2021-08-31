@@ -4,7 +4,7 @@ import { Ionicons,Entypo,FontAwesome5,EvilIcons,Octicons,FontAwesome} from '@exp
 import { Appbar, List, ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SliderBox } from "react-native-image-slider-box";
-import Attributesarray from './Attributes';
+
 import NewAttributesarray from './NewAttributes';
 const useForceUpdate = () => useState()[1];
 const axios = require('axios');
@@ -180,7 +180,7 @@ export default function NewProductsvariable({route,navigation}) {
                                 </Text>
                             </View> }
                 
-                <NewAttributesarray id = {proid} Images={route.params.Images} match={matchvardetails2} titles={titles} opt={opt} updateid={updateid}/>
+                <NewAttributesarray id = {proid} Images={route.params.Images} match={matchvardetails2} titles={titles} opt={opt} chooseoption={route.params.opt} updateid={updateid}/>
                 
                 <View style={{flex:1,padding:15,justifyContent:"flex-start"}}>
                     <Text style={{color:"black",fontSize:19}}>Quantity</Text>

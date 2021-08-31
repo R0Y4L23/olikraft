@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import {View,Text,Image, StyleSheet,Button, TouchableOpacity,ScrollView} from "react-native"
 import { Ionicons,AntDesign,Entypo, EvilIcons, FontAwesome } from '@expo/vector-icons';
-import { Appbar, Card } from 'react-native-paper';
+import { Appbar, Card , ActivityIndicator} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProgressBar from 'react-native-progress/Bar';
 
@@ -37,6 +37,7 @@ export default function Productreview({route,navigation}) {
     const [rating3, setrating3] = useState(0)
     const [rating4, setrating4] = useState(0)
     const [rating5, setrating5] = useState(0)
+    const [rendercomplete, setrendercomplete] = useState(false)
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -67,6 +68,7 @@ export default function Productreview({route,navigation}) {
                 setrating3(response.data.data.rating_counts[3]/response.data.data.review_count)
                 setrating4(response.data.data.rating_counts[4]/response.data.data.review_count)
                 setrating5(response.data.data.rating_counts[5]/response.data.data.review_count)
+                setrendercomplete(true)
             })
             .catch(function (error) {
                 console.log(error);
@@ -80,15 +82,15 @@ useEffect(()=>{
 
     return (
            <View style={styles.container}>
-               <View>
+               {rendercomplete && <View>
                     <Appbar.Header style = {styles.item}>
                             <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}}/>
                             <Appbar.Content title="Ratings and Reviews" titleStyle={styles.title}/>
                         </Appbar.Header>
-                </View>
+                </View>}
                 
              
-                    {totalreview && <ScrollView >
+                    {totalreview > 0 && rendercomplete&&  <ScrollView >
                         <View style={{flex:1,alignItems:"center",margin:5}}>
                             <Text style={{fontSize:15,fontWeight:"bold"}}>Overall Rating</Text>
                             <Text style={{fontSize:45,fontWeight:"bold"}}>{overallrating}</Text>
@@ -144,14 +146,23 @@ useEffect(()=>{
                         {RRJSON.map((item,index)=>{return <RecentReviewsComponent name={item.author} stars={Number(item.rating)} comment={item.content}  key={index} />})}
                     </ScrollView>
                     }
-                    <View>
-                    <View style={styles.button}> 
-                        
-                        <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Review",{id:route.params.id})}}>
-                            <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Write a Review</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                     {
+                    totalreview === 0 && rendercomplete && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                        <Text style={{fontWeight:"bold",fontSize:18}}>No Reviews yet......</Text></View>
+                    } 
+                    {rendercomplete &&<View>
+                        <View style={styles.button}> 
+                            
+                            <TouchableOpacity style={styles.send} onPress={()=>{navigation.navigate("Review",{id:route.params.id})}}>
+                                <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Write a Review</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>}
+                    {
+                        rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                        <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                        </View>
+                    }
                
         </View>
     )

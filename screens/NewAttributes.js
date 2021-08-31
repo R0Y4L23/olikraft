@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 // import Buttons from './Buttons';
 import NewButtons from './NewButtons';
 const axios = require('axios');
-export default function NewAttributesarray({id,Images,match,titles,opt,updateid}) {
+export default function NewAttributesarray({id,Images,match,titles,opt,updateid,chooseoption}) {
     const [Attributes,setAttributes] = useState([])
     const [fa,setfa] = useState([])
     const fetchvarchildren = async (ids) =>{
@@ -70,7 +70,7 @@ useEffect(()=>{
                                 </View>
                                
                                 <View style={{flexDirection:"row",marginVertical:5,marginHorizontal:15}}>
-                                    <NewButtons att= {att} len={Attributes.length} fa={fa} images={Images} match={match} titles={titles} opt={opt} pid={id} uid={updateid}/>
+                                    <NewButtons att= {att} len={Attributes.length} fa={fa} images={Images} match={match} titles={titles} opt={opt} pid={id} uid={updateid} copt={chooseoption} index={idx}/>
                                 </View>
                                        
                             </View>

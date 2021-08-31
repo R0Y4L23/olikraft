@@ -14,6 +14,7 @@ export default function Mycart({navigation}) {
     const [carttotals,setCarttotals]=useState([])
     const [hasitemremoved,sethasitemremoved] = useState(false)
     const [rendercomplete, setrendercomplete] = useState(false)
+    const [cartempty, setcartempty] = useState(false)
     const forceUpdate = useForceUpdate();
 
     const getData = async () => {
@@ -62,7 +63,7 @@ export default function Mycart({navigation}) {
         })
         .then(response => response.json())
         .then((res) => {
-            console.log(res.data.coupon_discount_totals)
+            // console.log(res.data.coupon_discount_totals)
             setCartitems(res.data.cart_items)
             setCarttotals(res.data.cart_totals)
             forceUpdate()
@@ -80,10 +81,16 @@ export default function Mycart({navigation}) {
         })
         .then(response => response.json())
         .then((res) => {
-            // console.log(res)
+         
+            if(typeof res.data != "undefined"){
             setCartitems(res.data.cart_items)
             setCarttotals(res.data.cart_totals)
             setrendercomplete(true)
+            }
+            else if(typeof res.data === "undefined"){
+                setcartempty(true)
+                setrendercomplete(true)
+            }
         })
         .catch(error => console.log(error))
       }
@@ -99,13 +106,20 @@ export default function Mycart({navigation}) {
        ,[hasitemremoved])
     return (
         <View style={{flex:1,justifyContent:"space-between"}}>
-            { rendercomplete && <View>
+           
+            {cartempty!=true  && rendercomplete && <View>
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
                 <Appbar.Content title="My Cart" titleStyle={styles.title}/>
             </Appbar.Header>
             </View>}
-            { cartitems.length > 0 && rendercomplete &&
+            {cartempty  && rendercomplete && <View>
+            <Appbar.Header style = {styles.item}>
+                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
+                <Appbar.Content title="My Cart" titleStyle={styles.title}/>
+            </Appbar.Header>
+            </View>}
+            {cartempty!=true && cartitems.length > 0 && rendercomplete &&
             <ScrollView>
                 
             {cartitems.map((item,idx)=>{return(
@@ -187,15 +201,15 @@ export default function Mycart({navigation}) {
                     
             </View>
             </ScrollView>}
-            {cartitems.length == 0 && rendercomplete &&
+            {/* {cartitems.length == 0 && rendercomplete &&
             <View style={{flex:1,justifyContent:"center",alignItems:'center'}}>
                     <Text>
                         No Prodcuts added to cart
                     </Text>
-                </View>
-            }
+                </View> 
+            }*/}
             {
-                cartitems!=0 && rendercomplete &&
+             cartempty!= true && cartitems.length!=0 && rendercomplete &&
             <View style={styles.button}> 
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("BNS")}}>
                             <Text style={{fontSize:15,fontWeight:"bold"}}>Continue Shopping </Text>
@@ -206,6 +220,22 @@ export default function Mycart({navigation}) {
                     </View>
                     
             }
+           
+             {
+                    cartempty && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                        <Text style={{fontWeight:"bold",fontSize:18}}>Your Cart is empty</Text></View>
+                } 
+                {
+             cartempty && rendercomplete &&
+            <View style={styles.button}> 
+                        <TouchableOpacity style={styles.cancel1} onPress={()=>{navigation.navigate("BNS")}}>
+                            <Text style={{fontSize:15,fontWeight:"bold",color:"white"}}>Continue Shopping </Text>
+                        </TouchableOpacity>
+                      
+                    </View>
+                    
+            }
+            
              {
                 rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
                 <ActivityIndicator animating={true} color={"blue"} size="large"/>
@@ -253,6 +283,15 @@ const styles = StyleSheet.create ({
     },
     cancel:{
         backgroundColor:"white",
+        height:50,
+        width:300,
+        borderRadius:10,
+        justifyContent:"center",
+        alignItems:"center",
+        flex:1
+    },
+    cancel1:{
+        backgroundColor:"rgb(5,23,41)",
         height:50,
         width:300,
         borderRadius:10,

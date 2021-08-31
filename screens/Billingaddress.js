@@ -60,7 +60,7 @@ export default function Billingaddress({navigation,updateba}) {
     return (
         <View>
            {/* {!ad&& rendercomplete&& <Text>No Address</Text>} */}
-           {ad&& rendercomplete && <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+           {(typeof ad != "undefined"  && typeof country != "undefined" && typeof State != "undefined")&& rendercomplete && <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,fontWeight:"bold",marginLeft:16,marginTop:10,color:"black"}}>Billing Address</Text>
                     <View style={{marginTop:10,marginRight:15}}>
