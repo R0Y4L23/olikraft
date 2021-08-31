@@ -66,6 +66,7 @@ export default function Mycart({navigation}) {
             // console.log(res.data.coupon_discount_totals)
             setCartitems(res.data.cart_items)
             setCarttotals(res.data.cart_totals)
+            alert("Coupon Added Successfully")
             forceUpdate()
         })
         .catch(error => console.log(error))

@@ -10,17 +10,18 @@ export const QuantityInput = ({qt,fetchcart,id}) => {
     // var [cartdata,setCartdata] = useState([])
     const decrement = () => {
         // setCartdata(ct)
-        quantity.setValue(quantity.value - 1);
+        quantity.setValue(Number(quantity.value) - 1);
         // console.log(ct)
-        quantityupdate(quantity.value - 1,id)
+        quantityupdate(Number(quantity.value) - 1,id)
         
     };
 
     const increment = () => {
       // setCartdata(ct)
-      quantity.setValue(quantity.value + 1);
-      // console.log(ct)
-      quantityupdate(quantity.value + 1,id)
+      // console.log(quantity)
+      quantity.setValue(Number(quantity.value) + 1);
+      
+      quantityupdate(Number(quantity.value) + 1,id)
       
   };
     const getData = async () => {
@@ -37,7 +38,7 @@ export const QuantityInput = ({qt,fetchcart,id}) => {
     const quantityupdate=async (quan,id)=>{
         let token = await getData()
   
-      
+        console.log(quan)
         let cartdata={}
         cartdata[id] = quan
 
@@ -70,11 +71,11 @@ export const QuantityInput = ({qt,fetchcart,id}) => {
         
         <View style={{backgroundColor:"white",flex:1,flexDirection:"row",borderWidth:1,borderLeftWidth:0,borderColor:"grey"}} >
             
-            <TouchableOpacity style={{flex:1,marginLeft:5,justifyContent:"center"}} onPress={decrement} disabled={quantity.value === 0}>
+            <TouchableOpacity style={{flex:1,marginLeft:5,justifyContent:"center"}} onPress={decrement} disabled={quantity.value === 1}>
                 <Entypo name="minus" size={24} color="black" />
             </TouchableOpacity>
             <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                <Text style={{fontWeight:"bold",fontSize:16}}>{quantity.value}</Text>
+                <Text style={{fontWeight:"bold",fontSize:16}}>{Number(quantity.value)}</Text>
             </View>
             <TouchableOpacity style={{flex:1,justifyContent:"center",alignItems:"flex-end",marginRight:10}}  onPress={increment}>
                 <Entypo name="plus" size={24} color="black"/>

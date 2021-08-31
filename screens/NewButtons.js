@@ -1,16 +1,16 @@
-import React, { useState,useEffect } from 'react'
-import { View, Text,TouchableHighlight,Button } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect } from 'react'
+import { View} from 'react-native'
+
 import {Picker} from '@react-native-picker/picker';
-const useForceUpdate = () => useState()[1];
+
 export default function NewButtons({att,len,fa,images,match,titles,opt,uid,copt,index}) {
    
-    const forceUpdate = useForceUpdate();
+
 
     let objectfinal = []
     // const [optiontype,setoptiontype] = useState("Choose an option to change")
     // const [optionvalue,setoptionvalue] = useState("")
-    const navigation = useNavigation(); 
+
     const item=(t,o)=>{
         if((t.length === len) & (o.length === len)){
 
@@ -28,7 +28,7 @@ export default function NewButtons({att,len,fa,images,match,titles,opt,uid,copt,
             // navigation.navigate("NewProductsvariable",{"id":objectfinal[0].id , "Images":images, pid:pid})
             uid(objectfinal[0].id,images)
             // console.log("final")
-            forceUpdate()
+            
 
         }
         // {console.log("hello",titlessss,variations)}
