@@ -63,7 +63,7 @@ const Login = ({navigation}) => {
     }
     return (
        <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9"}}>
-           <Image style={{width:100,height:100,marginBottom:100}} source={require("../assets/logo.png")}/> 
+           <Image style={{width:100,height:100,marginBottom:100,backgroundColor:"#f9f9f9"}} source={require("../assets/icon.png")}/> 
                <Text style={{fontSize:25}}>Login</Text>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,marginVertical:12}}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setEmail} value={email} placeholder="Username" />
