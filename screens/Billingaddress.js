@@ -56,15 +56,15 @@ export default function Billingaddress({navigation,updateba}) {
             .catch(error => console.log(error))
         }
   
-    //   useEffect(()=>{
-    //             fetchbillingaddress()
-    //     },[])
-    React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-         fetchbillingaddress()
-        });
-        return unsubscribe;
-      }, [navigation]);
+      useEffect(()=>{
+                fetchbillingaddress()
+        },[])
+    // React.useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //      fetchbillingaddress()
+    //     });
+    //     return unsubscribe;
+    //   }, [navigation]);
     return (
         <View>
   

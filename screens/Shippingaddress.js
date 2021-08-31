@@ -53,15 +53,15 @@ export default function Shippingaddress({navigation,updatesa}) {
         .catch(error => console.log(error))
     
     }
-    // useEffect(()=>{
-    //       fetchshippingaddress()  
-    //   },[])
-    React.useEffect(() => {
-      const unsubscribe = navigation.addListener('focus', () => {
-       fetchshippingaddress()
-      });
-      return unsubscribe;
-    }, [navigation]);
+    useEffect(()=>{
+          fetchshippingaddress()  
+      },[])
+    // React.useEffect(() => {
+    //   const unsubscribe = navigation.addListener('focus', () => {
+    //    fetchshippingaddress()
+    //   });
+    //   return unsubscribe;
+    // }, [navigation]);
     return (
         <View>
                 
