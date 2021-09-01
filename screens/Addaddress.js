@@ -66,7 +66,7 @@ export default function Addaddress({navigation,route}) {
         .then(response => response.json())
         .then((res) => {
         
-            // setclist(res.data.countries)
+            setclist(res.data.countries)
             setslist(res.data.states)
             var values = Object.keys(res.data.countries).map(function (key) { return res.data.countries[key]; });
             const keys=Object.keys(res.data.countries)
@@ -99,10 +99,7 @@ export default function Addaddress({navigation,route}) {
     const getCountrycode = (countryvalue) =>{
       setCountry(Object.keys(clist).find(key => clist[key] === countryvalue))
     }
-    const getCountries=()=>{
-        // console.log(clist)
-      
-      }
+
       useEffect(()=>{
         const getProfileData = async () => {
             try {

@@ -68,7 +68,7 @@ export default function Checkout({route,navigation}) {
         })
         .then(response => response.json())
         .then((res) => {
-            // console.log("hello",res.data.customer.address_1)
+            // console.log("hello",res.data.payment_gateways.stripe.secret_key)
             setaddress1(res.data.customer.address_1)
             setaddress2(res.data.customer.address_2)
             setcity(res.data.customer.city)
@@ -103,9 +103,9 @@ export default function Checkout({route,navigation}) {
             cvc: cvc,
             
          });
-        
+        // console.log(cardtoken)
     
-            if(Object.keys(cardtoken)[0] === "data"){
+            if(Object.keys(cardtoken)[0] != "error"){
                 let stripetoken = cardtoken.id
                 fetch('https://olikraft.shubhchintak.co/api/letscms/v1/order/create', {
                     method:"POST",
@@ -133,7 +133,7 @@ export default function Checkout({route,navigation}) {
                 },)
                 .then(response => response.json())
                 .then((response) =>{
-                    console.log(response)
+                    // console.log(response)
                     alert("Order Successfully Placed.Thanks for ordering!!")
                     navigation.navigate("Orderconfirmation",{orderid:response.data.order_id,cartitems:route.params.cartitems,carttotals:route.params.carttotals})
                     
@@ -264,11 +264,12 @@ export default function Checkout({route,navigation}) {
                 
                
             </Card>
-            
-                {/* ?   <Billingaddress navigation={navigation} updateba={updateba}/> */}
-               <Shippingaddress navigation={navigation} updatesa={updatesa} />
-                
-           {/* <View style={{flexDirection:"row"}}>
+            {
+                checked 
+                ?   <Billingaddress navigation={navigation} updateba={updateba}/>
+                :   <Shippingaddress navigation={navigation} updatesa={updatesa} />
+            }
+           <View style={{flexDirection:"row"}}>
                 <Checkbox
                     status={checked ? 'checked' : 'unchecked'}
                     
@@ -278,7 +279,7 @@ export default function Checkout({route,navigation}) {
                     color="black"
                     />
                     <Text style={{marginTop:6,color:"black"}}>Same as Billing address</Text>
-                </View> */}
+                </View>
             <Card style={{marginTop:20,borderRadius:10,elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold"}}>Order Payment Information</Text>
