@@ -56,15 +56,15 @@ export default function Billingaddress({navigation,updateba}) {
             .catch(error => console.log(error))
         }
   
-    //   useEffect(()=>{
-    //             fetchbillingaddress()
-    //     },[])
-    React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-         fetchbillingaddress()
-        });
-        return unsubscribe;
-      }, [navigation]);
+      useEffect(()=>{
+                fetchbillingaddress()
+        },[])
+    // React.useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //      fetchbillingaddress()
+    //     });
+    //     return unsubscribe;
+    //   }, [navigation]);
     return (
         <View>
   
@@ -80,13 +80,13 @@ export default function Billingaddress({navigation,updateba}) {
                     <Paragraph style={{fontSize:12,}}>{ad.address_1} </Paragraph>
                     <Paragraph style={{fontSize:12,}}>{ad.address_2} </Paragraph>
                     <Paragraph style={{fontSize:12,}}>{ad.city} {ad.postcode}</Paragraph>
-                    {/* <Showcountrystate country={country} state={State} countrylist={countrylist} statelist={Statelist} updateaddressfetched={updateaddressfetched} isaddressfetched={isaddressfetched} /> */}
+                    <Showcountrystate country={country} state={State} countrylist={countrylist} statelist={Statelist} updateaddressfetched={updateaddressfetched} isaddressfetched={isaddressfetched} />
                 </Card.Content>
             </Card>):(<></>)}
              {
-               ( rendercomplete === false ) ? (<Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+               ( rendercomplete === false ) && <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <ActivityIndicator animating={true} color={"blue"} size="small"/>
-                </Card>):(<></>)
+                </Card>
             } 
         </View>
     )

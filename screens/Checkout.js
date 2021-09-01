@@ -35,6 +35,7 @@ export default function Checkout({route,navigation}) {
     const [ expmonth, setexpmonth] = useState("")
     const [ expyear, setexpyear] = useState("")
     const [rendercomplete, setrendercomplete] = useState(false)
+    const [sk, setsk] = useState("")
     const updateba = () => {
         setbafetched(true)
     }
@@ -82,6 +83,7 @@ export default function Checkout({route,navigation}) {
             setCarttotals(res.data.cart_totals)
             setpaymentmethod("stripe")
             setpaymentmethodtitle("Stripe")
+            setsk(res.data.payment_gateways.stripe.secret_key)
             setrendercomplete(true)
         })
         .catch(error => console.log(error))
@@ -90,43 +92,61 @@ export default function Checkout({route,navigation}) {
     
     const placeorder=async ()=>{
         let token = await getData()
-        let stripetoken = await handlePayPress()
-        console.log("hello",stripetoken)
-            fetch('https://olikraft.shubhchintak.co/api/letscms/v1/order/create', {
-                method:"POST",
-                headers:{
-                    "letscms_token":token,
-                    'Content-Type': 'application/json'
-                },
-                body:JSON.stringify({
-                first_name:firstname,
-                last_name:lastname,
-                country:country,
-                city:city,
-                state:State,
-                postcode:postcode,
-                phone:contact,
-                email:email,
-                payment_method:paymentmethod,
-                payment_method_title:paymentmethodtitle,
-                address_1:address1,
-                address_2:address2,
-                coupons:route.params.coupon,
-                stripe_card_token: stripetoken
-                }),
-                
-              },)
-              .then(response => response.json())
-              .then((response) =>{
-                console.log(response)
-                alert("Order Successfully Placed.Thanks for ordering!!")
-                navigation.navigate("Orderconfirmation",{orderid:response.data.order_id,cartitems:route.params.cartitems,carttotals:route.params.carttotals})
-                
-                
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+    
+        const client = new Stripe(sk);
+        
+   
+        const cardtoken = await client.createToken({
+            number: cardnumber ,
+            exp_month: expmonth, 
+            exp_year: expyear, 
+            cvc: cvc,
+            
+         });
+        
+    
+            if(Object.keys(cardtoken)[0] === "data"){
+                let stripetoken = cardtoken.id
+                fetch('https://olikraft.shubhchintak.co/api/letscms/v1/order/create', {
+                    method:"POST",
+                    headers:{
+                        "letscms_token":token,
+                        'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({
+                    first_name:firstname,
+                    last_name:lastname,
+                    country:country,
+                    city:city,
+                    state:State,
+                    postcode:postcode,
+                    phone:contact,
+                    email:email,
+                    payment_method:paymentmethod,
+                    payment_method_title:paymentmethodtitle,
+                    address_1:address1,
+                    address_2:address2,
+                    coupons:route.params.coupon,
+                    stripe_card_token: stripetoken
+                    }),
+                    
+                },)
+                .then(response => response.json())
+                .then((response) =>{
+                    console.log(response)
+                    alert("Order Successfully Placed.Thanks for ordering!!")
+                    navigation.navigate("Orderconfirmation",{orderid:response.data.order_id,cartitems:route.params.cartitems,carttotals:route.params.carttotals})
+                    
+                    
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+            else if(Object.keys(cardtoken)[0] === "error"){
+                alert(cardtoken.error.message)
+                navigation.navigate("Mycart")
+            }
         
     }
     
@@ -201,20 +221,8 @@ export default function Checkout({route,navigation}) {
         //   } else if (paymentIntent) {
         //     console.log('Success from promise', paymentIntent);
         //   }
-        const apiKey = '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';
-        const client = new Stripe(apiKey);
         
-        // Create a Stripe token with new card infos
-        const token = await client.createToken({
-            number: cardnumber ,
-            exp_month: expmonth, 
-            exp_year: expyear, 
-            cvc: cvc,
-            
-         });
-        let stripe_token = token.id
-        // console.log(token.id)
-        return stripe_token
+       
       };
     useEffect(()=>{
         fetchcheckout()

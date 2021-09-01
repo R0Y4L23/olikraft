@@ -186,7 +186,7 @@ export default function NewProductsvariable({route,navigation}) {
                     <Text style={{color:"black",fontSize:19}}>Quantity</Text>
                     <View style={{flexDirection:"row",backgroundColor:"white",padding:5,marginVertical:5,borderWidth:0.5,borderColor:"grey"}}>
                         <View style={{flex:1,marginLeft:5,justifyContent:"center"}}>
-                            <Entypo name="minus" size={24} color="black" onPress={decrement}/>
+                            <Entypo name="minus" size={24} color="black" onPress={decrement} disabled={Counter === 1}/>
                         </View>
                         <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
                             <Text style={{fontWeight:"bold",fontSize:16}}>{Counter}</Text>
