@@ -264,12 +264,11 @@ export default function Checkout({route,navigation}) {
                 
                
             </Card>
-            {
-                checked 
-                ?   <Billingaddress navigation={navigation} updateba={updateba}/>
-                :   <Shippingaddress navigation={navigation} updatesa={updatesa} />
-            }
-           <View style={{flexDirection:"row"}}>
+            
+                {/* ?   <Billingaddress navigation={navigation} updateba={updateba}/> */}
+               <Shippingaddress navigation={navigation} updatesa={updatesa} />
+                
+           {/* <View style={{flexDirection:"row"}}>
                 <Checkbox
                     status={checked ? 'checked' : 'unchecked'}
                     
@@ -279,7 +278,7 @@ export default function Checkout({route,navigation}) {
                     color="black"
                     />
                     <Text style={{marginTop:6,color:"black"}}>Same as Billing address</Text>
-                </View>
+                </View> */}
             <Card style={{marginTop:20,borderRadius:10,elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold"}}>Order Payment Information</Text>
