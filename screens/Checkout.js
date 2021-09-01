@@ -101,8 +101,18 @@ export default function Checkout({route,navigation}) {
             exp_month: expmonth, 
             exp_year: expyear, 
             cvc: cvc,
+            address_line1: address1,
+            address_line2:address2,
+            address_city:city,
+            address_state:State,
+            address_zip: postcode,
+            address_country: country,
+
             
-         });
+            
+         }
+         );
+         console.log("helllooooo",State,country)
         // console.log(cardtoken)
     
             if(Object.keys(cardtoken)[0] != "error"){
@@ -264,12 +274,12 @@ export default function Checkout({route,navigation}) {
                 
                
             </Card>
-            {
+            {/* {
                 checked 
-                ?   <Billingaddress navigation={navigation} updateba={updateba}/>
-                :   <Shippingaddress navigation={navigation} updatesa={updatesa} />
-            }
-           <View style={{flexDirection:"row"}}>
+                ?   <Billingaddress navigation={navigation} updateba={updateba}/> */}
+                <Shippingaddress navigation={navigation} updatesa={updatesa} />
+            
+           {/* <View style={{flexDirection:"row"}}>
                 <Checkbox
                     status={checked ? 'checked' : 'unchecked'}
                     
@@ -279,7 +289,7 @@ export default function Checkout({route,navigation}) {
                     color="black"
                     />
                     <Text style={{marginTop:6,color:"black"}}>Same as Billing address</Text>
-                </View>
+                </View> */}
             <Card style={{marginTop:20,borderRadius:10,elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,marginLeft:16,marginTop:10,fontWeight:"bold"}}>Order Payment Information</Text>

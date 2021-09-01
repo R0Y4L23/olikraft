@@ -53,6 +53,13 @@ const Tutorials = ({navigation}) => {
     )
 }
 
+const styles = StyleSheet.create ({
+   
+    icon: {
+        marginLeft: 20
+    },
 
+   
+})
 
 export default Tutorials
