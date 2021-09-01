@@ -1,7 +1,7 @@
 import React,{useState, useRef, useEffect} from 'react'
 import { Appbar, ActivityIndicator } from 'react-native-paper';
 import { View,Text,Image,TouchableOpacity,Alert,StyleSheet } from 'react-native'
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { SimpleLineIcons, Ionicons } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {Icon} from 'react-native-elements';
@@ -20,8 +20,9 @@ const Tutorials = ({navigation}) => {
         <View style={{flex:1,backgroundColor:"#f9f9f9"}}>
             {rendercomplete && <View>
                 <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)",height:35,paddingBottom:17}}>
+                <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}}/>
                 <Appbar.Content title="Tutorials" titleStyle={{fontSize:20}}/>
-              <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:10}}/></TouchableOpacity>
+              {/* <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:10}}/></TouchableOpacity> */}
             </Appbar.Header>
             </View>
             }

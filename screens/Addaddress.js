@@ -17,6 +17,23 @@ export default function Addaddress({navigation,route}) {
     const [phone,setPhone]=useState("")
     const [success,setSuccess]=useState("")
     const [addresstype,setaddresstype]=useState("billing")
+    const [countryList,setCountryList]=useState([])
+    const [countryKeyList,setCountryKeyList]=useState([])
+    const [stateList,setStateList]=useState([])
+    const [States, setStates] = useState({})
+    const [clist,setclist] = useState([])
+    const [slist,setslist] = useState([])
+    const getData = async () => {
+        try {
+          const value = await AsyncStorage.getItem('token')
+          if(value !== null) 
+          {
+           return value
+          }
+        } catch(e) {
+          console.log(e)
+        }
+      }
     const saveAddress=async ()=>{
         const response = await fetch(`https://olikraft.shubhchintak.co/api/letscms/v1/address/${addresstype}`, {
             method: 'POST', 
@@ -36,7 +53,55 @@ export default function Addaddress({navigation,route}) {
             'address_1':`${building}`,
             'address_2':`${street}`})
           })
+          
           return response.json()
+      }
+      const fetchaddress = async (addresstype) =>{
+        let token = await getData()
+        await fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/" + addresstype,{
+            headers:{
+                letscms_token:token
+            }
+        })
+        .then(response => response.json())
+        .then((res) => {
+        
+            // setclist(res.data.countries)
+            setslist(res.data.states)
+            var values = Object.keys(res.data.countries).map(function (key) { return res.data.countries[key]; });
+            const keys=Object.keys(res.data.countries)
+            setCountryKeyList(keys)
+            setCountryList(values)
+            setaddresstype(addresstype)
+
+        })
+        .catch(error => console.log(error))
+    }
+
+    const getStates=(index)=>{
+        if(!Array.isArray(slist[countryKeyList[index]])&&slist[countryKeyList[index]]!=undefined)
+        {
+          setStates(slist[countryKeyList[index]])
+          const stateValues=Object.keys(slist[countryKeyList[index]]).map(function (key) { return slist[countryKeyList[index]][key]; })
+          setStateList(stateValues)
+          // console.log(stateValues)
+          
+        }
+        else{
+          setStateList([])
+        }
+    }
+
+    const getStatecode = (statevalue) =>{
+      setState(Object.keys(States).find(key => States[key] === statevalue))
+    }
+
+    const getCountrycode = (countryvalue) =>{
+      setCountry(Object.keys(clist).find(key => clist[key] === countryvalue))
+    }
+    const getCountries=()=>{
+        // console.log(clist)
+      
       }
       useEffect(()=>{
         const getProfileData = async () => {
@@ -54,7 +119,11 @@ export default function Addaddress({navigation,route}) {
              console.log(e)
             }
         }
+
         getProfileData()
+        fetchaddress("billing")
+        
+        
     },[])
     return (
            <View style={styles.container}>
@@ -65,7 +134,23 @@ export default function Addaddress({navigation,route}) {
                     </Appbar.Header>
                 </View>
                 <ScrollView style={{flex:1}}>
+                    
                  <View style={styles.content}>
+                 <Text>Type of Address</Text>
+                    {/* <View style={styles.form}>
+                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setPhone}  placeholder="Enter here..." keyboardType="number-pad" />
+                    </View> */}
+                    <View style={styles.form}>
+                    <Picker
+                         style={{ height: 40,padding:5, width:"100%" }}
+                        selectedValue={addresstype}
+                        onValueChange={(address, index) =>
+                            fetchaddress(address)
+                        }>
+                        <Picker.Item label="Billing" value="billing" />
+                        <Picker.Item label="Shipping" value="shipping" />
+                    </Picker>
+                    </View>
                    <Text>Street name</Text>
                     <View style={styles.form}>    
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setStreet} placeholder="Enter here..." />
@@ -79,16 +164,25 @@ export default function Addaddress({navigation,route}) {
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setCity}  placeholder="Enter here..."  />
                     </View>
                     <Text>State</Text>
-                    <View style={styles.form}>
+                    {/* <View style={styles.form}>
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setState} placeholder="Enter here..."  />
+                    </View> */}
+                    <View style={styles.form,{backgroundColor:"rgb(249,249,249)"}}>
+                        <Picker selectedValue={state} onValueChange={(itemValue, itemIndex)=>{getStatecode(itemValue)}} style={{height:60,flex:1}}>
+                            {stateList.length>0&&stateList.map((i,idx)=>{return  <Picker.Item label={i} value={i} key={idx}/>})}
+                            {stateList.length==0&&<Picker.Item label={"No States Available"} value={""}/>}
+                        </Picker>
                     </View>
                     <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                         <Text style={{flex:1}}>Country</Text>
                         <Text style={{flex:1}}>Postal/Zip code</Text>
                     </View>
                     <View style={styles.country}>    
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",flex:1,borderColor:"grey",}} onChangeText={setCountry} placeholder="Enter here..."/>
-                        {/* <Entypo name="triangle-down" size={24} color="black" /> */}
+                        {/* <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",flex:1,borderColor:"grey",}} onChangeText={setCountry} placeholder="Enter here..."/>
+                        <Entypo name="triangle-down" size={24} color="black" /> */}
+                        <Picker selectedValue={country} onValueChange={(itemValue, itemIndex)=>{getCountrycode(itemValue);getStates(itemIndex)}} style={{height:40,flex:1}}>
+                            {countryList.length>0&&countryList.map((i,idx)=>{return  <Picker.Item label={i} value={i} key={idx}/>})}
+                        </Picker>
                         <TextInput style={{ height: 40,padding: 10,marginLeft:5,backgroundColor:"white",flex:1}} onChangeText={setZip} placeholder="Enter here..." />
                     </View> 
                     <Text>Phone</Text>
@@ -96,21 +190,7 @@ export default function Addaddress({navigation,route}) {
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setPhone}  placeholder="Enter here..." keyboardType="number-pad" />
                     </View>
 
-                    <Text>Type of Address</Text>
-                    {/* <View style={styles.form}>
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setPhone}  placeholder="Enter here..." keyboardType="number-pad" />
-                    </View> */}
-                    <View style={styles.form}>
-                    <Picker
-                         style={{ height: 40,padding:5, width:"100%" }}
-                        selectedValue={addresstype}
-                        onValueChange={(address, index) =>
-                            setaddresstype(address)
-                        }>
-                        <Picker.Item label="Billing" value="billing" />
-                        <Picker.Item label="Shipping" value="shipping" />
-                    </Picker>
-                    </View>
+                    
                     <Text style={{textAlign:"center",color:"green"}}>{success}</Text>
                 </View> 
                 </ScrollView>
@@ -119,7 +199,7 @@ export default function Addaddress({navigation,route}) {
                 <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("ManageAddress")}}>
                             <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.send} onPress={()=>{saveAddress().then((data)=>{alert("Address Added Successfully");navigation.navigate("Home")})}}>
+                        <TouchableOpacity style={styles.send} onPress={()=>{saveAddress().then((data)=>{console.log(data),alert("Address Added Successfully");navigation.navigate("Home")})}}>
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
                         </TouchableOpacity>
                     </View>

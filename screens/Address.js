@@ -20,6 +20,7 @@ export default function Address({navigation,route}) {
     const [countryList,setCountryList]=useState([])
     const [countryKeyList,setCountryKeyList]=useState([])
     const [stateList,setStateList]=useState([])
+    const [States, setStates] = useState({})
     const saveAddress=async ()=>{
         const response = await fetch(`https://olikraft.shubhchintak.co/api/letscms/v1/address/${route.params.name}`, {
             method: 'POST', 
@@ -44,15 +45,27 @@ export default function Address({navigation,route}) {
       const getStates=(index)=>{
           if(!Array.isArray(route.params.slist[countryKeyList[index]])&&route.params.slist[countryKeyList[index]]!=undefined)
           {
+            setStates(route.params.slist[countryKeyList[index]])
             const stateValues=Object.keys(route.params.slist[countryKeyList[index]]).map(function (key) { return route.params.slist[countryKeyList[index]][key]; })
             setStateList(stateValues)
+            // console.log(stateValues)
+            
           }
           else{
             setStateList([])
           }
       }
+
+      const getStatecode = (statevalue) =>{
+        setState(Object.keys(States).find(key => States[key] === statevalue))
+      }
+
+      const getCountrycode = (countryvalue) =>{
+        setCountry(Object.keys(route.params.clist).find(key => route.params.clist[key] === countryvalue))
+      }
       useEffect(()=>{
           const getCountries=()=>{
+            // console.log(route.params.clist)
           var values = Object.keys(route.params.clist).map(function (key) { return route.params.clist[key]; });
           const keys=Object.keys(route.params.clist)
           setCountryKeyList(keys)
@@ -102,7 +115,7 @@ export default function Address({navigation,route}) {
                        </View>
                        <Text>State</Text>
                        <View style={styles.form,{backgroundColor:"rgb(249,249,249)"}}>
-                           <Picker selectedValue={state} onValueChange={(itemValue, itemIndex)=>{setState(itemValue)}} style={{height:60,flex:1}}>
+                           <Picker selectedValue={state} onValueChange={(itemValue, itemIndex)=>{getStatecode(itemValue)}} style={{height:60,flex:1}}>
                                {stateList.length>0&&stateList.map((i,idx)=>{return  <Picker.Item label={i} value={i} key={idx}/>})}
                                {stateList.length==0&&<Picker.Item label={"No States Available"} value={""}/>}
                            </Picker>
@@ -112,7 +125,7 @@ export default function Address({navigation,route}) {
                            <Text style={{flex:1}}>Postal/Zip code</Text>
                        </View>
                        <View style={styles.country}>
-                           <Picker selectedValue={country} onValueChange={(itemValue, itemIndex)=>{setCountry(itemValue);getStates(itemIndex)}} style={{height:40,flex:1}}>
+                           <Picker selectedValue={country} onValueChange={(itemValue, itemIndex)=>{getCountrycode(itemValue);getStates(itemIndex)}} style={{height:40,flex:1}}>
                                {countryList.length>0&&countryList.map((i,idx)=>{return  <Picker.Item label={i} value={i} key={idx}/>})}
                            </Picker>
                            <TextInput style={{ height: 40,padding: 10,marginLeft:5,backgroundColor:"white",flex:1}}

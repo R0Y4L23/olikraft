@@ -228,7 +228,8 @@ export default function NewProductsvariable({route,navigation}) {
                         </View>
                     </View>
                 </TouchableOpacity>         
-                <TouchableOpacity style={{backgroundColor:"white",elevation:5,height:40,marginTop:10,borderRadius:15,justifyContent:"center"}}>
+                <TouchableOpacity style={{backgroundColor:"white",elevation:5,height:40,marginTop:10,borderRadius:15,justifyContent:"center"}}
+                onPress={()=>{navigation.navigate("Productreview",{"id":proid})}}>
                     <View style={{flexDirection:"row"}}>
                         <View style={{flex:1,alignItems:"flex-start",marginLeft:15}}>
                             <FontAwesome name="star-half-full" size={24} color="black" />
