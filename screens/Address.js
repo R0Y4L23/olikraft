@@ -22,7 +22,7 @@ export default function Address({navigation,route}) {
     const [stateList,setStateList]=useState([])
     const [States, setStates] = useState({})
     const saveAddress=async ()=>{
-        const response = await fetch(`https://olikraft.shubhchintak.co/api/letscms/v1/address/${route.params.name}`, {
+        const response = await fetch(`https://olikraft.com/api/letscms/v1/address/${route.params.name}`, {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',

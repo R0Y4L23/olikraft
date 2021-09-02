@@ -31,7 +31,7 @@ export default function Mycart({navigation}) {
       const removefromcart=async (key)=>{
         let token = await getData()
 
-            fetch('https://olikraft.shubhchintak.co/api/letscms/v1/cart/remove-item/' + key, {
+            fetch('https://olikraft.com/api/letscms/v1/cart/remove-item/' + key, {
                 method:"POST",
                 headers:{
                     "letscms_token":token,
@@ -56,7 +56,7 @@ export default function Mycart({navigation}) {
 
     const addcoupon = async () =>{
         let token = await getData()
-        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/cart?coupons[]=" + Coupon,{
+        fetch("https://olikraft.com/api/letscms/v1/cart?coupons[]=" + Coupon,{
             headers:{
                 letscms_token:token
             }
@@ -75,7 +75,7 @@ export default function Mycart({navigation}) {
     
       const fetchcart = async () =>{
         let token = await getData()
-        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/cart/",{
+        fetch("https://olikraft.com/api/letscms/v1/cart/",{
             headers:{
                 letscms_token:token
             }

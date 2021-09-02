@@ -21,7 +21,7 @@ export default function Ontheway({navigation}) {
     }
     const fetchOrders = async () => {
         let token = await getData()
-        await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/orders', {
+        await fetch('https://olikraft.com/api/letscms/v1/orders', {
             
             headers: {
                 "letscms_token": token

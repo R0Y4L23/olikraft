@@ -28,7 +28,7 @@ export default function Shippingaddress({navigation,updatesa}) {
       }
     const fetchshippingaddress= async ()=>{
         let token = await getData()
-        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/shipping",{
+        fetch("https://olikraft.com/api/letscms/v1/address/shipping",{
             headers:{
                 letscms_token:token
             }

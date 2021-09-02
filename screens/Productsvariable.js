@@ -46,7 +46,7 @@ export default function Productsvariable({route,navigation}) {
       const addtocart=async ()=>{
         let token = await getData()
 
-            fetch('https://olikraft.shubhchintak.co/api/letscms/v1/cart/add-item', {
+            fetch('https://olikraft.com/api/letscms/v1/cart/add-item', {
                 method:"POST",
                 headers:{
                     "letscms_token":token,
@@ -87,7 +87,7 @@ export default function Productsvariable({route,navigation}) {
     const fetchrootitem = async () =>{
         let token=getData()
 
-        axios.get('https://olikraft.shubhchintak.co/api/letscms/v1/product/' + varid, {
+        axios.get('https://olikraft.com/api/letscms/v1/product/' + varid, {
             Headers:{
                 letscms_token:token
             }

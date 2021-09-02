@@ -11,7 +11,7 @@ export default function Forgotpass ({navigation}) {
     const handleForgotpass=async ()=>{
         if(email&&username)
         {
-           await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/auth/forgot-password', {
+           await axios.post('https://olikraft.com/api/letscms/v1/auth/forgot-password', {
                 username: username,
                 email: email
               })

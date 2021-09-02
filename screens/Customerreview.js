@@ -44,7 +44,7 @@ export default function Customerreview({navigation}) {
    
     const fetchRatings = async () => {
         let token = await getData()
-        await axios.get(`https://olikraft.shubhchintak.co/api/jet-cct/dashboard_reviews`, {
+        await axios.get(`https://olikraft.com/api/jet-cct/dashboard_reviews`, {
                 Headers: {
                     letscms_token: token
                 }

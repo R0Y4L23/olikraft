@@ -61,7 +61,7 @@ export default function Checkout({route,navigation}) {
     const fetchcheckout= async ()=>{
         let token = await getData()
     
-        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/checkout?coupons[]=" + route.params.coupon,{
+        fetch("https://olikraft.com/api/letscms/v1/checkout?coupons[]=" + route.params.coupon,{
             headers:{
                 letscms_token:token
             }
@@ -118,7 +118,7 @@ export default function Checkout({route,navigation}) {
     
             if(Object.keys(cardtoken)[0] != "error"){
                 let stripetoken = cardtoken.id
-                fetch('https://olikraft.shubhchintak.co/api/letscms/v1/order/create', {
+                fetch('https://olikraft.com/api/letscms/v1/order/create', {
                     method:"POST",
                     headers:{
                         "letscms_token":token,
@@ -166,7 +166,7 @@ export default function Checkout({route,navigation}) {
     
     // const fetchPaymentIntentClientSecret = async () => {
     //     let token = await getData()
-    //     const response = await fetch("https://olikraft.shubhchintak.co/api/letscms/v1/stripe/createPaymentIntent", {
+    //     const response = await fetch("https://olikraft.com/api/letscms/v1/stripe/createPaymentIntent", {
     //       method: 'POST',
     //       headers: {
     //         letscms_token:token,
@@ -183,7 +183,7 @@ export default function Checkout({route,navigation}) {
     //             "customer_name": "Dinesh Chandak",
     //             "customer_email": "shubhchintak.co@gmail.com",
     //             // "order_id": "9819",
-    //             "site_url": "https://olikraft.shubhchintak.co"
+    //             "site_url": "https://olikraft.com"
     //         },
     //         "capture_method": "automatic",
     //         "payment_method_types": {
@@ -213,7 +213,7 @@ export default function Checkout({route,navigation}) {
         //         "customer_name": "Dinesh Chandak",
         //         "customer_email": "shubhchintak.co@gmail.com",
         //         // "order_id": "9819",
-        //         "site_url": "https://olikraft.shubhchintak.co"
+        //         "site_url": "https://olikraft.com"
         //     },
         //     "capture_method": "automatic",
         //     "payment_method_types": {

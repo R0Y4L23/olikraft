@@ -24,7 +24,7 @@ export default function Editprofile({navigation}) {
         }
       }
     const changeProfileData=async ()=>{
-        const response = await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/account-details', {
+        const response = await fetch('https://olikraft.com/api/letscms/v1/account-details', {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',

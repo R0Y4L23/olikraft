@@ -26,7 +26,7 @@ export default function ProductDetails({route,navigation}) {
 
     const fetchrootitem = async () =>{
         let token=getData()
-        axios.get('https://olikraft.shubhchintak.co/api/letscms/v1/product/' + route.params.id, {
+        axios.get('https://olikraft.com/api/letscms/v1/product/' + route.params.id, {
             Headers:{
                 letscms_token:token
             }

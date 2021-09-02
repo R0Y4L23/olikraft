@@ -30,7 +30,7 @@ const Login = ({navigation}) => {
         setLoading(true)
         if(email&&password)
         {
-           await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/auth/login', {
+           await axios.post('https://olikraft.com/api/letscms/v1/auth/login', {
                 username: email,
                 password: password
               })

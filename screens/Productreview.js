@@ -54,7 +54,7 @@ export default function Productreview({route,navigation}) {
    
     const fetchRatings = async () => {
         let token = await getData()
-        await axios.get("https://olikraft.shubhchintak.co/api/letscms/v1/product/" + route.params.id, {
+        await axios.get("https://olikraft.com/api/letscms/v1/product/" + route.params.id, {
                 Headers: {
                     letscms_token: token
                 }

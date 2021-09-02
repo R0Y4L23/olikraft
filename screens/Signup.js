@@ -35,7 +35,7 @@ const Signup = ({navigation}) => {
         setLoading(true)
         if(name&&email&&password&&confirmPass&&password==confirmPass)
         {
-            await axios.post('https://olikraft.shubhchintak.co/api/letscms/v1/auth/register', {
+            await axios.post('https://olikraft.com/api/letscms/v1/auth/register', {
                 first_name : name.split(" ")[0],
                 last_name : name.split(" ")[1],
                 username : username,

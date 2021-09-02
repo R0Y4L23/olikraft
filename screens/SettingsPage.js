@@ -10,7 +10,7 @@ export default function SettingsPage({navigation}) {
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}} />
                 <Appbar.Content title="Settings" titleStyle={styles.title}/>
             </Appbar.Header>
-            <View style={styles.notification}>
+            {/* <View style={styles.notification}>
                 <Text style={styles.notificationtext}>
                     Notifications
                 </Text>
@@ -20,7 +20,7 @@ export default function SettingsPage({navigation}) {
                     onValueChange={(value) => setToggle(value)}
                     value={toggle}
                 />
-            </View>
+            </View> */}
             <TouchableOpacity onPress={()=>{navigation.navigate("Privacypolicy")}}>
             <View style={styles.notification}>
                 <Text style={styles.notificationtext}>

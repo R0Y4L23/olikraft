@@ -42,7 +42,7 @@ export const QuantityInput = ({qt,fetchcart,id}) => {
         let cartdata={}
         cartdata[id] = quan
 
-            fetch('https://olikraft.shubhchintak.co/api/letscms/v1/cart/update-quantities', {
+            fetch('https://olikraft.com/api/letscms/v1/cart/update-quantities', {
                 method:"POST",
                 headers:{
                     "letscms_token":token,

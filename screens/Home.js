@@ -87,7 +87,7 @@ const Home = ({navigation}) => {
     }
     const fetchProducts = async () => {
         let token = await getData()
-        await axios.get(`https://olikraft.shubhchintak.co/api/letscms/v1/products?page=1&search=${searchQuery}`, {
+        await axios.get(`https://olikraft.com/api/letscms/v1/products?page=1&search=${searchQuery}`, {
                 Headers: {
                     letscms_token: token
                 }
@@ -101,7 +101,7 @@ const Home = ({navigation}) => {
     }
     const fetchRatings = async () => {
         let token = await getData()
-        await axios.get(`https://olikraft.shubhchintak.co/api/jet-cct/dashboard_reviews`, {
+        await axios.get(`https://olikraft.com/api/jet-cct/dashboard_reviews`, {
                 Headers: {
                     letscms_token: token
                 }

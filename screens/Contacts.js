@@ -11,7 +11,7 @@ export default function Contacts({navigation}) {
     const [success,setSuccess]=useState("")
     const [rendercomplete, setrendercomplete] = useState(false)
 const fetchContactUs=async ()=>{
-    await axios.get("https://olikraft.shubhchintak.co/api/jet-cct/contact_us")
+    await axios.get("https://olikraft.com/api/jet-cct/contact_us")
           .then(function (response){
             // console.log(response.data[0])
             setName(response.data[0].name)

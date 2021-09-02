@@ -35,7 +35,7 @@ export default function Addaddress({navigation,route}) {
         }
       }
     const saveAddress=async ()=>{
-        const response = await fetch(`https://olikraft.shubhchintak.co/api/letscms/v1/address/${addresstype}`, {
+        const response = await fetch(`https://olikraft.com/api/letscms/v1/address/${addresstype}`, {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export default function Addaddress({navigation,route}) {
       }
       const fetchaddress = async (addresstype) =>{
         let token = await getData()
-        await fetch("https://olikraft.shubhchintak.co/api/letscms/v1/address/" + addresstype,{
+        await fetch("https://olikraft.com/api/letscms/v1/address/" + addresstype,{
             headers:{
                 letscms_token:token
             }

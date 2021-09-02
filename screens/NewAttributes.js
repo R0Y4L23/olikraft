@@ -8,7 +8,7 @@ export default function NewAttributesarray({id,Images,match,titles,opt,updateid,
     const [fa,setfa] = useState([])
     const fetchvarchildren = async (ids) =>{
             
-        await axios.get("https://olikraft.shubhchintak.co/api/wc/v3/products/" + ids, {
+        await axios.get("https://olikraft.com/api/wc/v3/products/" + ids, {
             auth: {
                 username: 'ck_e296377c8e66081c9321b68f176b42812ca4c40a',
                 password: 'cs_d3c061b568c0318c269f0b4c3ef6aa8a855e520e'
@@ -23,7 +23,7 @@ export default function NewAttributesarray({id,Images,match,titles,opt,updateid,
             console.log(error);
           })
 
-        axios.get("https://olikraft.shubhchintak.co/api/wc/v3/products/" + ids + "/variations", {
+        axios.get("https://olikraft.com/api/wc/v3/products/" + ids + "/variations", {
             auth: {
                 username: 'ck_e296377c8e66081c9321b68f176b42812ca4c40a',
                 password: 'cs_d3c061b568c0318c269f0b4c3ef6aa8a855e520e'

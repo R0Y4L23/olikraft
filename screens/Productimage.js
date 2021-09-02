@@ -16,7 +16,7 @@ export default function Productimage({id}) {
     const fetchimage = async (ids) => {
             
             let token = await getData()
-            await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/product/'+ ids, {
+            await fetch('https://olikraft.com/api/letscms/v1/product/'+ ids, {
                 
                 headers: {
                     "letscms_token": token

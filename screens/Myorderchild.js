@@ -20,7 +20,7 @@ export default function Myorderchild({id}) {
     const fetchsingleOrders = async (ids) => {
 
             let token = await getData()
-            await fetch('https://olikraft.shubhchintak.co/api/letscms/v1/order/'+ ids, {
+            await fetch('https://olikraft.com/api/letscms/v1/order/'+ ids, {
                 
                 headers: {
                     "letscms_token": token
