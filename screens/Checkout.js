@@ -91,6 +91,7 @@ export default function Checkout({route,navigation}) {
     }
     
     const placeorder=async ()=>{
+        setrendercomplete(false)
         let token = await getData()
     
         const client = new Stripe(sk);
@@ -144,6 +145,7 @@ export default function Checkout({route,navigation}) {
                 .then(response => response.json())
                 .then((response) =>{
                     // console.log(response)
+                    
                     alert("Order Successfully Placed.Thanks for ordering!!")
                     navigation.navigate("Orderconfirmation",{orderid:response.data.order_id,cartitems:route.params.cartitems,carttotals:route.params.carttotals})
                     
@@ -154,8 +156,10 @@ export default function Checkout({route,navigation}) {
                 });
             }
             else if(Object.keys(cardtoken)[0] === "error"){
+                
                 alert(cardtoken.error.message)
                 navigation.navigate("Mycart")
+            
             }
         
     }
