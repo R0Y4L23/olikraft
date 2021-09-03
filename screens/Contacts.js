@@ -11,21 +11,35 @@ export default function Contacts({navigation}) {
     const [success,setSuccess]=useState("")
     const [rendercomplete, setrendercomplete] = useState(false)
 const fetchContactUs=async ()=>{
-    await axios.get("https://olikraft.com/api/jet-cct/contact_us")
-          .then(function (response){
-            // console.log(response.data[0])
-            setName(response.data[0].name)
-            setEmail(response.data[0].email)
-            setMessage(response.data[0].message)
-            setrendercomplete(true)
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
+    fetch('https://olikraft.com/api/letscms/v1/order/create', {
+                    method:"POST",
+                    headers:{
+                        
+                        'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({
+                    name:name,
+                    email:email,
+                    message:message
+                    }),
+                    
+                },)
+                .then(response => response.json())
+                .then((response) =>{
+                    console.log(response)
+                    
+                    alert("Your Query Posted successfully")
+                    navigation.navigate("BNS",{screen:"Home"})
+                    
+                    
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
 }
 useEffect(()=>{
    
-    fetchContactUs()
+    setrendercomplete(true)
  
 },[])
     return (
@@ -56,7 +70,7 @@ useEffect(()=>{
                         <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.goBack()}}>
                             <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.send} onPress={()=>{setSuccess("Message Sent Successfully");alert("Message Sent Successfully");navigation.navigate("BNS",{screen:"Home"})}}>
+                        <TouchableOpacity style={styles.send} onPress={fetchContactUs}>
                             <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Send</Text>
                         </TouchableOpacity>
                     </View>

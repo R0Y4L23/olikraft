@@ -70,7 +70,7 @@ useEffect(()=>{
                                 </View>
                                
                                 <View style={{flexDirection:"row",marginVertical:5,marginHorizontal:15}}>
-                                    <NewButtons att= {att} len={Attributes.length} fa={fa} images={Images} match={match} titles={titles} opt={opt} pid={id} uid={updateid} copt={chooseoption} index={idx}/>
+                                    <NewButtons att= {att} len={Attributes.length} fa={fa} images={Images} match={match} titles={titles} opt={opt} pid={id} uid={updateid} copt={chooseoption} index={idx} />
                                 </View>
                                        
                             </View>

@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react'
-import { View} from 'react-native'
-
-import {Picker} from '@react-native-picker/picker';
-
-export default function NewButtons({att,len,fa,images,match,titles,opt,uid,copt,index}) {
+import React, { useState,useEffect } from 'react'
+import { View, Button} from 'react-native'
+import PickerModal from 'react-native-picker-modal-view';
+export default function NewButtons({att,len,fa,images,match,titles,opt,uid}) {
    
 
 
     let objectfinal = []
+    const [objoptions, setobjoptions] = useState([])
+
     // const [optiontype,setoptiontype] = useState("Choose an option to change")
-    // const [optionvalue,setoptionvalue] = useState("")
+    const [optionvalue,setoptionvalue] = useState("Click to choose")
 
     const item=(t,o)=>{
+        
         if((t.length === len) & (o.length === len)){
 
             let object = {}
@@ -27,6 +28,11 @@ export default function NewButtons({att,len,fa,images,match,titles,opt,uid,copt,
             // console.log(objectfinal[0].id)
             // navigation.navigate("NewProductsvariable",{"id":objectfinal[0].id , "Images":images, pid:pid})
             uid(objectfinal[0].id,images)
+            setTimeout(() => {
+                setoptionvalue("click to change")
+              }, 2000);
+            
+            
             // console.log("final")
             
 
@@ -38,10 +44,48 @@ export default function NewButtons({att,len,fa,images,match,titles,opt,uid,copt,
        
       
     }
+    const onSelected =(selected)=> {
+        // this.setState({ selectedItem: selected });
+        
+        // console.log(selected.Name)
+        setoptionvalue(selected.Name)
+        matchvardetails(selected.Name,att.name)
+        return selected;
+    }
+
+    const createobj =(o) => {
+        for(let i = 0; i< o.length; i++)
+        {
+            let obj = {}
+            obj["Name"] = o[i]
+            obj["Value"] = o[i]
+            obj["Id"] = i
+            // console.log(obj)
+            // setobjoptions([...objoptions, obj]);
+            if(objoptions.includes(obj) === false)
+            {   
+                
+                objoptions.push(obj)
+                
+            }
+        }
+
+       
+        
+    }
+    useEffect(()=>{
+        // console.log(opt,titles)
+        
+        createobj(att.options)
+        
+        
+    },[att.options])
+
     useEffect(()=>{
         // console.log(opt,titles)
         if(titles.length === len & opt.length === len)
         {
+           
             item(titles,opt)
             
         }
@@ -50,27 +94,30 @@ export default function NewButtons({att,len,fa,images,match,titles,opt,uid,copt,
     return (
         
           
+       
         <View style={{flex:1,borderWidth:1,borderColor:"rgb(5,23,41)",backgroundColor:"white"}}>
-            <Picker
-                style={{ height: 35,padding:5, width:"100%" }}
-                selectedValue={copt[index]}
-                onValueChange={(option, index) =>{
-                    // matchvardetails(option,title)
-                    // setoptiontype(option)
-                    // setoptionvalue(option)
-                    matchvardetails(option,att.name)
-                }}
-            >
-                {/* <Picker.Item label={optiontype} value={optiontype}/> */}
-            {
-                att.options.map((option,index)=>{
-                    return(
-                        <Picker.Item label={option} value={option} key={index}/>
+                
+          
+            <PickerModal
+                   renderSelectView={(disabled, selected, showModal) =>
+                        <Button title={optionvalue} onPress={showModal} disabled={disabled} color={"rgb(5,23,41)"}/>
                         
-                    )
-                })
-            }
-            </Picker>
-        </View>
+                    }
+                    onSelected={onSelected}
+                    
+                    // onBackButtonPressed={this.onBackButtonPressed.bind(this)}
+                    items={objoptions}
+                    sortingLanguage={'tr'}
+                    showToTopButton={true}
+                    selected={null}
+                    showAlphabeticalIndex={true}
+                    autoGenerateAlphabeticalIndex={true}
+                    selectPlaceholderText={'Choose one...'}
+                    onEndReached={() => console.log('list ended...')}
+                    searchPlaceholderText={'Search...'}
+                    requireSelection={false}
+                    autoSort={false}
+                />
+            </View>
     )
 }

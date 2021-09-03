@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import { Appbar,Searchbar,ActivityIndicator } from 'react-native-paper';
-import { ScrollView, View,Text,Image,TouchableOpacity } from 'react-native'
+import { ScrollView, View,Text,Image,TouchableOpacity, Platform } from 'react-native'
 import { SimpleLineIcons,Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const axios = require('axios');
@@ -60,7 +60,7 @@ const Products = ({navigation}) => {
     return (
        <View style={{flex:1,backgroundColor:"#f9f9f9"}}>
          {rendercomplete && <View>
-           <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)",height:35,paddingBottom:17}}>
+           <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)",height:Platform.OS === 'android' ? 35 :55,paddingBottom:17}}>
                 <Appbar.Content title="Products" titleStyle={{fontSize:20}}/>
                 <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:15}}/></TouchableOpacity>
                  {focus&&<Searchbar onChangeText={onChangeSearch} onChange={fetchProducts} value={searchQuery} style={{height:30,width:150,marginRight:10}} onBlur={()=>{setFocus(!focus);setSearchQuery("");fetchProducts()}}/>}
@@ -80,7 +80,7 @@ const Products = ({navigation}) => {
             </View>}
             {
                 rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                <ActivityIndicator animating={true} color={"rgb(5,23,41)"} size="large"/>
                 </View>
             }
        </View>

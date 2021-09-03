@@ -260,7 +260,7 @@ export default function Productsvariable({route,navigation}) {
             }
             {
                 rendercomplete === false && <View style={{flex:1,justifyContent:"flex-start",alignItems:"center"}}>
-                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                <ActivityIndicator animating={true} color={"rgb(5,23,41)"} size="large"/>
                 </View>
             }
         </View>

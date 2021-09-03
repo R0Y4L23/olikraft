@@ -30,13 +30,16 @@ export default function NewProductsvariable({route,navigation}) {
         
         // console.log(theArray)
     }
-
+   
     function updateid (id,images){
+        
         setvarid(id);
         setimages(images)
         settitles([])
         setopt([])
+        
         sethasidchanged(true)
+
         // forceUpdate()
         // fetchrootitem()
     }
@@ -123,8 +126,12 @@ export default function NewProductsvariable({route,navigation}) {
         fetchrootitem()
         if(hasidchanged){
          
-            sethasidchanged(false)
-            fetchrootitem()
+            setTimeout(() => {
+                sethasidchanged(false)
+                fetchrootitem()
+              }, 2000);
+            
+            
         }
         // 
         // console.log(route.params.pid)
@@ -254,7 +261,7 @@ export default function NewProductsvariable({route,navigation}) {
             }
             {
                 rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                <ActivityIndicator animating={true} color={"rgb(5,23,41)"} size="large"/>
                 </View>
             }
         </View>

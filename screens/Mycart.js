@@ -20,6 +20,7 @@ export default function Mycart({navigation}) {
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
+        //   console.log(value)
           if(value !== null) 
           {
            return value
@@ -75,14 +76,15 @@ export default function Mycart({navigation}) {
     
       const fetchcart = async () =>{
         let token = await getData()
-        fetch("https://olikraft.com/api/letscms/v1/cart/",{
+        console.log("hello",token)
+        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/cart/",{
             headers:{
                 letscms_token:token
             }
         })
         .then(response => response.json())
         .then((res) => {
-         
+            console.log(res)
             if(typeof res.data != "undefined"){
             setCartitems(res.data.cart_items)
             setCarttotals(res.data.cart_totals)
