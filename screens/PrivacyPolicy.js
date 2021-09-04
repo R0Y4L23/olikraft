@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     },
 
     item: {
-        backgroundColor : 'rgb(5,23,41)',height:35,paddingBottom:17
+        backgroundColor : 'rgb(5,23,41)',height:Platform.OS === 'android' ? 35 :55
      },
      icon: {
          marginLeft: 20

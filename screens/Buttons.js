@@ -3,7 +3,7 @@ import { View, Text,TouchableOpacity,Button, TouchableHighlight } from 'react-na
 
 import { useNavigation } from '@react-navigation/native';
 import PickerModal from 'react-native-picker-modal-view';
- import data from './top20.json'
+
 export default function Buttons({att,pid,len,fa,images,match,titles,opt}) {
    
     let objectfinal = []

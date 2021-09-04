@@ -1,13 +1,13 @@
 import React,{useEffect, useState} from 'react'
 import { Appbar,Searchbar,ActivityIndicator } from 'react-native-paper';
-import { ScrollView, View,Text,Image,TouchableOpacity, Platform } from 'react-native'
+import { ScrollView, View,Text,Image,TouchableOpacity } from 'react-native'
 import { SimpleLineIcons,Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const axios = require('axios');
 const ProductsComponent=({product,nprice,pprice,discount,discountPrice,image,id,navigation})=>{
     return (
       <TouchableOpacity onPress={()=>{navigation.navigate("Productsvariable",{"id":id})}}>
-        <View style={{width:325,height:"auto",margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
+        <View style={{width:325,height:"auto",margin:15,backgroundColor:"white",shadowColor: 'rgba(0, 0, 0, 0.2)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
         {image != false && <Image source={{uri:image}} style={{height:75,width:75}}/>}
         <View>
             <Text style={{fontSize:18,width:150}}>{product}</Text>
@@ -60,7 +60,7 @@ const Products = ({navigation}) => {
     return (
        <View style={{flex:1,backgroundColor:"#f9f9f9"}}>
          {rendercomplete && <View>
-           <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)",height:Platform.OS === 'android' ? 35 :55,paddingBottom:17}}>
+           <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)",height:Platform.OS === 'android' ? 35 :55}}>
                 <Appbar.Content title="Products" titleStyle={{fontSize:20}}/>
                 <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:15}}/></TouchableOpacity>
                  {focus&&<Searchbar onChangeText={onChangeSearch} onChange={fetchProducts} value={searchQuery} style={{height:30,width:150,marginRight:10}} onBlur={()=>{setFocus(!focus);setSearchQuery("");fetchProducts()}}/>}

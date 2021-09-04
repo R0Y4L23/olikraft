@@ -72,7 +72,7 @@ export default function Myorderchild({id}) {
         }
          {
                 rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                <ActivityIndicator animating={true} color={"blue"} size="small"/>
+                <ActivityIndicator animating={true} color={"rgb(5,23,41)"} size="small"/>
                 </View>
             }
         </View>

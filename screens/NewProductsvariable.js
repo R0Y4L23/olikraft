@@ -30,16 +30,13 @@ export default function NewProductsvariable({route,navigation}) {
         
         // console.log(theArray)
     }
-   
+
     function updateid (id,images){
-        
         setvarid(id);
         setimages(images)
         settitles([])
         setopt([])
-        
         sethasidchanged(true)
-
         // forceUpdate()
         // fetchrootitem()
     }
@@ -126,12 +123,8 @@ export default function NewProductsvariable({route,navigation}) {
         fetchrootitem()
         if(hasidchanged){
          
-            setTimeout(() => {
-                sethasidchanged(false)
-                fetchrootitem()
-              }, 2000);
-            
-            
+            sethasidchanged(false)
+            fetchrootitem()
         }
         // 
         // console.log(route.params.pid)
@@ -202,7 +195,7 @@ export default function NewProductsvariable({route,navigation}) {
                             <Entypo name="plus" size={24} color="black" onPress={increment}/>
                         </View>
                 </View>
-                <View style={{padding:5}}>
+                {/* <View style={{padding:5}}>
                     <Text style={{color:"black",fontSize:17,fontWeight:"bold"}}>
                         Package will include:
                     </Text>
@@ -216,7 +209,7 @@ export default function NewProductsvariable({route,navigation}) {
                     {'\u2022'}Package item details 3
                     </Text>
                    
-                </View>
+                </View> */}
                 <View style={{flexDirection:"row",padding:5}}>
                     <Image source={require("../assets/moneyback.png")} style={{resizeMode:"stretch",height:50,width:50,marginRight:15}}/>
                     <Image source={require("../assets/mcafee.png")} style={{height:50,width:50,resizeMode:"stretch"}}/>

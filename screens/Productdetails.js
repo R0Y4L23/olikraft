@@ -61,7 +61,7 @@ export default function ProductDetails({route,navigation}) {
         </ScrollView>}
         {
                 rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                <ActivityIndicator animating={true} color={"rgb(5,23,41)"} size="large"/>
                 </View>
             }
       </View>

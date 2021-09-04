@@ -8,7 +8,7 @@ const RecentReviewsComponent=({name,stars,comment,url})=>{
     let Image_Http_URL ={ uri: url};
     
     return (
-        <View style={{width:"100%",height:140,borderBottomWidth:0.5,marginVertical:0.5,borderColor:"grey",backgroundColor:"rgb(249,249,249)",backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
+        <View style={{width:"100%",height:140,borderBottomWidth:0.5,marginVertical:0.5,borderColor:"grey",backgroundColor:"rgb(249,249,249)",backgroundColor:"white",shadowColor: 'rgba(0, 0, 0, 0.2)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
             <View >
             <Image source={Image_Http_URL} style={{height:75,width:75,borderRadius:50,margin:10}}/>
             {/* {console.log(url)} */}
@@ -78,7 +78,7 @@ useEffect(()=>{
                 </ScrollView>}
                 {
                 rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                <ActivityIndicator animating={true} color={"rgb(5,23,41)"} size="large"/>
                 </View>
             }
         </View>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create ({
         
     },
     item: {
-       backgroundColor : 'rgb(5,23,41)',height:35,paddingBottom:17
+       backgroundColor : 'rgb(5,23,41)',height:Platform.OS === 'android' ? 35 :55
     },
     icon: {
         marginLeft: 20

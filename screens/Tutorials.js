@@ -19,7 +19,7 @@ const Tutorials = ({navigation}) => {
     return (
         <View style={{flex:1,backgroundColor:"#f9f9f9"}}>
             {rendercomplete && <View>
-                <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)",height:35,paddingBottom:17}}>
+                <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)",height:Platform.OS === 'android' ? 35 :55}}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white"  onPress={()=>{navigation.goBack()}}/>
                 <Appbar.Content title="Tutorials" titleStyle={{fontSize:20}}/>
               {/* <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:10}}/></TouchableOpacity> */}
@@ -46,7 +46,7 @@ const Tutorials = ({navigation}) => {
             </View> }   
             {
                 rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                <ActivityIndicator animating={true} color={"rgb(5,23,41)"} size="large"/>
                 </View>
             } 
         </View>

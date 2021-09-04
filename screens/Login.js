@@ -83,11 +83,11 @@ const Login = ({navigation}) => {
                   <Text style={{textAlign:"right",textDecorationLine:"underline"}}>Forget Password?</Text>
                   </TouchableOpacity>
                </View>
-               {/* <TouchableOpacity style={{backgroundColor:"white",height:50,width:300,display:"flex",flexDirection:"row",alignItems:"center",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5}}>
+               {/* <TouchableOpacity style={{backgroundColor:"white",height:50,width:300,display:"flex",flexDirection:"row",alignItems:"center",shadowColor: 'rgba(0, 0, 0, 0.2)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5}}>
                    <Image style={{width:22,height:22,marginLeft:10}} source={require("../assets/google.png")}/> 
                    <Text style={{fontSize:15,color:"black",textAlign:"center",width:"90%"}}>Login with Google</Text>
                </TouchableOpacity>
-               <TouchableOpacity style={{backgroundColor:"white",height:50,width:300,display:"flex",flexDirection:"row",alignItems:"center",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5}}>
+               <TouchableOpacity style={{backgroundColor:"white",height:50,width:300,display:"flex",flexDirection:"row",alignItems:"center",shadowColor: 'rgba(0, 0, 0, 0.2)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5}}>
                    <Image style={{width:22,height:22,marginLeft:10}} source={require("../assets/facebook.png")}/> 
                    <Text style={{fontSize:15,color:"black",textAlign:"center",width:"90%"}}>Login with Facebook</Text>
                </TouchableOpacity> */}

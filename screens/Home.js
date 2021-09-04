@@ -25,7 +25,7 @@ const ShopFromFavouriteComponent=({product,nprice,pprice,id,navigation,image,fea
     return(
         <TouchableOpacity onPress={()=>{navigation.navigate("Productsvariable",{"id":id})}}>
             {featured&&<View
-                style={{width:325,height:100,margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
+                style={{width:325,height:100,margin:15,backgroundColor:"white",shadowColor: 'rgba(0, 0, 0, 0.2)',shadowOpacity: 1.5,shadowRadius: 5,elevation:1,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
                 <Image source={{uri:image}} style={{height:75,width:75}} />
                 <View>
                     <Text style={{fontSize:12,width:150}}>{product}</Text>
@@ -39,7 +39,7 @@ const RecentReviewsComponent=({name,stars,comment,url})=>{
     let Image_Http_URL ={ uri: url};
     
     return (
-        <View style={{width:400,height:150,margin:15,backgroundColor:"white",shadowColor: 'rgba(46, 229, 157, 0.4)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
+        <View style={{width:400,height:150,margin:15,backgroundColor:"white",shadowColor: 'rgba(0, 0, 0, 0.2)',shadowOpacity: 1.5,shadowRadius: 5,elevation:1,display:"flex",flexDirection:"row",justifyContent:"space-around",padding:10}}>
             <View >
             <Image source={Image_Http_URL} style={{height:75,width:75,borderRadius:50,margin:10}}/>
             {/* {console.log(url)} */}

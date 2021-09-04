@@ -82,7 +82,7 @@ export default function Shippingaddress({navigation,updatesa}) {
          </Card>)}
          
                 {( rendercomplete === false) && (<Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
-                <ActivityIndicator animating={true} color={"blue"} size="small"/>
+                <ActivityIndicator animating={true} color={"rgb(5,23,41)"} size="large"/>
                 </Card>) } 
         </View>
     )

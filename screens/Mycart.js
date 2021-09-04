@@ -20,7 +20,6 @@ export default function Mycart({navigation}) {
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
-        //   console.log(value)
           if(value !== null) 
           {
            return value
@@ -76,15 +75,14 @@ export default function Mycart({navigation}) {
     
       const fetchcart = async () =>{
         let token = await getData()
-        console.log("hello",token)
-        fetch("https://olikraft.shubhchintak.co/api/letscms/v1/cart/",{
+        fetch("https://olikraft.com/api/letscms/v1/cart/",{
             headers:{
                 letscms_token:token
             }
         })
         .then(response => response.json())
         .then((res) => {
-            console.log(res)
+         
             if(typeof res.data != "undefined"){
             setCartitems(res.data.cart_items)
             setCarttotals(res.data.cart_totals)
@@ -241,7 +239,7 @@ export default function Mycart({navigation}) {
             
              {
                 rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                <ActivityIndicator animating={true} color={"rgb(5,23,41)"} size="large"/>
                 </View>
             }
         </View>
@@ -252,7 +250,7 @@ const styles = StyleSheet.create ({
   
     item: {
        backgroundColor : 'rgb(5,23,41)'
-       ,height:35,paddingBottom:17
+       ,height:Platform.OS === 'android' ? 35 :55
     },
     icon: {
         marginLeft: 20

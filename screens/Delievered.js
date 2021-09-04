@@ -87,7 +87,7 @@ export default function  Delievered() {
                 } 
                  {
                 rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                <ActivityIndicator animating={true} color={"blue"} size="large"/>
+                <ActivityIndicator animating={true} color={"rgb(5,23,41)"} size="large"/>
                 </View>
             }  
         </View>
@@ -98,7 +98,7 @@ export default function  Delievered() {
 const styles = StyleSheet.create ({
   
     item: {
-       backgroundColor : 'rgb(5,23,41)',height:35,paddingBottom:17
+       backgroundColor : 'rgb(5,23,41)',height:Platform.OS === 'android' ? 35 :55
     },
     icon: {
         marginLeft: 20,

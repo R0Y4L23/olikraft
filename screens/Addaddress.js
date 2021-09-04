@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react'
-import {View,Text,Image,TextInput,TouchableOpacity, StyleSheet, ScrollView } from "react-native"
+import {View,Text,Image,TextInput,Button,TouchableOpacity, StyleSheet, ScrollView } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import { Appbar } from 'react-native-paper';
-import {Picker} from '@react-native-picker/picker';
+import PickerModal from 'react-native-picker-modal-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Addaddress({navigation,route}) {
     const [name,setName]=useState("")
@@ -23,6 +23,21 @@ export default function Addaddress({navigation,route}) {
     const [States, setStates] = useState({})
     const [clist,setclist] = useState([])
     const [slist,setslist] = useState([])
+    const [objcountries, setobjcountries] = useState([])
+    const [optioncountry,setoptioncountry] = useState("Click to choose")
+    const [objstate, setobjstate] = useState([])
+    const [optionstate,setoptionstate] = useState("Click to choose")
+    const type_of_address = [ {
+        Name:'Billing',
+        Value:'billing',
+        Id:0
+    },
+    {
+        Name:'Shipping',
+        Value:'shipping',
+        Id:0
+    }
+]
     const getData = async () => {
         try {
           const value = await AsyncStorage.getItem('token')
@@ -58,20 +73,35 @@ export default function Addaddress({navigation,route}) {
       }
       const fetchaddress = async (addresstype) =>{
         let token = await getData()
-        await fetch("https://olikraft.com/api/letscms/v1/address/" + addresstype,{
+        await fetch("https://olikraft.com/api/letscms/v1/address/" + addresstype ,{
             headers:{
                 letscms_token:token
             }
         })
         .then(response => response.json())
         .then((res) => {
-        
+            
             setclist(res.data.countries)
             setslist(res.data.states)
             var values = Object.keys(res.data.countries).map(function (key) { return res.data.countries[key]; });
             const keys=Object.keys(res.data.countries)
             setCountryKeyList(keys)
             setCountryList(values)
+            for(let i = 0; i< values.length; i++)
+            {
+                let obj = {}
+                obj["Name"] = values[i]
+                obj["Value"] = values[i]
+                obj["Id"] = i
+                // console.log(obj)
+                // setobjoptions([...objoptions, obj]);
+                if(objcountries.includes(obj) === false)
+                {   
+                    
+                    objcountries.push(obj)
+                    
+                }
+            }
             setaddresstype(addresstype)
 
         })
@@ -84,6 +114,21 @@ export default function Addaddress({navigation,route}) {
           setStates(slist[countryKeyList[index]])
           const stateValues=Object.keys(slist[countryKeyList[index]]).map(function (key) { return slist[countryKeyList[index]][key]; })
           setStateList(stateValues)
+          for(let i = 0; i< stateValues.length; i++)
+            {
+                let obj = {}
+                obj["Name"] =  stateValues[i]
+                obj["Value"] =  stateValues[i]
+                obj["Id"] = i
+                // console.log(obj)
+                // setobjoptions([...objoptions, obj]);
+                if(objstate.includes(obj) === false)
+                {   
+                    
+                    objstate.push(obj)
+                    
+                }
+            }
           // console.log(stateValues)
           
         }
@@ -99,7 +144,39 @@ export default function Addaddress({navigation,route}) {
     const getCountrycode = (countryvalue) =>{
       setCountry(Object.keys(clist).find(key => clist[key] === countryvalue))
     }
+    const onSelectedcountry =(selected)=> {
+        // this.setState({ selectedItem: selected });
+        
+        console.log(selected.Name)
+        setoptioncountry(selected.Name)
+        // matchvardetails(selected.Name,att.name)
+        
+        getCountrycode(selected.Name);getStates(selected.Id)
+        return selected;
+    }
+    const onSelectedstate =(selected)=> {
+        // this.setState({ selectedItem: selected });
+        
+        console.log(selected.Name)
+        setoptionstate(selected.Name)
+        // matchvardetails(selected.Name,att.name)
+        
+        getStatecode(selected.Name)
+        return selected;
+    }
 
+    const onSelectedaddresstype =(selected)=> {
+        // this.setState({ selectedItem: selected });
+        
+        console.log(selected.Name)
+        setaddresstype(selected.Value)
+        fetchaddress(selected.value)
+        // matchvardetails(selected.Name,att.name)
+        
+        // getStatecode(selected.Name)
+        return selected;
+    }
+  
       useEffect(()=>{
         const getProfileData = async () => {
             try {
@@ -124,6 +201,7 @@ export default function Addaddress({navigation,route}) {
     },[])
     return (
            <View style={styles.container}>
+               {/* {console.log(objstate)} */}
                <View>
                 <Appbar.Header style = {styles.item}>
                         <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
@@ -134,19 +212,30 @@ export default function Addaddress({navigation,route}) {
                     
                  <View style={styles.content}>
                  <Text>Type of Address</Text>
-                    {/* <View style={styles.form}>
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setPhone}  placeholder="Enter here..." keyboardType="number-pad" />
-                    </View> */}
+                 
                     <View style={styles.form}>
-                    <Picker
-                         style={{ height: 40,padding:5, width:"100%" }}
-                        selectedValue={addresstype}
-                        onValueChange={(address, index) =>
-                            fetchaddress(address)
-                        }>
-                        <Picker.Item label="Billing" value="billing" />
-                        <Picker.Item label="Shipping" value="shipping" />
-                    </Picker>
+                   
+                    <PickerModal
+                            renderSelectView={(disabled, selected, showModal) =>
+                                <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(5,23,41)"}}>
+                                    <Button title={addresstype} onPress={showModal} color={"rgb(5,23,41)"} />
+                                </View>
+                                }
+                                onSelected={onSelectedaddresstype}
+                        
+                                items={type_of_address}
+                                // sortingLanguage={'tr'}
+                                showToTopButton={true}
+                                selected={null}
+                                // showAlphabeticalIndex={true}
+                                // autoGenerateAlphabeticalIndex={true}
+                                selectPlaceholderText={'Choose one...'}
+                                onEndReached={() => console.log('list ended...')}
+                                searchPlaceholderText={'Search...'}
+                                requireSelection={false}
+                                autoSort={false}
+                        />
+                        
                     </View>
                    <Text>Street name</Text>
                     <View style={styles.form}>    
@@ -160,27 +249,60 @@ export default function Addaddress({navigation,route}) {
                     <View style={styles.form}>
                         <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setCity}  placeholder="Enter here..."  />
                     </View>
-                    <Text>State</Text>
-                    {/* <View style={styles.form}>
-                        <TextInput style={{ height: 40,padding: 10,backgroundColor:"white"}} onChangeText={setState} placeholder="Enter here..."  />
-                    </View> */}
+                    <Text style={{marginVertical:5}}>Country</Text>
+                    
                     <View style={styles.form,{backgroundColor:"rgb(249,249,249)"}}>
-                        <Picker selectedValue={state} onValueChange={(itemValue, itemIndex)=>{getStatecode(itemValue)}} style={{height:60,flex:1}}>
-                            {stateList.length>0&&stateList.map((i,idx)=>{return  <Picker.Item label={i} value={i} key={idx}/>})}
-                            {stateList.length==0&&<Picker.Item label={"No States Available"} value={""}/>}
-                        </Picker>
+                    <PickerModal
+                            renderSelectView={(disabled, selected, showModal) =>
+                                <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(5,23,41)"}}>
+                                    <Button title={optioncountry} onPress={showModal} color={"rgb(5,23,41)"} />
+                                </View>
+                                }
+                                onSelected={onSelectedcountry}
+                        
+                                items={objcountries}
+                                sortingLanguage={'tr'}
+                                showToTopButton={true}
+                                selected={null}
+                                showAlphabeticalIndex={true}
+                                autoGenerateAlphabeticalIndex={true}
+                                selectPlaceholderText={'Choose one...'}
+                                onEndReached={() => console.log('list ended...')}
+                                searchPlaceholderText={'Search...'}
+                                requireSelection={false}
+                                autoSort={false}
+                        />
+                        
+                        
                     </View>
-                    <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                        <Text style={{flex:1}}>Country</Text>
+                    <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10}}>
+                        <Text style={{flex:1}}>State</Text>
                         <Text style={{flex:1}}>Postal/Zip code</Text>
                     </View>
                     <View style={styles.country}>    
-                        {/* <TextInput style={{ height: 40,padding: 10,backgroundColor:"white",flex:1,borderColor:"grey",}} onChangeText={setCountry} placeholder="Enter here..."/>
-                        <Entypo name="triangle-down" size={24} color="black" /> */}
-                        <Picker selectedValue={country} onValueChange={(itemValue, itemIndex)=>{getCountrycode(itemValue);getStates(itemIndex)}} style={{height:40,flex:1}}>
-                            {countryList.length>0&&countryList.map((i,idx)=>{return  <Picker.Item label={i} value={i} key={idx}/>})}
-                        </Picker>
-                        <TextInput style={{ height: 40,padding: 10,marginLeft:5,backgroundColor:"white",flex:1}} onChangeText={setZip} placeholder="Enter here..." />
+                        <PickerModal
+                                renderSelectView={(disabled, selected, showModal) =>
+                                    <View style={{width:"50%",justifyContent:"center"}}>
+                                        <Button title={optionstate} onPress={showModal} color={"rgb(5,23,41)"} disabled={stateList.length === 0}/>
+                                    </View>
+                                    }
+                                    onSelected={onSelectedstate}
+                                    
+                                    // onBackButtonPressed={this.onBackButtonPressed.bind(this)}
+                                    items={objstate}
+                                    sortingLanguage={'tr'}
+                                    showToTopButton={true}
+                                    selected={null}
+                                    showAlphabeticalIndex={true}
+                                    autoGenerateAlphabeticalIndex={true}
+                                    selectPlaceholderText={'Choose one...'}
+                                    onEndReached={() => console.log('list ended...')}
+                                    searchPlaceholderText={'Search...'}
+                                    requireSelection={false}
+                                    autoSort={false}
+                            />
+                            
+                        <TextInput style={{ height: 40,padding: 10,marginLeft:5,backgroundColor:"white"}} onChangeText={setZip} placeholder="Enter here..." />
                     </View> 
                     <Text>Phone</Text>
                     <View style={styles.form}>
@@ -211,7 +333,7 @@ const styles = StyleSheet.create ({
         flex:1
     },
     item: {
-       backgroundColor : 'rgb(5,23,41)',height:35,paddingBottom:17
+       backgroundColor : 'rgb(5,23,41)',height:Platform.OS === 'android' ? 35 :55
     },
     icon: {
         marginLeft: 20

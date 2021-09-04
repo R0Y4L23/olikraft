@@ -93,6 +93,7 @@ export default function Productsvariable({route,navigation}) {
             }
           })
           .then(function (response) {
+                console.log(response.data.data)
                 setPro(response.data.data)
                 setImages(response.data.data.gallery_images)
                 // console.log(response.data.data.gallery_images)
@@ -188,7 +189,7 @@ export default function Productsvariable({route,navigation}) {
                             <Entypo name="plus" size={24} color="black" onPress={increment} />
                         </View>
                     </View>
-                    <View style={{padding:5}}>
+                    {/* <View style={{padding:5}}>
                         <Text style={{color:"black",fontSize:17,fontWeight:"bold"}}>
                             Package will include:
                         </Text>
@@ -201,7 +202,7 @@ export default function Productsvariable({route,navigation}) {
                         <Text style={styles.listitem}>
                             {'\u2022'}Package item details 3
                         </Text>
-                    </View>
+                    </View> */}
                     <View style={{flexDirection:"row",padding:5}}>
                         <Image source={require("../assets/moneyback.png")}
                             style={{resizeMode:"stretch",height:50,width:50,marginRight:15}} />
