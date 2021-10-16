@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {View,Text,TextInput,TouchableOpacity,ActivityIndicator} from "react-native"
+import {View,Text,TextInput,TouchableOpacity,ActivityIndicator,ScrollView} from "react-native"
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const axios = require('axios');
 const Signup = ({navigation}) => {
     const [name,setName]=useState("")
+    const [nameLast,setNameLast]=useState("")
     const [username,setUsername]=useState("")
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
@@ -36,8 +37,8 @@ const Signup = ({navigation}) => {
         if(name&&email&&password&&confirmPass&&password==confirmPass)
         {
             await axios.post('https://olikraft.com/api/letscms/v1/auth/register', {
-                first_name : name.split(" ")[0],
-                last_name : name.split(" ")[1],
+                first_name : name,
+                last_name : nameLast,
                 username : username,
                 password : password,
                 email : email
@@ -76,10 +77,16 @@ const Signup = ({navigation}) => {
         }
     }
     return (
-       <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9"}}>
+        <View style={{flex:1}}>
+        <ScrollView>
+       <View style={{display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9",paddingTop:30}}>
                <Text style={{fontSize:25,marginBottom:50}}>Signup</Text>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,borderColor:"grey",marginVertical:12}}>
-                   <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setName} value={name} placeholder="Firstname + Lastname"/>
+                   <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setName} value={name} placeholder="First Name"/>
+                   <FontAwesome name="user" size={35} color="black" style={{flex:1.5}}/>
+               </View>
+               <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,borderColor:"grey",marginVertical:12}}>
+                   <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setNameLast} value={nameLast} placeholder="Last Name"/>
                    <FontAwesome name="user" size={35} color="black" style={{flex:1.5}}/>
                </View>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,borderColor:"grey",marginVertical:12}}>
@@ -103,15 +110,9 @@ const Signup = ({navigation}) => {
                    {!loading&&<Text style={{color:"white",fontSize:16}}>Signup</Text>}
                    {loading&&<ActivityIndicator size="small" color="white"/>}
                </TouchableOpacity>
-               {/* <TouchableOpacity style={{backgroundColor:"white",height:50,width:300,display:"flex",flexDirection:"row",alignItems:"center",shadowColor: 'rgba(0, 0, 0, 0.2)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5}}>
-                   <Image style={{width:22,height:22,marginLeft:10}} source={require("../assets/google.png")}/> 
-                   <Text style={{fontSize:15,color:"black",textAlign:"center",width:"90%"}}>Signup with Google</Text>
-               </TouchableOpacity>
-               <TouchableOpacity style={{backgroundColor:"white",height:50,width:300,display:"flex",flexDirection:"row",alignItems:"center",shadowColor: 'rgba(0, 0, 0, 0.2)',shadowOpacity: 1.5,shadowRadius: 20,elevation:5}}>
-                   <Image style={{width:22,height:22,marginLeft:10}} source={require("../assets/facebook.png")}/> 
-                   <Text style={{fontSize:15,color:"black",textAlign:"center",width:"90%"}}>Signup with Facebook</Text>
-               </TouchableOpacity> */}
-               <Text style={{marginTop:70}}>Already have an account? <Text style={{textDecorationLine:"underline"}} onPress={()=>{navigation.navigate("Login")}}>Login</Text></Text>
+               <Text style={{marginTop:50,marginBottom:20}}>Already have an account? <Text style={{textDecorationLine:"underline"}} onPress={()=>{navigation.navigate("Login")}}>Login</Text></Text>
+       </View>
+       </ScrollView>
        </View>
     )
 }
