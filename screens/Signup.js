@@ -34,7 +34,7 @@ const Signup = ({navigation}) => {
     const handleSignup=async ()=>{
         setError("")
         setLoading(true)
-        if(name&&email&&password&&confirmPass&&password==confirmPass)
+        if(name&&email&&password&&confirmPass&&password==confirmPass&&nameLast)
         {
             await axios.post('https://olikraft.com/api/letscms/v1/auth/register', {
                 first_name : name,
@@ -105,7 +105,7 @@ const Signup = ({navigation}) => {
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setConfirmPass} value={confirmPass} placeholder="Confirm Password" secureTextEntry={!confirmPassVisible}/>
                    <Feather name={`${confirmPassVisible?"eye-off":"eye"}`} size={35} color="black" style={{flex:1.5}} onPress={()=>{setConfirmPassVisible(!confirmPassVisible)}}/>
                </View>
-               <Text>{error&&<Text style={{color:"red",marginVertical:8,textTransform:"capitalize",textAlign:"center"}}>{error}</Text>}</Text>
+               <Text style={{textAlign:"center"}}>{error&&<Text style={{color:"red",marginVertical:8,textTransform:"capitalize",textAlign:"center"}}>{error}</Text>}</Text>
                <TouchableOpacity style={{backgroundColor:"#051729",height:40,width:300,display:"flex",justifyContent:"center",alignItems:"center",marginVertical:12}} onPress={handleSignup}>
                    {!loading&&<Text style={{color:"white",fontSize:16}}>Signup</Text>}
                    {loading&&<ActivityIndicator size="small" color="white"/>}

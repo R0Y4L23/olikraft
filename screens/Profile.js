@@ -34,7 +34,7 @@ export default function Profile({navigation}) {
                        if(jsonValue)
                        {
                            let data=JSON.parse(jsonValue)
-                           setName(`${data.first_name} ${data.last_name}`)
+                           setName(`${data.display_name}`)
                            setEmail(data.user_email)
                            setrendercomplete(true)
                        }
@@ -59,9 +59,9 @@ export default function Profile({navigation}) {
             </View>}
             {rendercomplete && <View style={{flex:1,padding:15,marginLeft:20}}>
                 <Text style={styles.name}>Full Name</Text>
-                <TextInput style={{ height: 40}}  value={name} placeholder="Full Name"  />
+                <TextInput style={{ height: 40}}  value={name} placeholder="Full Name" editable={false}/>
                 <Text style={styles.name} >Email</Text>
-                <TextInput style={{ height: 40,marginBottom:30}}  value={email} placeholder="Email" />
+                <TextInput style={{ height: 40,marginBottom:30}}  value={email} placeholder="Email" editable={false} />
               
             </View>}
             {
