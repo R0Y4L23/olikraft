@@ -38,8 +38,8 @@ export default function Billingaddress({navigation,updateba}) {
             })
             .then(response => response.json())
             .then((res) => {
-                if(typeof res.data.address.country != "undefined"){
-                    console.log(res.data,"&&&&&&&&&&")
+                if(typeof res.data.address.country != "undefined")
+                {
                     setAddress(res.data.address)
                     setCountrylist(res.data.countries)
                     setStatelist(res.data.states)
@@ -57,21 +57,21 @@ export default function Billingaddress({navigation,updateba}) {
             .catch(error => console.log(error))
         }
   
-      useEffect(()=>{
-                fetchbillingaddress()
-        },[])
-    // React.useEffect(() => {
-    //     const unsubscribe = navigation.addListener('focus', () => {
-    //      fetchbillingaddress()
-    //     });
-    //     return unsubscribe;
-    //   }, [navigation]);
+    //   useEffect(()=>{
+    //             fetchbillingaddress()
+    //     },[])
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+         fetchbillingaddress()
+        });
+        return unsubscribe;
+      }, [navigation]);
 
     //(country.length>0 && State.length>0 )&&
     return (
         <View>
   
-           {( rendercomplete) ?( <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
+           {((country.length>0 && State.length>0) && rendercomplete) ?( <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <View style={{flexDirection:"row"}}>
                     <Text style={{flex:1,fontSize:18,fontWeight:"bold",marginLeft:16,marginTop:10,color:"black"}}>Billing Address</Text>
                     <View style={{marginTop:10,marginRight:15}}>
@@ -85,7 +85,7 @@ export default function Billingaddress({navigation,updateba}) {
                     <Paragraph style={{fontSize:12,}}>{ad.city} {ad.postcode}</Paragraph>
                     <Showcountrystate country={country} state={State} countrylist={countrylist} statelist={Statelist} updateaddressfetched={updateaddressfetched} isaddressfetched={isaddressfetched} />
                 </Card.Content>
-            </Card>):(<></>)}
+            </Card>):(<Text style={{textAlign:"center",fontSize:25,margin:10}}>No Billing Address Added</Text>)}
              {
                ( rendercomplete === false ) && <Card style={{marginTop:20,borderRadius:10,shadowColor:"grey",elevation:10}}>
                 <ActivityIndicator animating={true} color={"rgb(5,23,41)"} size="large"/>

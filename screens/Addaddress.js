@@ -51,11 +51,7 @@ export default function Addaddress({navigation,route}) {
       }
     const saveAddress=async ()=>{
 
-
-
       //  console.log(country,objstate,'%%%%%%%')
-
-
         const response = await fetch(`https://olikraft.com/api/letscms/v1/address/${addresstype}`, {
             method: 'POST', 
             headers: {
@@ -79,6 +75,7 @@ export default function Addaddress({navigation,route}) {
       }
       const fetchaddress = async (addresstype) =>{
         let token = await getData()
+        console.log("https://olikraft.com/api/letscms/v1/address/" + addresstype)
         await fetch("https://olikraft.com/api/letscms/v1/address/" + addresstype ,{
             headers:{
                 letscms_token:token
@@ -86,31 +83,23 @@ export default function Addaddress({navigation,route}) {
         })
         .then(response => response.json())
         .then((res) => {
-            
             setclist(res.data.countries)
-           // console.log(res.data.countries)
             setslist(res.data.states)
-           // console.log(res.data.states)
             var values = Object.keys(res.data.countries).map(function (key) { return res.data.countries[key]; });
+            console.log(values.length,": Total Countries")
             const keys=Object.keys(res.data.countries)
             setCountryKeyList(keys)
             setCountryList(values)
+            let o=[]
             for(let i = 0; i< values.length; i++)
             {
                 let obj = {}
                 obj["Name"] = values[i]
                 obj["Value"] = values[i]
                 obj["Id"] = i
-                // console.log(obj)
-                // setobjoptions([...objoptions, obj]);
-                if(objcountries.includes(obj) === false)
-                {   
-                    
-                    objcountries.push(obj)
-                    
-                }
+                o.push(obj)
             }
-            setaddresstype(addresstype)
+            setobjcountries(o)
         })
         .catch(error => console.log(error))
     }
@@ -131,9 +120,7 @@ export default function Addaddress({navigation,route}) {
                 // setobjoptions([...objoptions, obj]);
                 if(objstate.includes(obj) === false)
                 {   
-                    
                     objstate.push(obj)
-                    
                 }
             }
            console.log(stateValues)
@@ -147,7 +134,6 @@ export default function Addaddress({navigation,route}) {
     const getStatecode = (statevalue) =>{
       setState(Object.keys(States).find(key => States[key] === statevalue))
     }
-
     const getCountrycode = (countryvalue) =>{
       setCountry(Object.keys(clist).find(key => clist[key] === countryvalue))
       let c=Object.keys(clist).find(key => clist[key] === countryvalue)
@@ -178,7 +164,6 @@ export default function Addaddress({navigation,route}) {
     }
     const onSelectedcountry =(selected)=> {
         // this.setState({ selectedItem: selected });
-        
        // console.log(selected.Name)
         setoptioncountry(selected.Name)
         // matchvardetails(selected.Name,att.name)
@@ -188,24 +173,17 @@ export default function Addaddress({navigation,route}) {
     }
     const onSelectedstate =(selected)=> {
         // this.setState({ selectedItem: selected });
-        
         console.log(selected.Name)
         setoptionstate(selected.Name)
         // matchvardetails(selected.Name,att.name)
-        
         getStatecode(selected.Name)
         return selected;
     }
 
     const onSelectedaddresstype =(selected)=> {
-        // this.setState({ selectedItem: selected });
-        
-        console.log(selected.Name)
+        console.log(selected.Name,"^^^^^^^^^^^^^^^^")
         setaddresstype(selected.Value)
-        fetchaddress(selected.value)
-        // matchvardetails(selected.Name,att.name)
-        
-        // getStatecode(selected.Name)
+        fetchaddress(selected.Value)
         return selected;
     }
   
@@ -248,16 +226,13 @@ export default function Addaddress({navigation,route}) {
                     <PickerModal
                             renderSelectView={(disabled, selected, showModal) =>
                                 <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(5,23,41)"}}>
-                                    <Button title={addresstype} onPress={showModal} color={"rgb(5,23,41)"} />
+                                    <Button title={addresstype||"Select"} onPress={showModal} color={"rgb(5,23,41)"} />
                                 </View>
                                 }
                                 onSelected={onSelectedaddresstype}
                                 items={type_of_address}
-                                // sortingLanguage={'tr'}
                                 showToTopButton={true}
                                 selected={null}
-                                // showAlphabeticalIndex={true}
-                                // autoGenerateAlphabeticalIndex={true}
                                 selectPlaceholderText={'Choose one...'}
                                 onEndReached={() => console.log('list ended...')}
                                 searchPlaceholderText={'Search...'}
