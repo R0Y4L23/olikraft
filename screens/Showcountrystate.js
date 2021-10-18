@@ -42,7 +42,7 @@ export default function Showcountrystate({isaddressfetched,updateaddressfetched,
       console.log(filteredstate,filteredcountry)
     return (
         <View>
-           <Text>{(filteredstate&&filteredcountry)?(<Paragraph style={{fontSize:12}}>{filteredstate}<Text>,</Text>{filteredcountry}.</Paragraph>):(<></>)}</Text>
+           <Text>{(filteredstate&&filteredcountry)?(<Paragraph style={{fontSize:12}}><Text>{JSON.stringify(filteredstate)=="{}"?"":filteredstate+" , "}</Text>{JSON.stringify(filteredcountry)=="{}"?"":filteredcountry}</Paragraph>):(<></>)}</Text>
         </View>
     )
 }

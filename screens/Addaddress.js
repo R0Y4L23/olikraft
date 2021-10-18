@@ -50,6 +50,12 @@ export default function Addaddress({navigation,route}) {
         }
       }
     const saveAddress=async ()=>{
+
+
+
+      //  console.log(country,objstate,'%%%%%%%')
+
+
         const response = await fetch(`https://olikraft.com/api/letscms/v1/address/${addresstype}`, {
             method: 'POST', 
             headers: {
@@ -62,7 +68,7 @@ export default function Addaddress({navigation,route}) {
             'email' : email,
             'country':country,
             'city':city,
-            'state':state,
+            'state':objstate,
             'postcode':zip,
             'phone':phone,
             'address_1':`${building}`,
@@ -82,7 +88,9 @@ export default function Addaddress({navigation,route}) {
         .then((res) => {
             
             setclist(res.data.countries)
+           // console.log(res.data.countries)
             setslist(res.data.states)
+           // console.log(res.data.states)
             var values = Object.keys(res.data.countries).map(function (key) { return res.data.countries[key]; });
             const keys=Object.keys(res.data.countries)
             setCountryKeyList(keys)
@@ -103,7 +111,6 @@ export default function Addaddress({navigation,route}) {
                 }
             }
             setaddresstype(addresstype)
-
         })
         .catch(error => console.log(error))
     }
@@ -129,7 +136,7 @@ export default function Addaddress({navigation,route}) {
                     
                 }
             }
-          // console.log(stateValues)
+           console.log(stateValues)
           
         }
         else{
@@ -143,15 +150,40 @@ export default function Addaddress({navigation,route}) {
 
     const getCountrycode = (countryvalue) =>{
       setCountry(Object.keys(clist).find(key => clist[key] === countryvalue))
+      let c=Object.keys(clist).find(key => clist[key] === countryvalue)
+      if (
+        typeof slist[c] === 'object' &&
+        !Array.isArray(slist[c]) &&
+        slist[c] !== null
+    ) 
+    {
+        let a=Object.values(slist[c])
+        let o=[]
+        for(let i=0;i<a.length;i++)
+        {
+
+            let obj = {}
+            obj["Name"] =  a[i]
+            obj["Value"] =  a[i]
+            obj["Id"] = i
+            o.push(obj)
+        }
+      //  console.log(o)
+        setobjstate(o)
+    }
+    else{
+        setobjstate([])
+        setoptionstate("Click To Choose")
+    }
     }
     const onSelectedcountry =(selected)=> {
         // this.setState({ selectedItem: selected });
         
-        console.log(selected.Name)
+       // console.log(selected.Name)
         setoptioncountry(selected.Name)
         // matchvardetails(selected.Name,att.name)
-        
-        getCountrycode(selected.Name);getStates(selected.Id)
+        getCountrycode(selected.Name);
+       // getStates(selected.Id);
         return selected;
     }
     const onSelectedstate =(selected)=> {
@@ -212,9 +244,7 @@ export default function Addaddress({navigation,route}) {
                     
                  <View style={styles.content}>
                  <Text>Type of Address</Text>
-                 
                     <View style={styles.form}>
-                   
                     <PickerModal
                             renderSelectView={(disabled, selected, showModal) =>
                                 <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(5,23,41)"}}>
@@ -222,7 +252,6 @@ export default function Addaddress({navigation,route}) {
                                 </View>
                                 }
                                 onSelected={onSelectedaddresstype}
-                        
                                 items={type_of_address}
                                 // sortingLanguage={'tr'}
                                 showToTopButton={true}
@@ -255,11 +284,10 @@ export default function Addaddress({navigation,route}) {
                     <PickerModal
                             renderSelectView={(disabled, selected, showModal) =>
                                 <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(5,23,41)"}}>
-                                    <Button title={optioncountry} onPress={showModal} color={"rgb(5,23,41)"} />
+                                    <Button title={optioncountry||"Click to Choose"} onPress={showModal} color={"rgb(5,23,41)"} />
                                 </View>
                                 }
                                 onSelected={onSelectedcountry}
-                        
                                 items={objcountries}
                                 sortingLanguage={'tr'}
                                 showToTopButton={true}
@@ -271,6 +299,7 @@ export default function Addaddress({navigation,route}) {
                                 searchPlaceholderText={'Search...'}
                                 requireSelection={false}
                                 autoSort={false}
+                                
                         />
                         
                         
@@ -283,11 +312,10 @@ export default function Addaddress({navigation,route}) {
                         <PickerModal
                                 renderSelectView={(disabled, selected, showModal) =>
                                     <View style={{width:"50%",justifyContent:"center"}}>
-                                        <Button title={optionstate} onPress={showModal} color={"rgb(5,23,41)"} disabled={stateList.length === 0}/>
+                                        <Button title={optionstate||"Select State"} onPress={showModal} color={"rgb(5,23,41)"} disabled={objstate.length===0}/>
                                     </View>
                                     }
                                     onSelected={onSelectedstate}
-                                    
                                     // onBackButtonPressed={this.onBackButtonPressed.bind(this)}
                                     items={objstate}
                                     sortingLanguage={'tr'}

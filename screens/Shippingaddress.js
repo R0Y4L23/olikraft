@@ -8,8 +8,8 @@ export default function Shippingaddress({navigation,updatesa}) {
     const [shad,setshippingAddress]=useState([])
     const [countrylist,setCountrylist] = useState([])
     const [Statelist,setStatelist] = useState([])
-    const [country,setCountry] = useState([])
-    const [State,setState] = useState([])
+    const [country,setCountry] = useState("")
+    const [State,setState] = useState("")
     const [isaddressfetched,  setisaddressfetched] = useState(false)
     const [rendercomplete, setrendercomplete] = useState(false)
     const getData = async () => {
