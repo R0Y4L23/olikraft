@@ -159,7 +159,7 @@ export default function Addaddress({navigation,route}) {
     }
     else{
         setobjstate([])
-        setoptionstate("Click To Choose")
+        setoptionstate("No states for the country")
     }
     }
     const onSelectedcountry =(selected)=> {
@@ -259,7 +259,7 @@ export default function Addaddress({navigation,route}) {
                     <PickerModal
                             renderSelectView={(disabled, selected, showModal) =>
                                 <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(5,23,41)"}}>
-                                    <Button title={optioncountry||"Click to Choose"} onPress={showModal} color={"rgb(5,23,41)"} />
+                                    <Button title={"Click to Choose"} onPress={showModal} color={"rgb(5,23,41)"} />
                                 </View>
                                 }
                                 onSelected={onSelectedcountry}
@@ -274,7 +274,6 @@ export default function Addaddress({navigation,route}) {
                                 searchPlaceholderText={'Search...'}
                                 requireSelection={false}
                                 autoSort={false}
-                                
                         />
                         
                         
@@ -287,7 +286,7 @@ export default function Addaddress({navigation,route}) {
                         <PickerModal
                                 renderSelectView={(disabled, selected, showModal) =>
                                     <View style={{width:"50%",justifyContent:"center"}}>
-                                        <Button title={optionstate||"Select State"} onPress={showModal} color={"rgb(5,23,41)"} disabled={objstate.length===0}/>
+                                        <Button title={"Click to Choose"} onPress={showModal} color={"rgb(5,23,41)"} disabled={objstate.length===0}/>
                                     </View>
                                     }
                                     onSelected={onSelectedstate}

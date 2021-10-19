@@ -129,66 +129,77 @@ const Home = ({navigation}) => {
     return (
        <View style={{flex:1,backgroundColor:"#f9f9f9",paddingTop:25}}>
            <ScrollView>
-               <View style={{marginLeft:'auto',marginRight:"auto",flex:1,justifyContent:"space-evenly",width:"100%",height:"100%"}}>
-           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",marginBottom:30}}>
-               <Text style={{fontSize:20}}>Hi, {name}</Text>
-               <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
-                  <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}} style={{marginRight:15}}><SimpleLineIcons name="bag" size={26} color="black"  /></TouchableOpacity>
-                   {/* {focus&&<Searchbar onChangeText={onChangeSearch} onChange={fetchProducts} value={searchQuery} style={{height:30,width:150}} onBlur={()=>{setFocus(!focus);setSearchQuery("");fetchProducts()}}/>}
-                   {!focus&&<Ionicons name="search" size={26} color="black" onPress={()=>{setFocus(!focus)}}/> } */}
+               <View
+                   style={{marginLeft:'auto',marginRight:"auto",flex:1,justifyContent:"space-evenly",width:"100%",height:"100%"}}>
+                   <View
+                       style={{display:"flex",flexDirection:"row",justifyContent:"space-between",marginBottom:30,marginHorizontal:"10%"}}>
+                       <Text style={{fontSize:20}}>Hi , {name}</Text>
+                       <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}>
+                           <SimpleLineIcons name="bag" size={26} color="black" />
+                       </TouchableOpacity>
+                   </View>
+                   <View style={{height:200}}>
+                       <ScrollView horizontal>
+                           {TCJSON.map((item,index)=>{return <TopComponent content={item.content} key={index} image={item.image} link={item.link}
+                               navigation={navigation} />})}
+                       </ScrollView>
+                   </View>
+                   <View
+                       style={{display:"flex",flexDirection:"row",width:350,justifyContent:"space-evenly",marginBottom:20,marginTop:10}}>
+                       <LinearGradient
+                           style={{display:"flex",flexDirection:"row",width:150,height:75,justifyContent:"space-between",padding:10,borderRadius:15}}
+                           colors={['#E0B042', '#E7E75F' , '#E78357' ]}>
+                           <View>
+                               <Text style={{fontSize:20,color:"white"}}>10 %</Text>
+                               <Text style={{color:"white"}}>Flat Offer</Text>
+                           </View>
+                           <SimpleLineIcons name="badge" size={30} color="white" />
+                       </LinearGradient>
+                       <LinearGradient
+                           style={{display:"flex",flexDirection:"row",width:150,height:75,justifyContent:"space-between",padding:10,borderRadius:15}}
+                           colors={['#6BD1BB', '#9BE786' , '#95FB5F' ]}>
+                           <View>
+                               <Text style={{fontSize:20,color:"white"}}>Discount</Text>
+                               <Text style={{color:"white"}}>Weekend Sale</Text>
+                           </View>
+                           <SimpleLineIcons name="present" size={30} color="white" />
+                       </LinearGradient>
+                   </View>
+                   <TouchableOpacity onPress={()=>{navigation.navigate("Products")}}>
+                       <View
+                           style={{display:"flex",flexDirection:"row",justifyContent:"space-between",marginHorizontal:"5%"}}>
+                           <Text style={{fontSize:22}}>Shop from Favourites</Text>
+                           <AntDesign name="arrowright" size={24} color="black" style={{marginTop:4}} />
+                       </View>
+                   </TouchableOpacity>
+                   <View style={{height:125}}>
+                       <ScrollView horizontal>
+                           {pro.length>0&&pro.map((item,index)=>{return <ShopFromFavouriteComponent product={item.name} nprice={item.price}
+                               pprice={item.regular_price} key={index} id={item.id} navigation={navigation}
+                               image={item.image} featured={item.featured} />})}
+                       </ScrollView>
+                   </View>
+                   <View
+                       style={{display:"flex",flexDirection:"row",justifyContent:"space-between",marginHorizontal:"5%"}}>
+                       <Text style={{fontSize:22}}>Recent Reviews</Text>
+                       <AntDesign name="arrowright" size={24} color="black" style={{marginTop:4}} onPress={()=>
+                           navigation.navigate("Customerreview")}/>
+                   </View>
+                   <View style={{height:200}}>
+                       <ScrollView horizontal>
+                           {RRJSON.map((item,index)=>{return <RecentReviewsComponent name={item.name} stars={Number(item.rating_stars)}
+                               comment={item.review} key={index} url={item.customer_pic} />})}
+                       </ScrollView>
+                   </View>
                </View>
-           </View>
-           <View style={{height:200}}>
-               <ScrollView horizontal>
-                   {TCJSON.map((item,index)=>{return <TopComponent content={item.content} key={index} image={item.image} link={item.link} navigation={navigation}/>})}
-               </ScrollView>
-           </View>
-           <View style={{display:"flex",flexDirection:"row",width:350,justifyContent:"space-evenly",marginBottom:20,marginTop:10}}>
-                   <LinearGradient style={{display:"flex",flexDirection:"row",width:150,height:75,justifyContent:"space-between",padding:10,borderRadius:15}}  colors={['#E0B042', '#E7E75F', '#E78357']}>
-                   <View>
-                       <Text style={{fontSize:20,color:"white"}}>10 %</Text>
-                       <Text style={{color:"white"}}>Flat Offer</Text>
-                   </View>
-                   <SimpleLineIcons name="badge" size={30} color="white" />
-                   </LinearGradient>
-                   <LinearGradient style={{display:"flex",flexDirection:"row",width:150,height:75,justifyContent:"space-between",padding:10,borderRadius:15}}  colors={['#6BD1BB', '#9BE786', '#95FB5F']}>
-                   <View>
-                       <Text style={{fontSize:20,color:"white"}}>Discount</Text>
-                       <Text style={{color:"white"}}>Weekend Sale</Text>
-                   </View>
-                   <SimpleLineIcons name="present" size={30} color="white" />
-                   </LinearGradient>
-           </View>
-           <TouchableOpacity onPress={()=>{navigation.navigate("Products")}}>
-           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:"100%"}}>
-               <Text style={{fontSize:22}}>Shop from Favourites</Text>
-               <AntDesign name="arrowright" size={24} color="black"  style={{marginTop:4}}/>
-           </View>
-           </TouchableOpacity>
-           {/* <View style={{height:125}}>
-               <ScrollView horizontal>
-                   {SFFJSON.map((item,index)=>{return <ShopFromFavouriteComponent product={item.product} nprice={item.NPrice} pprice={item.PPrice} key={index}/>})}
-               </ScrollView>
-           </View> */}
-           <View style={{height:125}}>
-               <ScrollView horizontal>
-                   {pro.length>0&&pro.map((item,index)=>{return <ShopFromFavouriteComponent product={item.name} nprice={item.price} pprice={item.regular_price} key={index} id={item.id} navigation={navigation} image={item.image} featured={item.featured}/>})}
-               </ScrollView>
-           </View>
-          
-           <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",width:"100%"}}>
-               <Text style={{fontSize:22}}>Recent Reviews</Text>
-               <AntDesign name="arrowright" size={24} color="black" style={{marginTop:4}} onPress={()=>navigation.navigate("Customerreview")}/>
-           </View>
-           <View style={{height:300}}>
-               <ScrollView horizontal>
-                   {RRJSON.map((item,index)=>{return <RecentReviewsComponent name={item.name} stars={Number(item.rating_stars)} comment={item.review} key={index} url={item.customer_pic}/>})}
-               </ScrollView>
-           </View>
-           </View>
            </ScrollView>
        </View>
     )
 }
 
 export default Home
+
+
+
+
+

@@ -16,6 +16,7 @@ export default function NewAttributesarray({id,Images,match,titles,opt,updateid,
           })
           .then(response => {
                 
+               console.log(response.data.attributes,"Response from backend")
                setAttributes(response.data.attributes)
            
           })
