@@ -27,6 +27,7 @@ export default function Shippingaddress({navigation,updatesa}) {
         setisaddressfetched(false)
       }
     const fetchshippingaddress= async ()=>{
+      console.log("Fetching shipping Address API")
         let token = await getData()
         fetch("https://olikraft.com/api/letscms/v1/address/shipping",{
             headers:{
@@ -59,6 +60,7 @@ export default function Shippingaddress({navigation,updatesa}) {
     React.useEffect(() => {
       const unsubscribe = navigation.addListener('focus', () => {
        fetchshippingaddress()
+       console.log("Fetching shipping Address UseEffect")
       });
       return unsubscribe;
     }, [navigation]);
