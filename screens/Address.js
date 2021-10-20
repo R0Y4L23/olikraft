@@ -53,6 +53,7 @@ export default function Address({navigation,route}) {
             setStates(route.params.slist[countryKeyList[index]])
             const stateValues=Object.keys(route.params.slist[countryKeyList[index]]).map(function (key) { return route.params.slist[countryKeyList[index]][key]; })
             setStateList(stateValues)
+            setoptionstate("Click to Choose")
             // console.log(stateValues)
             for(let i = 0; i< stateValues.length; i++)
             {
@@ -64,42 +65,35 @@ export default function Address({navigation,route}) {
                 // setobjoptions([...objoptions, obj]);
                 if(objstate.includes(obj) === false)
                 {   
-                    
                     objstate.push(obj)
-                    
                 }
             }
-            
           }
           else{
             setStateList([])
+            setoptionstate("No states available")
           }
       }
 
       const getStatecode = (statevalue) =>{
         setState(Object.keys(States).find(key => States[key] === statevalue))
       }
-
       const getCountrycode = (countryvalue) =>{
         setCountry(Object.keys(route.params.clist).find(key => route.params.clist[key] === countryvalue))
       }
       const onSelectedcountry =(selected)=> {
         // this.setState({ selectedItem: selected });
-        
         console.log(selected.Name)
         setoptioncountry(selected.Name)
         // matchvardetails(selected.Name,att.name)
-        
         getCountrycode(selected.Name);getStates(selected.Id)
         return selected;
     }
     const onSelectedstate =(selected)=> {
         // this.setState({ selectedItem: selected });
-        
         console.log(selected.Name)
         setoptionstate(selected.Name)
         // matchvardetails(selected.Name,att.name)
-        
         getStatecode(selected.Name)
         return selected;
     }
@@ -120,9 +114,7 @@ export default function Address({navigation,route}) {
                 // setobjoptions([...objoptions, obj]);
                 if(objcountries.includes(obj) === false)
                 {   
-                    
                     objcountries.push(obj)
-                    
                 }
             }
           }
@@ -170,58 +162,51 @@ export default function Address({navigation,route}) {
                        </View>
                        <Text style={{marginVertical:5}}>Country</Text>
                        <View style={styles.form,{backgroundColor:"rgb(249,249,249)"}}>
-                     
-                           <PickerModal
-                            renderSelectView={(disabled, selected, showModal) =>
-                                <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(5,23,41)"}}>
-                                    <Button title={optioncountry} onPress={showModal} color={"rgb(5,23,41)"} />
-                                </View>
-                                }
-                                onSelected={onSelectedcountry}
-                        
-                                items={objcountries}
-                                sortingLanguage={'tr'}
-                                showToTopButton={true}
-                                selected={null}
-                                showAlphabeticalIndex={true}
-                                autoGenerateAlphabeticalIndex={true}
-                                selectPlaceholderText={'Choose one...'}
-                                onEndReached={() => console.log('list ended...')}
-                                searchPlaceholderText={'Search...'}
-                                requireSelection={false}
-                                autoSort={false}
-                        />
-                        
+                           <PickerModal renderSelectView={(disabled, selected, showModal)=>
+                               <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(5,23,41)"}}>
+                                   <Button title={optioncountry||"Click to Choose"} onPress={showModal}
+                                       color={"rgb(5,23,41)"} />
+                               </View>
+                               }
+                               onSelected={onSelectedcountry}
+                               items={objcountries}
+                               sortingLanguage={'tr'}
+                               showToTopButton={true}
+                               selected={null}
+                               showAlphabeticalIndex={true}
+                               autoGenerateAlphabeticalIndex={true}
+                               selectPlaceholderText={'Choose one...'}
+                               onEndReached={() => console.log('list ended...')}
+                               searchPlaceholderText={'Search...'}
+                               requireSelection={false}
+                               autoSort={false}
+                               />
                        </View>
                        <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10}}>
                            <Text style={{flex:1}}>State</Text>
                            <Text style={{flex:1}}>Postal/Zip code</Text>
                        </View>
                        <View style={styles.country}>
-                          
-                           <PickerModal
-                                renderSelectView={(disabled, selected, showModal) =>
-                                    <View style={{width:"50%"}}>
-                                        <Button title={optionstate} onPress={showModal} color={"rgb(5,23,41)"} disabled={stateList.length === 0}/>
-                                    </View>
-                                    }
-                                    onSelected={onSelectedstate}
-                                    
-                                    // onBackButtonPressed={this.onBackButtonPressed.bind(this)}
-                                    items={objstate}
-                                    sortingLanguage={'tr'}
-                                    showToTopButton={true}
-                                    selected={null}
-                                    showAlphabeticalIndex={true}
-                                    autoGenerateAlphabeticalIndex={true}
-                                    selectPlaceholderText={'Choose one...'}
-                                    onEndReached={() => console.log('list ended...')}
-                                    searchPlaceholderText={'Search...'}
-                                    requireSelection={false}
-                                    autoSort={false}
-                            />
-                           <TextInput style={{ height: 40,padding: 10,marginLeft:5,backgroundColor:"white",flex:1}}
-                               onChangeText={setZip} value={zip} placeholder="Enter here..." />
+                           <PickerModal renderSelectView={(disabled, selected, showModal)=>
+                               <View style={{width:"50%"}}>
+                                   <Button title={optionstate||"Click to Choose"} onPress={showModal} color={"rgb(5,23,41)"} disabled={stateList.length===0}/>
+                               </View>
+                               }
+                               onSelected={onSelectedstate}
+                               items={objstate}
+                               sortingLanguage={'tr'}
+                               showToTopButton={true}
+                               selected={null}
+                               showAlphabeticalIndex={true}
+                               autoGenerateAlphabeticalIndex={true}
+                               selectPlaceholderText={'Choose one...'}
+                               onEndReached={() => console.log('list ended...')}
+                               searchPlaceholderText={'Search...'}
+                               requireSelection={false}
+                               autoSort={false}
+                               />
+                               <TextInput style={{ height: 40,padding: 10,marginLeft:5,backgroundColor:"white",flex:1}}
+                                   onChangeText={setZip} value={zip} placeholder="Enter here..." />
                        </View>
                        <Text>Phone</Text>
                        <View style={styles.form}>
@@ -236,7 +221,7 @@ export default function Address({navigation,route}) {
                        <TouchableOpacity style={styles.cancel} onPress={()=>{navigation.navigate("ManageAddress")}}>
                            <Text style={{fontSize:17,fontWeight:"bold"}}>Cancel</Text>
                        </TouchableOpacity>
-                       <TouchableOpacity style={styles.send} onPress={()=>{saveAddress().then((data)=>{alert("Address Saved Successfully");navigation.navigate("ManageAddress")})}}>
+                       <TouchableOpacity style={styles.send} onPress={async ()=>{await saveAddress();alert("Address Saved Successfully");navigation.navigate("ManageAddress")}}>
                            <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Save</Text>
                        </TouchableOpacity>
                    </View>

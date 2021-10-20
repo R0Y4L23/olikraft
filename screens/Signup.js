@@ -81,29 +81,47 @@ const Signup = ({navigation}) => {
         <ScrollView>
        <View style={{display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9",paddingTop:30}}>
                <Text style={{fontSize:25,marginBottom:50}}>Signup</Text>
+               <View>
+               <Text>First Name</Text>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,borderColor:"grey",marginVertical:12}}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setName} value={name} placeholder="First Name"/>
                    <FontAwesome name="user" size={35} color="black" style={{flex:1.5}}/>
                </View>
+               </View>
+               <View>
+               <Text>Last Name</Text>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,borderColor:"grey",marginVertical:12}}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setNameLast} value={nameLast} placeholder="Last Name"/>
                    <FontAwesome name="user" size={35} color="black" style={{flex:1.5}}/>
                </View>
+               </View>
+               <View>
+               <Text>Username</Text>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,borderColor:"grey",marginVertical:12}}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setUsername} value={username} placeholder="Username"/>
                    <FontAwesome name="user" size={35} color="black" style={{flex:1.5}}/>
                </View>
+               </View>
+               <View>
+               <Text>Email</Text>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,borderColor:"grey",marginVertical:12}}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setEmail} value={email} placeholder="Email"/>
                    <MaterialIcons style={{flex:1.5}} name="email" size={35} color="black" />
                </View>
+               </View>
+               <View>
+               <Text>Password</Text>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,marginVertical:12}}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setPassword} value={password} placeholder="Password" secureTextEntry={!passVisible}/>
                    <Feather name={`${passVisible?"eye-off":"eye"}`} size={35} color="black" style={{flex:1.5}} onPress={()=>{setPassVisible(!passVisible)}}/>
                </View>
+               </View>
+               <View>
+               <Text>Confirm Password</Text>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,marginVertical:12}}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setConfirmPass} value={confirmPass} placeholder="Confirm Password" secureTextEntry={!confirmPassVisible}/>
                    <Feather name={`${confirmPassVisible?"eye-off":"eye"}`} size={35} color="black" style={{flex:1.5}} onPress={()=>{setConfirmPassVisible(!confirmPassVisible)}}/>
+               </View>
                </View>
                <Text style={{textAlign:"center"}}>{error&&<Text style={{color:"red",marginVertical:8,textTransform:"capitalize",textAlign:"center"}}>{error}</Text>}</Text>
                <TouchableOpacity style={{backgroundColor:"#051729",height:40,width:300,display:"flex",justifyContent:"center",alignItems:"center",marginVertical:12}} onPress={handleSignup}>

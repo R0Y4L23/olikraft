@@ -65,15 +65,21 @@ const Login = ({navigation}) => {
       <View style={{flex:1}}>
        <ScrollView>
        <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"#f9f9f9",paddingTop:20}}>
-           <Image style={{width:100,height:100,marginBottom:100,backgroundColor:"#f9f9f9"}} source={require("../assets/icon.png")}/> 
-               <Text style={{fontSize:25}}>Login</Text>
+           <Image style={{width:100,height:90,marginBottom:70,backgroundColor:"#f9f9f9"}} source={require("../assets/icon.png")}/> 
+               <Text style={{fontSize:25,marginBottom:30}}>Login</Text>
+               <View>
+               <Text>Username</Text>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,marginVertical:12}}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setEmail} value={email} placeholder="Username" />
                    <MaterialIcons style={{flex:1.5}} name="email" size={35} color="black" />
                </View>
+               </View>
+               <View>
+               <Text>Password</Text>
                <View style={{display:"flex",flexDirection:"row",borderWidth:1,width:300,borderRadius:5,marginVertical:12}}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setPassword} value={password} placeholder="Password" secureTextEntry={!passVisible}/>
                    <Feather name={`${passVisible?"eye-off":"eye"}`} size={35} color="black" style={{flex:1.5}} onPress={()=>{setPassVisible(!passVisible)}}/>
+               </View>
                </View>
                <Text>{error&&<Text style={{color:"red",fontSize:18,marginVertical:8,textTransform:"capitalize"}}>{error}</Text>}</Text>
                <TouchableOpacity style={{backgroundColor:"#051729",height:40,width:300,display:"flex",justifyContent:"center",alignItems:"center",marginVertical:12}} onPress={handleLogin}>
@@ -85,7 +91,7 @@ const Login = ({navigation}) => {
                   <Text style={{textAlign:"right",textDecorationLine:"underline"}}>Forget Password?</Text>
                   </TouchableOpacity>
                </View>
-               <Text style={{marginTop:100,marginBottom:20}}>If you dont have an account. <Text style={{textDecorationLine:"underline"}} onPress={()=>{navigation.navigate("Signup")}}>Signup</Text></Text>
+               <Text style={{marginTop:100,marginBottom:10}}>If you dont have an account. <Text style={{textDecorationLine:"underline"}} onPress={()=>{navigation.navigate("Signup")}}>Signup</Text></Text>
        </View>
        </ScrollView>
        </View>
