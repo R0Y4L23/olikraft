@@ -164,8 +164,9 @@ export default function Address({navigation,route}) {
                        <View style={styles.form,{backgroundColor:"rgb(249,249,249)"}}>
                            <PickerModal renderSelectView={(disabled, selected, showModal)=>
                                <View style={{flex:1,justifyContent:"center",backgroundColor:"rgb(5,23,41)"}}>
-                                   <Button title={optioncountry||"Click to Choose"} onPress={showModal}
-                                       color={"rgb(5,23,41)"} />
+                                    <TouchableOpacity onPress={showModal}>
+                                        <Text style={{color:"white",textAlign:"center",textTransform:"uppercase",paddingVertical:10}}>{optioncountry||"Click to Choose"}</Text>
+                                    </TouchableOpacity>
                                </View>
                                }
                                onSelected={onSelectedcountry}
@@ -188,8 +189,10 @@ export default function Address({navigation,route}) {
                        </View>
                        <View style={styles.country}>
                            <PickerModal renderSelectView={(disabled, selected, showModal)=>
-                               <View style={{width:"50%"}}>
-                                   <Button title={optionstate||"Click to Choose"} onPress={showModal} color={"rgb(5,23,41)"} disabled={stateList.length===0}/>
+                               <View style={{width:"50%",backgroundColor:"rgb(5,23,41)"}}>
+                                   <TouchableOpacity onPress={showModal} disabled={stateList.length===0}>
+                                        <Text style={{color:"white",textAlign:"center",textTransform:"uppercase",paddingVertical:10}}>{optionstate||"Click to Choose"}</Text>
+                                    </TouchableOpacity>
                                </View>
                                }
                                onSelected={onSelectedstate}
