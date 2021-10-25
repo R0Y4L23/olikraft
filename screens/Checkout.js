@@ -503,7 +503,7 @@ export default function Checkout({
                                     <View style={styles.form}>
                                         <TextInput
                                             style={{ height: 40,padding: 10,backgroundColor:"white",borderRadius:8,borderWidth:0.5}}
-                                            onChangeText={setcardnumber} value={cardnumber}
+                                            onChangeText={setcardnumber} value={cardnumber} keyboardType="number-pad"
                                             placeholder="4242424242424242" />
                                     </View>
                                     <View style={{flexDirection:"row"}}>
@@ -512,7 +512,7 @@ export default function Checkout({
                                             <View style={styles.form}>
                                                 <TextInput
                                                     style={{ height: 40,padding: 10,backgroundColor:"white",borderRadius:8,borderWidth:0.5}}
-                                                    onChangeText={setexpmonth} value={expmonth}
+                                                    onChangeText={setexpmonth} value={expmonth} keyboardType="number-pad"
                                                     placeholder="01 to 12" />
                                             </View>
                                         </View>
@@ -521,7 +521,7 @@ export default function Checkout({
                                             <View style={styles.form}>
                                                 <TextInput
                                                     style={{ height: 40,padding: 10,backgroundColor:"white",textAlignVertical:"top",borderRadius:8,borderWidth:0.5}}
-                                                    onChangeText={setexpyear} value={expyear} placeholder="year" />
+                                                    onChangeText={setexpyear} value={expyear} placeholder="year" keyboardType="number-pad" />
                                             </View>
                                         </View>
                                     </View>
@@ -529,7 +529,7 @@ export default function Checkout({
                                     <View style={styles.form}>
                                         <TextInput
                                             style={{ height: 40,padding: 10,backgroundColor:"white",borderRadius:8,borderWidth:0.5}}
-                                            onChangeText={setcvc} value={cvc} placeholder="123" />
+                                            onChangeText={setcvc} value={cvc} placeholder="123" keyboardType="number-pad" />
                                     </View>
 
                                 </View>
@@ -549,7 +549,19 @@ export default function Checkout({
                             style={{fontSize:14,fontWeight:"bold"}}>${+Number(route.params.carttotals.total).toFixed(2)}</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.send} onPress={placeorder}>
+                    <TouchableOpacity style={styles.send} onPress={()=>{
+
+                        if(cardnumber&&expmonth&&expyear&&cvc)
+                        {
+                            placeorder()
+                        }
+                        else
+                        {
+                            alert("Please Fill your Card Details")
+                        }
+
+
+                    }}>
                         <Text style={{color:"white",fontSize:17,fontWeight:"bold"}}>Place Order</Text>
                     </TouchableOpacity>
                 </View>

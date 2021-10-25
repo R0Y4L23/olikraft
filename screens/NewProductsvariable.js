@@ -159,7 +159,7 @@ export default function NewProductsvariable({route,navigation}) {
                 </View>
                 <View style={{backgroundColor:"rgb(33,184,97)",borderRadius:5,marginLeft:15,width:"15%",flexDirection:"row",justifyContent:"space-evenly"}}>
                     <Text style={{color:"white",fontSize:16}}>{rating}</Text>
-                    <EvilIcons style={{marginTop:4}}name="star" size={20} color="white" />
+                    <EvilIcons style={{marginTop:3}} name="star" size={20} color="white" />
                 </View>
                 {(saleprice != 0)&&<View>
                                 <View style={{flexDirection:"row",width:"50%",padding:10,marginLeft:5,}}>
@@ -235,7 +235,7 @@ export default function NewProductsvariable({route,navigation}) {
                             <FontAwesome name="star-half-full" size={24} color="black" />
                         </View>
                         <View >
-                            <Text style={{fontSize:15,color:"black"}}>Rating and Reviews </Text>
+                            <Text style={{fontSize:15,color:"black"}}>Rating and Reviews</Text>
                         </View>
                         <View  style={{flex:1,alignItems:"flex-end",marginRight:15}}>
                             <FontAwesome name="angle-right" size={24} color="black" />

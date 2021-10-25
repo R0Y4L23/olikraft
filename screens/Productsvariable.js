@@ -155,7 +155,7 @@ export default function Productsvariable({route,navigation}) {
                 {rating !=  null && <View
                     style={{backgroundColor:"rgb(33,184,97)",borderRadius:5,marginLeft:15,width:"15%",flexDirection:"row",justifyContent:"space-evenly"}}>
                     <Text style={{color:"white",fontSize:16}}>{rating}</Text>
-                    <EvilIcons style={{marginTop:4}}name="star" size={20} color="white" />
+                    <EvilIcons style={{marginTop:3}} name="star" size={20} color="white" />
                 </View>
                 }
                 {(saleprice!="")&&<View>

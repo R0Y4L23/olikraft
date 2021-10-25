@@ -107,7 +107,6 @@ export default function Mycart({navigation}) {
        ,[hasitemremoved])
     return (
         <View style={{flex:1,justifyContent:"space-between"}}>
-           
             {cartempty!=true  && rendercomplete && <View>
             <Appbar.Header style = {styles.item}>
                 <Ionicons style ={styles.icon} name="arrow-back" size={24} color="white" onPress={()=>{navigation.goBack()}}/>
@@ -140,11 +139,13 @@ export default function Mycart({navigation}) {
                         </View>
                     </View>
                     <View style={{flex:1}}>
-                    <View style={{flexDirection:"row",padding:5}} key={item.key}>
-                       
+                    <View style={{flexDirection:"row",padding:5,marginHorizontal:10}} key={item.key}>
                         <QuantityInput qt={item.quantity} fetchcart={fetchcart} id = {item.key}/>
-                        <View style={{flex:1}}>
-                            <Button title="Remove" color="rgb(5,23,41)" onPress={()=>removefromcart(item.key)}/>
+                        <View style={{flex:1,backgroundColor:"rgb(5,23,41)"}}>
+                            {/* <Button title="Remove" color="rgb(5,23,41)" onPress={()=>removefromcart(item.key)}/> */}
+                            <TouchableOpacity onPress={()=>{removefromcart(item.key)}}>
+                                <Text style={{color:"white",textAlign:"center",paddingVertical:10}}>REMOVE</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     </View>
@@ -249,8 +250,8 @@ export default function Mycart({navigation}) {
 const styles = StyleSheet.create ({
   
     item: {
-       backgroundColor : 'rgb(5,23,41)'
-       ,height:Platform.OS === 'android' ? 35 :55
+       backgroundColor : 'rgb(5,23,41)',
+       height:Platform.OS === 'android' ? 35 : 20
     },
     icon: {
         marginLeft: 20

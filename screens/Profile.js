@@ -59,9 +59,9 @@ export default function Profile({navigation}) {
             </View>}
             {rendercomplete && <View style={{flex:1,padding:15,marginLeft:20}}>
                 <Text style={styles.name}>Full Name</Text>
-                <TextInput style={{ height: 40}}  value={name} placeholder="Full Name" editable={false}/>
+                <TextInput style={{ height: 40,fontSize:20}}  value={name} placeholder="Full Name" editable={false}/>
                 <Text style={styles.name} >Email</Text>
-                <TextInput style={{ height: 40,marginBottom:30}}  value={email} placeholder="Email" editable={false} />
+                <TextInput style={{ height: 40,marginBottom:30,fontSize:20}}  value={email} placeholder="Email" editable={false} />
               
             </View>}
             {
@@ -88,6 +88,7 @@ const styles = StyleSheet.create ({
     name:{
         color:"grey",
         marginTop:10,
+        fontSize:22
         
     },
     edit:{

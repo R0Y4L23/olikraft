@@ -83,7 +83,7 @@ export default function  Delievered() {
         </ScrollView>}
         {
                     orders.length === 0 && rendercomplete && <View style={{flex:1,justifyContent:"flex-start",alignItems:"center"}}>
-                        <Text style={{fontWeight:"bold",fontSize:18}}>We will reach to you soon with your order......</Text></View>
+                        <Text style={{fontWeight:"bold",fontSize:18,textAlign:"center"}}>We will reach to you soon with your order......</Text></View>
                 } 
                  {
                 rendercomplete === false && <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>

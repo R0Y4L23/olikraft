@@ -63,7 +63,7 @@ const More=({navigation})=>{
      </TouchableOpacity>
      <Divider/>
      <TouchableOpacity onPress={()=>{navigation.navigate("Profile")}}>
-     <Text style={{fontSize:18,paddingBottom:11}}>Profile</Text>
+     <Text style={{fontSize:18,paddingBottom:11}}>Edit Profile</Text>
      </TouchableOpacity>
      <Divider/>
      <TouchableOpacity onPress={()=>{navigation.navigate("ContactUs")}}>

@@ -73,7 +73,7 @@ export default function Editprofile({navigation}) {
             </View>
             {/* <Image source={Image_Http_URL} style={{height:"70%",width:"100%",opacity:0.9}} resizeMode="stretch"/> */}
             <View style={{padding:15}}>
-                <Text style={{color:"grey"}}>Full Name</Text>
+                <Text style={styles.name}>Full Name</Text>
                 <View style={styles.form}>
                  <TextInput style={{ height: 40,paddingLeft:10,}} onChangeText={setName}  value={name} placeholder="Full Name"/>
                 </View>
@@ -86,10 +86,12 @@ export default function Editprofile({navigation}) {
                     <TextInput style={{ height: 40,flex:1,paddingLeft:10,}}  value="India" secureTextEntry={hidecountry ? true : false} placeholder="Enter here..." />
                     <Feather style={{margin:10}}name={hidecountry ? 'eye-off' : 'eye'} size={20} color="black"  onPress={() => setHidecountry(!hidecountry)} />
                 </View> */}
+                <Text style={styles.name} >Password</Text>
                 <View style={styles.form}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setPassword} value={password} placeholder="Password" secureTextEntry={!passVisible}/>
                    <Feather name={`${passVisible?"eye-off":"eye"}`} size={35} color="black" style={{flex:1.5}} onPress={()=>{setPassVisible(!passVisible)}}/>
                </View>
+               <Text style={styles.name} >Old Password</Text>
                <View style={styles.form}>
                    <TextInput style={{ height: 40,padding: 10,flex:6.5,backgroundColor:"white"}} onChangeText={setConfirmPass} value={confirmPass} placeholder="Old Password" secureTextEntry={!confirmPassVisible}/>
                    <Feather name={`${confirmPassVisible?"eye-off":"eye"}`} size={35} color="black" style={{flex:1.5}} onPress={()=>{setConfirmPassVisible(!confirmPassVisible)}}/>
@@ -125,6 +127,7 @@ const styles = StyleSheet.create ({
     name:{
         color:"grey",
         marginTop:10,
+        fontSize:18
     },
     edit:{
         marginRight:"3%"

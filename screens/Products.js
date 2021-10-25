@@ -62,9 +62,9 @@ const Products = ({navigation}) => {
          {rendercomplete && <View>
            <Appbar.Header style = {{backgroundColor:"rgb(5,23,41)",height:Platform.OS === 'android' ? 35 :55}}>
                 <Appbar.Content title="Products" titleStyle={{fontSize:20}}/>
-                <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:15}}/></TouchableOpacity>
                  {focus&&<Searchbar onChangeText={onChangeSearch} onChange={fetchProducts} value={searchQuery} style={{height:30,width:150,marginRight:10}} onBlur={()=>{setFocus(!focus);setSearchQuery("");fetchProducts()}}/>}
-                   {!focus&&<Ionicons name="search" size={25} color="white" onPress={()=>{setFocus(!focus)}} style={{marginRight:15}}/> }
+                 {!focus&&<Ionicons name="search" size={25} color="white" onPress={()=>{setFocus(!focus)}} style={{marginRight:15}}/>}
+                 <TouchableOpacity onPress={()=>{navigation.navigate("Mycart")}}><SimpleLineIcons name="bag" size={25} color="white" style={{marginRight:15}}/></TouchableOpacity>
             </Appbar.Header>
             </View>}
             {rendercomplete && <View style={{flex:1,height:"87%",width:"100%"}}>
